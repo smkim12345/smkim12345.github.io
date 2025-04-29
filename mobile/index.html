@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>GATSBY</title>
+    <!-- 기본 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- 아이콘 폰트 -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <!-- 스와이퍼 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <!-- 커스텀 스타일 -->
+    <link rel="stylesheet" href="styles.css" />
+    <!-- 스크립트 -->
+    <script src="script.js" defer></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"
+      defer
+    ></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <!-- 모바일 헤더 -->
+      <header class="app-header">
+        <div class="header-container">
+          <button class="menu-toggle" aria-label="메뉴 열기">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <h1 class="app-logo">
+            <a href="index.html"><img src="images/logo.svg" /></a>
+          </h1>
+          <div class="header-actions">
+            <button class="action-btn search-toggle" aria-label="검색">
+              <span class="material-symbols-outlined">search</span>
+            </button>
+            <a href="#" class="action-btn" aria-label="장바구니">
+              <span class="material-symbols-outlined">shopping_bag</span>
+              <span class="badge">2</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 검색바 -->
+        <div class="search-bar">
+          <div class="search-container">
+            <input type="text" placeholder="검색어를 입력하세요" />
+            <button class="search-btn" aria-label="검색">
+              <span class="material-symbols-outlined">search</span>
+            </button>
+            <button class="search-close" aria-label="검색 닫기">
+              <span class="material-symbols-outlined">close</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- 사이드 메뉴 -->
+      <div class="side-menu-overlay"></div>
+      <nav class="side-menu">
+        <div class="side-menu-header">
+          <button class="menu-close" aria-label="메뉴 닫기">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+          <div class="user-profile">
+            <div class="profile-img">
+              <span class="material-symbols-outlined">person</span>
+            </div>
+            <div class="profile-info">
+              <p class="welcome">안녕하세요!</p>
+              <a href="#" class="login-btn">로그인/회원가입</a>
+            </div>
+          </div>
+        </div>
+
+        <ul class="side-menu-list">
+          <li class="menu-item">
+            <a href="#" class="menu-link">홈</a>
+          </li>
+          <li class="menu-item has-submenu">
+            <a href="#" class="menu-link">헤어스타일링</a>
+            <button class="submenu-toggle">
+              <span class="material-symbols-outlined">add</span>
+            </button>
+            <ul class="submenu">
+              <li><a href="products.html?category=헤어왁스">헤어왁스</a></li>
+              <li><a href="products.html?category=헤어케어">헤어케어</a></li>
+              <li>
+                <a href="products.html?category=헤어스프레이">헤어스프레이</a>
+              </li>
+              <li><a href="products.html?category=헤어젤">헤어젤</a></li>
+              <li><a href="products.html?category=폼">폼</a></li>
+              <li><a href="products.html?category=소품/기타">소품/기타</a></li>
+            </ul>
+          </li>
+          <li class="menu-item has-submenu">
+            <a href="#" class="menu-link">페이퍼</a>
+            <button class="submenu-toggle">
+              <span class="material-symbols-outlined">add</span>
+            </button>
+            <ul class="submenu">
+              <li><a href="products.html?category=기름종이">기름종이</a></li>
+              <li>
+                <a href="products.html?category=훼이셜 페이퍼">훼이셜 페이퍼</a>
+              </li>
+              <li>
+                <a href="products.html?category=바디 페이퍼">바디 페이퍼</a>
+              </li>
+            </ul>
+          </li>
+          <li class="menu-item has-submenu">
+            <a href="#" class="menu-link">스킨케어</a>
+            <button class="submenu-toggle">
+              <span class="material-symbols-outlined">add</span>
+            </button>
+            <ul class="submenu">
+              <li><a href="products.html?category=쉐이빙">쉐이빙</a></li>
+            </ul>
+          </li>
+          <li class="menu-item has-submenu">
+            <a href="#" class="menu-link">데오드란트</a>
+            <button class="submenu-toggle">
+              <span class="material-symbols-outlined">add</span>
+            </button>
+            <ul class="submenu">
+              <li>
+                <a href="products.html?category=바디 페이퍼">바디 페이퍼</a>
+              </li>
+              <li>
+                <a href="products.html?category=데오드란트 롤온"
+                  >데오드란트 롤온</a
+                >
+              </li>
+              <li>
+                <a href="products.html?category=데오드란트 스프레이"
+                  >데오드란트 스프레이</a
+                >
+              </li>
+              <li><a href="products.html?category=샤워코롱">샤워코롱</a></li>
+            </ul>
+          </li>
+          <li class="menu-item">
+            <a href="#" class="menu-link">기타</a>
+          </li>
+        </ul>
+
+        <div class="side-menu-footer">
+          <div class="menu-contact">
+            <h4>고객센터</h4>
+            <a href="tel:080-356-2222" class="phone">080-356-2222</a>
+            <p class="hours">평일 09:00 - 18:00</p>
+          </div>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook"
+              ><i class="fa-brands fa-facebook-f"></i
+            ></a>
+            <a href="#" aria-label="Instagram"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+            <a href="#" aria-label="Youtube"
+              ><i class="fa-brands fa-youtube"></i
+            ></a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- 메인 콘텐츠 -->
+      <main class="app-main">
+        <!-- 히어로 섹션 -->
+        <section class="hero-section">
+          <div class="swiper app-swiper">
+            <div class="swiper-wrapper">
+              <div
+                class="swiper-slide"
+                style="background-color: rgb(251, 252, 210)"
+              >
+                <img src="images/메인 배너.jpg" alt="메인 배너 1" />
+              </div>
+              <div class="swiper-slide" style="background-color: rgb(3, 3, 3)">
+                <img src="images/메인 배너3.jpg" alt="메인 배너 2" />
+              </div>
+              <div
+                class="swiper-slide"
+                style="background-color: rgb(75, 23, 23)"
+              >
+                <img src="images/메인배너2.png" alt="메인 배너 3" />
+              </div>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </section>
+
+        <!-- 카테고리 섹션 -->
+        <section class="category-section">
+          <div class="category-grid">
+            <a href="products.html?category=헤어스타일링" class="category-item">
+              <div class="category-icon">
+                <img src="images/c1.png" alt="헤어스타일링" />
+              </div>
+              <span>헤어스타일링</span>
+            </a>
+            <a href="products.html?category=페이퍼" class="category-item">
+              <div class="category-icon">
+                <img src="images/c2.png" alt="페이퍼" />
+              </div>
+              <span>페이퍼</span>
+            </a>
+            <a href="products.html?category=스킨케어" class="category-item">
+              <div class="category-icon">
+                <img src="images/c3.png" alt="스킨&바디케어" />
+              </div>
+              <span>스킨케어</span>
+            </a>
+
+            <a href="products.html?category=데오드란트" class="category-item">
+              <div class="category-icon">
+                <img src="images/c5.png" alt="데오드란트" width="70%" />
+              </div>
+              <span>데오드란트</span>
+            </a>
+            <a href="products.html?category=기타" class="category-item">
+              <div class="category-icon">
+                <img src="images/c6.png" alt="기타" />
+              </div>
+              <span>기타</span>
+            </a>
+          </div>
+        </section>
+
+        <!-- 이달의 행사 제품 -->
+        <section class="product-section">
+          <div class="section-header">
+            <h2 class="section-title">이달의 행사 제품</h2>
+            <a href="products.html" class="view-all"
+              >전체보기
+              <span class="material-symbols-outlined">chevron_right</span></a
+            >
+          </div>
+
+          <div class="product-scroll">
+            <div class="product-card">
+              <div
+                class="product-img"
+                style="background-image: url('images/mon1.jpg')"
+              >
+                <div class="product-badge hot">HOT</div>
+              </div>
+              <div class="product-details">
+                <p class="product-category">헤어왁스</p>
+                <h3 class="product-name">갸스비 메타러버 왁스 하드 65g</h3>
+                <div class="product-price">
+                  <span class="discount">30%</span>
+                  <span class="current-price">10,500원</span>
+                  <span class="original-price">15,000원</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <div
+                class="product-img"
+                style="background-image: url('images/mon2.jpg')"
+              >
+                <div class="product-badge sale">30%</div>
+              </div>
+              <div class="product-details">
+                <p class="product-category">헤어스프레이</p>
+                <h3 class="product-name">
+                  갸스비 셋&킵 대용량 스프레이 슈퍼하드 300ml X 5개 세트
+                </h3>
+                <div class="product-price">
+                  <span class="discount">30%</span>
+                  <span class="current-price">34,650원</span>
+                  <span class="original-price">49,500원</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <div
+                class="product-img"
+                style="background-image: url('images/mon31.jpg')"
+              >
+                <div class="product-badge new">NEW</div>
+              </div>
+              <div class="product-details">
+                <p class="product-category">쉐이빙</p>
+                <h3 class="product-name">갸스비 쉐이빙 젤/폼 3종</h3>
+                <div class="product-price">
+                  <span class="discount">30%</span>
+                  <span class="current-price">7,350원</span>
+                  <span class="original-price">10,500원</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 카테고리별 베스트 제품 -->
+        <section class="product-section">
+          <div class="section-header">
+            <h2 class="section-title">카테고리별 베스트</h2>
+            <a href="products.html" class="view-all"
+              >전체보기
+              <span class="material-symbols-outlined">chevron_right</span></a
+            >
+          </div>
+
+          <!-- 스와이퍼 대신 탭 메뉴로 구현 -->
+          <div class="category-tabs">
+            <button class="tab-btn active" data-category="hair">헤어</button>
+            <button class="tab-btn" data-category="paper">페이퍼</button>
+            <button class="tab-btn" data-category="deodorant">
+              데오드란트
+            </button>
+          </div>
+
+          <div class="tab-content active" id="hair-tab">
+            <div class="product-card featured">
+              <div
+                class="product-img"
+                style="background-image: url('images/best11.jpg')"
+              >
+                <div class="category-label">Hair Styling No.1</div>
+              </div>
+              <div class="product-details">
+                <p class="product-category">헤어왁스</p>
+                <h3 class="product-name">
+                  갸스비 메타러버 왁스 플레이 플렉스 65g
+                </h3>
+                <div class="product-price">
+                  <span class="discount">30%</span>
+                  <span class="current-price">10,500원</span>
+                  <span class="original-price">15,000원</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-content" id="paper-tab">
+            <div class="product-card featured">
+              <div
+                class="product-img"
+                style="background-image: url('images/best21.jpg')"
+              >
+                <div class="category-label">Oil Paper No.1</div>
+              </div>
+              <div class="product-details">
+                <p class="product-category">페이퍼</p>
+                <h3 class="product-name">갸스비 기름종이 필름 타입 70매 2팩</h3>
+                <div class="product-price">
+                  <span class="discount">20%</span>
+                  <span class="current-price">5,840원</span>
+                  <span class="original-price">7,300원</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-content" id="deodorant-tab">
+            <div class="product-card featured">
+              <div
+                class="product-img"
+                style="background-image: url('images/best31.jpg')"
+              >
+                <div class="category-label">Deodorant No.1</div>
+              </div>
+              <div class="product-details">
+                <p class="product-category">데오드란트</p>
+                <h3 class="product-name">갸스비 샤워코롱 스위티아쿠아 60ml</h3>
+                <div class="product-price">
+                  <span class="discount">30%</span>
+                  <span class="current-price">9,100원</span>
+                  <span class="original-price">13,000원</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 프로모션 배너 -->
+        <section class="promo-banner">
+          <a href="#">
+            <div
+              class="banner-content"
+              style="background-image: url('images/culc2.jpg')"
+            >
+              <div class="banner-text">
+                <p>
+                  하루종일 유지되는<br />
+                  풍성한 볼륨감
+                </p>
+                <h3>갸스비 컬크림</h3>
+                <div class="banner-tags">
+                  <span>#컬&볼륨유지</span>
+                  <span>#모발케어</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </section>
+
+        <!-- 브랜드 소개 -->
+        <section class="brand-section">
+          <div class="brand-content">
+            <div
+              class="brand-img"
+              style="background-image: url('images/갸스비\ 소개.jpg')"
+            ></div>
+            <div class="brand-info">
+              <h2>WITH GATSBY</h2>
+              <p>
+                GATSBY(갸스비)는 1978년 발매 이래, <br />그 시대의 가장
+                스타일리시한 스타일을 제안하는 <br /><strong
+                  >MEN'S COSMETIC BRAND</strong
+                >입니다.
+              </p>
+              <p>
+                스타일에 민감한 남성을 타겟으로<br />
+                <strong>HAIR STYLING · HAIR CARE · FACE · BODY CARE</strong>
+                등<br />
+                다양한 카테고리의 상품을 제안하고 있습니다.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 스타일링 팁 & 동영상 -->
+        <section class="styling-section">
+          <h2 class="section-title">GATSBY styling</h2>
+          <div class="video-container">
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/6GxHf8BSK-o"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+
+          <div class="styling-products">
+            <a href="#" class="styling-product">
+              <div class="product-img2">
+                <img
+                  src="images/style2.jpg"
+                  alt="갸스비 무빙러버 왁스 익스트림 매트 80g"
+                />
+              </div>
+              <div class="product-info">
+                <h3>갸스비 무빙러버 왁스 익스트림 매트 80g</h3>
+                <p class="product-desc">최강 셋팅력 & 최강 매트 왁스</p>
+                <div class="product-price">
+                  <span class="discount">20%</span>
+                  <span class="current-price">7,840원</span>
+                </div>
+              </div>
+            </a>
+
+            <a href="#" class="styling-product">
+              <div class="product-img2">
+                <img
+                  src="images/style1.jpg"
+                  alt="갸스비 스타일링 왁스 매트&하드 200ml"
+                />
+              </div>
+              <div class="product-info">
+                <h3>갸스비 스타일링 왁스 매트&하드 200ml</h3>
+                <p class="product-desc">
+                  번짐없는 매트와 강력한 고정력으로 24시간 지속
+                </p>
+                <div class="product-price">
+                  <span class="discount">10%</span>
+                  <span class="current-price">8,100원</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+      </main>
+
+      <!-- 바텀 네비게이션 -->
+      <nav class="bottom-nav">
+        <a href="#" class="nav-item active">
+          <span class="material-symbols-outlined">home</span>
+          <span class="nav-text">홈</span>
+        </a>
+        <a href="#" class="nav-item">
+          <span class="material-symbols-outlined">category</span>
+          <span class="nav-text">카테고리</span>
+        </a>
+        <a href="#" class="nav-item">
+          <span class="material-symbols-outlined">favorite</span>
+          <span class="nav-text">찜</span>
+        </a>
+        <a href="#" class="nav-item">
+          <span class="material-symbols-outlined">person</span>
+          <span class="nav-text">마이</span>
+        </a>
+      </nav>
+
+      <!-- 푸터 -->
+      <footer class="app-footer">
+        <div class="footer-links">
+          <a href="#">이용약관</a>
+          <a href="#" class="primary">개인정보처리방침</a>
+          <a href="#">고객센터</a>
+        </div>
+        <div class="company-info">
+          <p class="company-name"><img src="images/logo.svg" /></p>
+          <p class="copyright">© 2025 SUNG-MIN. All Rights Reserved.</p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
