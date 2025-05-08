@@ -1,0 +1,834 @@
+html {
+  font-size: 16px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  position: relative;
+}
+
+header a:hover {
+  color: #cccccc;
+}
+
+header a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+header a:hover::after {
+  width: 100%;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+li {
+  list-style: none;
+}
+
+body {
+  color: black;
+  font-size: 1.1rem;
+  background-color: white;
+  line-height: 1.5;
+  font-family: Arial, sans-serif;
+}
+
+.wrap {
+  margin: 5rem auto;
+  max-width: 1300px;
+  width: 100%;
+  padding: 0 1rem;
+}
+.wrap1 {
+  margin: 5rem auto;
+  max-width: 1450px;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+header {
+  background: black;
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem;
+}
+
+.icon2 {
+  margin-left: 1.9rem;
+}
+
+.logo {
+  width: 5rem;
+  margin: auto 1.8rem;
+  background: black;
+}
+
+nav {
+  background: black;
+  margin: auto;
+  width: 100%;
+}
+
+nav ul {
+  width: max-content;
+  background: black;
+  margin: 0 auto;
+  text-align: center;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 2.5rem;
+}
+
+/* Ensure no moving bar effect under the logo on hover with higher priority */
+nav ul li a img::after {
+  content: none !important;
+}
+
+.sec1,
+.sec2,
+.sec3,
+.sec4 {
+  padding: 1.25rem;
+}
+
+.main {
+  width: 100%;
+  height: 79vh;
+  background: url(img/main-1.jpg) no-repeat center;
+  background-size: cover;
+  position: relative;
+}
+
+.name_box {
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  z-index: 1;
+  color: white;
+}
+
+.name1 {
+  font-size: 1.5rem;
+  font-family: "poppins";
+  font-weight: 200;
+}
+
+.name2 {
+  font-size: 6rem;
+  font-family: "poppins";
+  font-weight: 200;
+}
+
+.name3 {
+  border: 1px solid;
+  background: white;
+  padding: 0.3rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  width: 10rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.name3:hover {
+  background: #f0f0f0;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.name3 a {
+  color: black;
+}
+
+.name4 {
+  border: 1px solid white;
+  padding: 0.3rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  width: 10rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.name4:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.sec0 {
+  height: 9rem;
+  background: rgb(17, 17, 17);
+  padding: 1.5rem;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+  margin: auto;
+}
+
+.menu a {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.menu a:hover {
+  transform: translateY(-5px);
+}
+
+h2 {
+  font-size: 2.2rem;
+  letter-spacing: 0.3rem;
+  font-weight: 400;
+  font-family: "poppins";
+}
+
+.sec1-bg1,
+.sec1-bg2 {
+  height: 14rem;
+  margin-bottom: 5%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sec1-suv {
+  background: url(img/suv.jpg) no-repeat;
+  width: 48%;
+  background-size: 100% 100%;
+  padding: 1%;
+}
+
+.sec1-black {
+  background: url(img/black.jpg) no-repeat;
+  width: 48%;
+  background-size: 100% 100%;
+  padding: 1%;
+}
+
+.sec1-sedan {
+  background: url(img/sedan.jpg) no-repeat;
+  width: 48%;
+  background-size: 100% 100%;
+  padding: 1%;
+}
+
+.sec1-ev {
+  background: url(img/ev.jpg) no-repeat;
+  width: 48%;
+  background-size: 100% 100%;
+  padding: 1%;
+}
+
+.sec1-bg .ht {
+  font-size: 2rem;
+  color: whitesmoke;
+  text-shadow: 0.06rem 0.06rem 0.1rem black;
+}
+
+.sec1-bg .tt {
+  font-size: 1rem;
+  color: whitesmoke;
+  text-decoration: underline whitesmoke;
+  text-shadow: 1px 1px 3px black;
+  transition: all 0.3s ease;
+}
+
+.sec2-bg {
+  height: 37.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sec2-top {
+  background: white;
+  width: 49%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sec2-top-img {
+  width: 100%;
+  height: 70%;
+  z-index: 0;
+  position: relative;
+}
+
+.sec2-top-img .tt {
+  bottom: 1%;
+  right: 1%;
+  color: white;
+  text-shadow: 1px 1px 3px black;
+  z-index: 1;
+  position: absolute;
+  text-decoration: underline;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.sec2-top-img .tt:hover {
+  transform: translateX(-5px);
+  color: #f0f0f0;
+}
+
+.sec2-top-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sec2-top-tt {
+  background: rgb(21, 21, 21);
+  height: 30%;
+  width: 100%;
+  padding: 3%;
+}
+
+.sec2-top-tt .tt1 {
+  font-size: 1rem;
+  color: white;
+}
+
+.sec2-top-tt .tt2 {
+  font-size: 1.2rem;
+  color: white;
+}
+
+.sec2-top-tt .tt3 {
+  font-size: 0.8rem;
+  color: white;
+}
+
+.sec2-bot {
+  width: 49%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sec2-bot1,
+.sec2-bot2,
+.sec2-bot3 {
+  display: flex;
+  justify-content: space-between;
+  height: 33%;
+}
+
+.sec2-img {
+  width: 33%;
+  height: 100%;
+}
+
+.sec2-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sec3-bg {
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sec3-left,
+.sec3-right {
+  height: 100%;
+  width: 50%;
+  transition: all 0.3s ease;
+  filter: brightness(0.6);
+}
+
+.sec3-tt {
+  position: absolute;
+  font-size: 2rem;
+  color: whitesmoke;
+  text-shadow: 1px 1px 4px black;
+}
+
+.sec3-left .sec3-tt {
+  left: 3%;
+  top: 88%;
+}
+
+.sec3-right .sec3-tt {
+  right: 3%;
+  top: 88%;
+}
+
+.sec3-left-img,
+.sec3-right-img {
+  width: 100%;
+  position: relative;
+}
+
+.sec3-left-img img,
+.sec3-right-img img {
+  width: 100%;
+  height: 100%;
+}
+
+.sec3-left:hover,
+.sec3-right:hover {
+  filter: brightness(1);
+}
+
+.sec3-left-tt,
+.sec3-right-tt {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 0.9rem;
+}
+
+.sec3-left-tt {
+  text-align: left;
+}
+
+.sec3-right-tt {
+  text-align: right;
+}
+
+.sec3-left-tt a,
+.sec3-right-tt a {
+  color: black;
+  text-decoration: underline;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.sec3-left-tt a:hover,
+.sec3-right-tt a:hover {
+  transform: translateX(5px);
+  color: #333;
+}
+
+.sec4-bg {
+  background: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sec4-box {
+  height: auto;
+  width: 32%;
+}
+
+.sec4-left-img {
+  background: url(img/event1.jpg) no-repeat center;
+}
+
+.sec4-mid-img {
+  background: url(img/event2.jpg) no-repeat center;
+}
+
+.sec4-right-img {
+  background: url(img/event3.jpg) no-repeat center;
+}
+
+.sec4-left-img,
+.sec4-mid-img,
+.sec4-right-img {
+  background-size: cover;
+  background-position: center;
+  height: 300px;
+  width: 100%;
+}
+
+.sec4-left-tt1,
+.sec4-mid-tt1,
+.sec4-right-tt1 {
+  height: 100px;
+  width: 100%;
+}
+
+.sec4-bg .hh,
+.sec5-bg .hh {
+  font-size: 1.3rem;
+  padding-top: 0.75rem;
+  font-weight: bold;
+}
+
+.sec4-bg a {
+  color: rgb(0, 0, 0);
+  font-size: 1.2rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: none;
+}
+
+.sec4-box {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.sec4-box:hover {
+  opacity: 1;
+}
+
+.sec5-bg {
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sec5-left,
+.sec5-right {
+  width: 48%;
+}
+
+.sec5-left-img,
+.sec5-right-img {
+  height: 400px;
+}
+
+.sec5-left-img {
+  background: url(img/rel2.jpg) no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.sec5-right-img {
+  background: url(img/rel3.jpg) no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.sec5-left img,
+.sec5-right img {
+  width: 100%;
+  height: 100%;
+}
+
+.sec5-bg a {
+  color: black;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.sec5-bg a:hover {
+  color: #555;
+  transform: translateX(5px);
+}
+
+.sec5-left,
+.sec5-right {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.sec5-left:hover,
+.sec5-right:hover {
+  opacity: 0.8;
+}
+
+.sec6 {
+  background: black;
+  height: auto;
+  min-height: 9.375rem;
+  padding: 1.5rem 1rem;
+}
+
+.sec6 nav {
+  margin: auto;
+  width: max-content;
+}
+
+footer {
+  text-align: center;
+  margin: 1rem;
+}
+
+footer h3 {
+  color: white;
+  font-size: 1rem;
+}
+
+/* Responsive styles */
+@media (max-width: 1000px) {
+  html {
+    font-size: 14px;
+  }
+
+  nav ul {
+    width: 100%;
+    text-align: center;
+    padding: 0.6rem 0;
+  }
+
+  nav ul li {
+    margin: 0 0.9rem;
+  }
+
+  .name_box {
+    position: absolute;
+    top: 60%;
+    left: 10%;
+  }
+
+  .name2 {
+    font-size: 5rem;
+  }
+
+  .name3,
+  .name4 {
+    width: 6rem;
+    font-size: 0.7rem;
+  }
+
+  .menu {
+    width: 100%;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  .menu a {
+    margin-bottom: 0.625rem;
+  }
+
+  .sec1-bg1,
+  .sec1-bg2 {
+    flex-direction: column;
+    height: auto;
+    margin: auto;
+    flex-wrap: wrap;
+  }
+
+  .sec1-suv,
+  .sec1-black,
+  .sec1-sedan,
+  .sec1-ev {
+    width: 100%;
+    height: 12.5rem;
+    font-size: 0.5rem;
+    background-position: center;
+    background-size: cover;
+  }
+
+  .sec2-bg {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sec2-top,
+  .sec2-bot {
+    width: 100%;
+    margin-bottom: 1.25rem;
+    height: 37.5rem;
+  }
+
+  .sec3-bg {
+    flex-direction: column;
+  }
+
+  .sec3-left,
+  .sec3-right {
+    width: 100%;
+    margin-bottom: 1.25rem;
+  }
+
+  .sec3-right .sec3-tt {
+    position: absolute;
+    left: 3%;
+    top: 88%;
+  }
+
+  .sec3-right-tt {
+    text-align: left;
+  }
+
+  .sec4-bg {
+    flex-direction: column;
+  }
+
+  .sec4-box {
+    width: 100%;
+    margin-bottom: 40px;
+    height: auto;
+  }
+
+  .sec5-bg {
+    flex-direction: column;
+  }
+
+  .sec5-left,
+  .sec5-right {
+    width: 100%;
+    margin-bottom: 40px;
+    height: auto;
+  }
+
+  .sec6 nav ul li {
+    display: block;
+    margin: 0.625rem 0;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1rem;
+  }
+
+  nav ul li {
+    margin: 0.2rem 0.1rem;
+  }
+
+  nav ul li:nth-child(5) {
+    width: 100%;
+    text-align: center;
+    order: -1;
+    margin-bottom: 0.5rem;
+  }
+}
+/* 추가된 커서 및 상호작용 스타일 */
+.sec1-suv,
+.sec1-black,
+.sec1-sedan,
+.sec1-ev {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sec1-suv:hover,
+.sec1-black:hover,
+.sec1-sedan:hover,
+.sec1-ev:hover {
+  opacity: 0.8;
+}
+
+.sec2-img {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.sec2-img img {
+  transition: all 0.5s ease;
+  filter: brightness(0.7);
+}
+
+.sec2-img:hover img {
+  transform: scale(1.1);
+  filter: brightness(1);
+}
+
+.sec4-box {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.sec4-box:hover {
+  opacity: 0.8;
+}
+
+.sec5-left,
+.sec5-right {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.sec5-left:hover,
+.sec5-right:hover {
+  opacity: 0.8;
+}
+
+/* 공통 호버 효과 클래스 */
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+#mainImage {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+#mainImage.fade-out {
+  opacity: 0.5;
+}
+
+/* Add gradient background to text areas */
+.sec1-suv,
+.sec1-black,
+.sec1-sedan,
+.sec1-ev {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sec1-suv:hover,
+.sec1-black:hover,
+.sec1-sedan:hover,
+.sec1-ev:hover {
+  opacity: 0.8;
+}
+
+.sec1-suv .ht,
+.sec1-black .ht,
+.sec1-sedan .ht,
+.sec1-ev .ht,
+.sec1-suv .tt,
+.sec1-black .tt,
+.sec1-sedan .tt,
+.sec1-ev .tt {
+  position: relative;
+  z-index: 2;
+}
+
+.sec1-suv::before,
+.sec1-black::before,
+.sec1-sedan::before,
+.sec1-ev::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0)
+  );
+  z-index: 1;
+}
