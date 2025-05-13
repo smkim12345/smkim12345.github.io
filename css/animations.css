@@ -1,0 +1,546 @@
+/* 
+ * Cosmic Portfolio - 애니메이션 스타일시트
+ * 김성민의 우주 테마 포트폴리오
+ */
+
+/* ===== 공통 애니메이션 ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* ===== 소개 섹션 애니메이션 ===== */
+.about-content {
+    display: flex;
+    gap: var(--spacing-xl);
+    flex-wrap: wrap;
+}
+
+.about-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.about-image {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lead-text {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary);
+}
+
+.image-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+}
+
+.orbit-animation {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.orbit {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+}
+
+.planet-avatar {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-tertiary), var(--color-primary));
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 30px rgba(110, 68, 255, 0.5);
+}
+
+.floating-elements {
+    display: none;
+}
+
+.meteor {
+    display: none;
+}
+
+@keyframes meteor {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* ===== 경력 섹션 애니메이션 ===== */
+.timeline {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) 0;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--color-primary), var(--color-secondary));
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: var(--border-radius-sm);
+}
+
+.timeline-container {
+    position: relative;
+    width: 50%;
+    padding: 0 var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.timeline-container.left {
+    left: 0;
+}
+
+.timeline-container.right {
+    left: 50%;
+}
+
+.timeline-content {
+    position: relative;
+    padding: var(--spacing-lg);
+    background-color: rgba(20, 25, 45, 0.8);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border);
+    transition: transform var(--transition-fast);
+}
+
+.timeline-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.timeline-container.left .timeline-content::before,
+.timeline-container.right .timeline-content::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 4px;
+    background: var(--gradient-primary);
+    z-index: 1;
+    border-radius: 2px;
+}
+
+.timeline-container.left .timeline-content::before {
+    right: -40px;
+}
+
+.timeline-container.right .timeline-content::before {
+    left: -40px;
+}
+
+.timeline-date {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--gradient-primary);
+    color: var(--color-text);
+    border-radius: var(--border-radius-sm);
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.timeline-title {
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.5rem;
+}
+
+.certificates {
+    margin-top: var(--spacing-xxl);
+}
+
+.certificates-title {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    font-size: 2rem;
+}
+
+.certificates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.certificate-item {
+    background-color: rgba(20, 25, 45, 0.8);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border);
+    transition: transform var(--transition-fast);
+}
+
+.certificate-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.certificate-icon {
+    color: var(--color-primary);
+    font-size: 2rem;
+}
+
+.certificate-info h4 {
+    margin-bottom: var(--spacing-xs);
+}
+
+.certificate-info p {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+}
+
+/* ===== 스킬 섹션 애니메이션 ===== */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+}
+
+.skill-category {
+    background-color: rgba(20, 25, 45, 0.8);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border);
+}
+
+.category-title {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.skill-item {
+    margin-bottom: var(--spacing-md);
+}
+
+.skill-info h4 {
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    justify-content: space-between;
+}
+
+.skill-level {
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+    position: relative;
+}
+
+.skill-progress {
+    height: 100%;
+    background: var(--gradient-primary);
+    border-radius: var(--border-radius-sm);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    transition: width 1.5s ease;
+}
+
+.skills-planets .planet-3 {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #ffc045, #ff9f1c);
+    top: 30%;
+    right: 5%;
+    opacity: 0.7;
+    box-shadow: 0 0 30px rgba(255, 192, 69, 0.4);
+}
+
+.skills-planets .planet-4 {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #0abde3, #4a69bd);
+    bottom: 20%;
+    left: 10%;
+    opacity: 0.6;
+    box-shadow: 0 0 20px rgba(10, 189, 227, 0.3);
+}
+
+.skills-planets .planet-5 {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #ff44a1, #6e44ff);
+    top: 60%;
+    left: 30%;
+    opacity: 0.5;
+    box-shadow: 0 0 15px rgba(110, 68, 255, 0.3);
+}
+
+/* ===== 포트폴리오 섹션 애니메이션 ===== */
+/* 이 섹션의 스타일은 main.css로 이동됨 */
+/* .portfolio-filter 및 포트폴리오 관련 스타일은 main.css 참조 */
+
+/* ===== 컨택트 섹션 애니메이션 ===== */
+.contact-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xl);
+}
+
+.contact-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+.contact-form {
+    flex: 1;
+    min-width: 300px;
+}
+
+.contact-card {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    background-color: rgba(20, 25, 45, 0.8);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border);
+    transition: transform var(--transition-fast);
+}
+
+.contact-card:hover {
+    transform: translateX(10px);
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-primary);
+    border-radius: var(--border-radius-circle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.cosmic-message {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: rgba(20, 25, 45, 0.8);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border);
+}
+
+.cosmic-message p {
+    font-size: 1.2rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.stars-decoration {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+.stars-decoration .star {
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    position: relative;
+}
+
+.stars-decoration .star:nth-child(1) {
+    animation: twinkle 3s infinite;
+}
+
+.stars-decoration .star:nth-child(2) {
+    animation: twinkle 3s infinite 0.5s;
+}
+
+.stars-decoration .star:nth-child(3) {
+    animation: twinkle 3s infinite 1s;
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: rgba(30, 35, 60, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    color: var(--color-text);
+    font-size: 1rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.contact-elements .planet-6 {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #0abde3, #6e44ff);
+    top: 20%;
+    right: 10%;
+    opacity: 0.6;
+    box-shadow: 0 0 25px rgba(110, 68, 255, 0.3);
+}
+
+.astronaut {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-color: var(--color-text);
+    border-radius: 50%;
+    bottom: 30%;
+    left: 10%;
+    opacity: 0.8;
+    animation: float 5s ease-in-out infinite;
+}
+
+.astronaut::before {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(30, 35, 60, 0.8);
+    border-radius: 50%;
+    top: 15px;
+    left: 15px;
+}

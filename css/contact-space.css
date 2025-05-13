@@ -1,0 +1,361 @@
+/* 
+ * Cosmic Portfolio - 연락하기 섹션 우주 테마 스타일시트
+ */
+
+/* 연락하기 섹션 기본 스타일 */
+.contact-section {
+    position: relative;
+    width: 100%;
+    min-height: 30vh; /* 높이 축소 */
+    padding: 80px 0 0 0; /* 하단 패딩 제거 */
+    overflow: visible; /* 오버플로우 허용 - 캐릭터가 푸터 영역에 침범할 수 있게 */
+    margin-bottom: -150px; /* 푸터와 더 많이 겹치도록 마진 조정 */
+}
+
+/* 우주 배경과 행성 스타일 */
+.contact-space-scene {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: 50px;
+    z-index: 5;
+}
+
+/* 우주복 캐릭터 컨테이너 */
+.astronaut-container {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: -120px; /* 푸터 행성 위에 서도록 마진 조정 */
+}
+
+/* 우주복 캐릭터 (클릭 가능 영역) */
+.astronaut-character {
+    position: relative;
+    width: 150px;
+    height: 250px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    z-index: 5;
+}
+
+/* CSS로 만든 우주복 몸체 */
+.astronaut-body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #fff 0%, #e0e8ff 100%);
+    border-radius: 50px 50px 30px 30px;
+    box-shadow: 0 0 20px rgba(100, 180, 255, 0.6);
+    overflow: hidden;
+}
+
+.astronaut-body::before {
+    content: '';
+    position: absolute;
+    top: 40%;
+    left: 10%;
+    width: 80%;
+    height: 60%;
+    background: linear-gradient(to bottom, rgba(100, 180, 255, 0.2) 0%, rgba(50, 100, 200, 0.4) 100%);
+    border-radius: 30px 30px 25px 25px;
+}
+
+.astronaut-character:hover {
+    transform: scale(1.05) translateY(-5px);
+}
+
+.astronaut-character:active {
+    transform: scale(0.98);
+}
+
+/* 우주복 캐릭터 얼굴 부분 (사진 합성) */
+.astronaut-face {
+    position: absolute;
+    top: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    background: rgba(200, 220, 255, 0.2);
+    box-shadow: 0 0 15px rgba(100, 180, 255, 0.6);
+}
+
+/* 얼굴 이미지가 없을 경우 대체 스타일 */
+.astronaut-face::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #e0e8ff 0%, #c8d8ff 100%);
+}
+
+/* 얼굴 기본 표정 (이미지가 없을 경우) */
+.astronaut-face::after {
+    content: ':)';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: #3060a0;
+}
+
+.astronaut-face img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 2;
+}
+
+/* 우주복 캐릭터 손 부분 (클릭 유도) - CSS로 구현 */
+.astronaut-hand {
+    position: absolute;
+    top: 160px;
+    right: 30px;
+    width: 30px;
+    height: 40px;
+    background: #fff;
+    border-radius: 15px 15px 10px 10px;
+    box-shadow: 0 0 10px rgba(100, 180, 255, 0.6);
+    animation: wave 2s infinite alternate ease-in-out;
+    transform-origin: bottom center;
+}
+
+.astronaut-hand::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(to bottom, rgba(100, 180, 255, 0.2) 0%, rgba(50, 100, 200, 0.4) 100%);
+    border-radius: 10px;
+}
+
+@keyframes wave {
+    0% { transform: rotate(-5deg); }
+    100% { transform: rotate(15deg); }
+}
+
+/* 말풍선 스타일 */
+.speech-bubble {
+    position: absolute;
+    top: 20px;
+    right: -180px;
+    width: 220px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #1a3a5f;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    animation: float 3s infinite alternate ease-in-out;
+}
+
+.speech-bubble::before {
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 15px 15px 15px 0;
+    border-style: solid;
+    border-color: transparent rgba(255, 255, 255, 0.9) transparent transparent;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}
+
+/* 착륙한 로켓 스타일 - 푸터에 배치 */
+#landed-rocket-footer {
+    position: absolute;
+    bottom: 10%; /* 바닥에 가깝게 배치 */
+    left: 65%; /* 기본 위치 - 우주복 캐릭터 오른쪽에 배치 */
+    width: 160px; /* 크기 조정 */
+    height: 240px;
+    transform: translateX(-50%);
+    z-index: 999;  /* 최상단에 표시되도록 z-index 높임 */
+    opacity: 0;    /* 초기에는 보이지 않음 */
+    transition: opacity 0.8s ease-in-out, left 0.5s ease, bottom 0.5s ease;
+    pointer-events: none; /* 클릭 이벤트 방지 */
+    visibility: visible; /* 강제로 보이게 설정 */
+    display: block;     /* 강제로 보이게 설정 */
+    background-color: transparent; /* 배경 없음 */
+}
+
+/* 로켓이 착륙했을 때 */
+.rocket-has-landed #landed-rocket-footer {
+    opacity: 1 !important;      /* 확실히 보이게 설정 */
+    visibility: visible !important;
+    display: block !important;
+}
+
+#landed-rocket-footer img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform: rotate(0deg); /* 로켓이 수직으로 서 있는 방향으로 회전 */
+    filter: drop-shadow(0 0 15px rgba(255, 168, 106, 0.8)); /* 로켓에 빛나는 효과 강화 */
+}
+
+/* 착륙한 로켓의 작은 화염 효과 */
+.landed-flame-small {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 15px;
+    background: linear-gradient(to bottom, rgba(255, 120, 50, 0.7), rgba(255, 200, 100, 0.4));
+    border-radius: 0 0 40% 40%;
+    filter: blur(2px);
+    opacity: 0.6;
+    animation: smallFlame 2s infinite alternate ease-in-out;
+}
+
+@keyframes smallFlame {
+    0% { height: 15px; opacity: 0.6; }
+    100% { height: 10px; opacity: 0.4; }
+}
+
+/* 착륙 지점 마커 */
+.landing-marker {
+    position: absolute;
+    bottom: 5%; /* 바닥에 더 가깝게 */
+    left: 65%; /* 기본 위치 - JS에서 동적으로 조정됨 */
+    width: 60px;
+    height: 20px; /* 타원형 모양으로 조정 */
+    border-radius: 50%;
+    border: 3px dashed rgba(76, 149, 219, 0.6);
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.5s ease, left 0.5s ease, bottom 0.5s ease;
+}
+
+.landing-marker.active {
+    opacity: 0.6;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: translateX(-50%) scale(1, 0.5); opacity: 0.6; }
+    50% { transform: translateX(-50%) scale(1.2, 0.6); opacity: 0.3; }
+    100% { transform: translateX(-50%) scale(1, 0.5); opacity: 0.6; }
+}
+
+/* 착륙 시 화염 효과는 제거 - 화염 요소 자체는 유지하되 숨김 */
+.landed-flame {
+    display: none;
+}
+
+/* 로켓이 착륙했을 때 */
+.rocket-has-landed .landed-rocket {
+    opacity: 1;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 992px) {
+    .speech-bubble {
+        right: auto;
+        left: 50%;
+        top: -100px;
+        transform: translateX(-50%);
+    }
+    
+    .speech-bubble::before {
+        left: 50%;
+        top: auto;
+        bottom: -15px;
+        transform: translateX(-50%);
+        border-width: 15px 15px 0 15px;
+        border-color: rgba(255, 255, 255, 0.9) transparent transparent transparent;
+    }
+    
+    .landed-rocket {
+        left: auto;
+        right: -60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-space-scene {
+        height: 50vh;
+    }
+    
+    .astronaut-container {
+        width: 250px;
+        height: 350px;
+    }
+    
+    .astronaut-character {
+        width: 120px;
+        height: 200px;
+    }
+    
+    .astronaut-face {
+        top: 35px;
+        width: 60px;
+        height: 60px;
+    }
+    
+    .landed-rocket {
+        width: 60px;
+        height: 90px;
+        right: -40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-space-scene {
+        height: 40vh;
+    }
+    
+    .astronaut-container {
+        width: 200px;
+        height: 300px;
+    }
+    
+    .astronaut-character {
+        width: 100px;
+        height: 170px;
+    }
+    
+    .astronaut-face {
+        top: 30px;
+        width: 50px;
+        height: 50px;
+    }
+    
+    .speech-bubble {
+        width: 180px;
+        font-size: 12px;
+        padding: 10px;
+    }
+    
+    .landed-rocket {
+        width: 50px;
+        height: 75px;
+    }
+}

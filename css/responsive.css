@@ -1,0 +1,345 @@
+/* 
+ * Cosmic Portfolio - 반응형 스타일시트
+ * 김성민의 우주 테마 포트폴리오
+ */
+
+/* ===== 큰 데스크탑 (1200px 이상) ===== */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+/* ===== 중간 데스크탑 (992px 이상) ===== */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .container {
+    max-width: 960px;
+  }
+
+  .name {
+    font-size: 4rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+}
+
+/* ===== 태블릿 (768px 이상) ===== */
+@media (min-width: 768px) and (max-width: 991px) {
+  .container {
+    max-width: 720px;
+  }
+
+  .name {
+    font-size: 3.5rem;
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .tagline {
+    font-size: 1.1rem;
+  }
+
+  .section-title {
+    font-size: 2.2rem;
+  }
+
+  .about-content {
+    flex-direction: column;
+  }
+
+  .skill-category {
+    min-width: 100%;
+  }
+
+  /* 포트폴리오 태블릿 반응형 */
+  .portfolio-filter {
+    gap: var(--spacing-sm);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 5px;
+    flex-wrap: nowrap !important;
+    align-items: center;
+  }
+
+  .portfolio-filter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    min-width: 100px;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===== 모바일 (576px 이상) ===== */
+@media (min-width: 576px) and (max-width: 767px) {
+  .container {
+    max-width: 540px;
+  }
+
+  .name {
+    font-size: 3rem;
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .btn {
+    padding: 0.5rem 1rem;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .lead-text {
+    font-size: 1.2rem;
+  }
+
+  /* 포트폴리오 모바일 반응형 */
+  .portfolio-filter {
+    gap: var(--spacing-xs);
+    padding: 0 var(--spacing-xs);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 5px;
+    flex-wrap: nowrap !important;
+    align-items: center;
+  }
+
+  .portfolio-filter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-btn {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.85rem;
+    min-width: 90px;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  /* 내비게이션 모바일 스타일 */
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 70%;
+    height: 100vh;
+    background-color: var(--color-dark);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: right var(--transition-normal);
+    z-index: 999;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .menu-toggle {
+    display: block;
+    z-index: 1000;
+  }
+
+  .menu-toggle.active .hamburger span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+
+  .menu-toggle.active .hamburger span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle.active .hamburger span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+  /* 타임라인 반응형 */
+  .timeline::after {
+    left: 30px;
+  }
+
+  .timeline-container {
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 20px;
+  }
+
+  .timeline-container.left,
+  .timeline-container.right {
+    left: 0;
+  }
+
+  .timeline-container.left .timeline-content::before,
+  .timeline-container.right .timeline-content::before {
+    left: -40px;
+  }
+}
+
+/* ===== 작은 모바일 (575px 이하) ===== */
+@media (max-width: 575px) {
+  .container {
+    width: 100%;
+    padding: 0 var(--spacing-md);
+  }
+
+  .name {
+    font-size: 2.5rem;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .tagline {
+    font-size: 0.9rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .btn {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .lead-text {
+    font-size: 1.1rem;
+  }
+
+  /* 내비게이션 모바일 스타일 */
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    height: 100vh;
+    background-color: var(--color-dark);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: right var(--transition-normal);
+    z-index: 999;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .menu-toggle {
+    display: block;
+    z-index: 1000;
+  }
+
+  .menu-toggle.active .hamburger span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+
+  .menu-toggle.active .hamburger span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle.active .hamburger span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+  /* 타임라인 반응형 */
+  .timeline::after {
+    left: 20px;
+  }
+
+  .timeline-container {
+    width: 100%;
+    padding-left: 50px;
+    padding-right: 10px;
+  }
+
+  .timeline-container.left,
+  .timeline-container.right {
+    left: 0;
+  }
+
+  .timeline-container.left .timeline-content::before,
+  .timeline-container.right .timeline-content::before {
+    left: -30px;
+  }
+
+  .timeline-title {
+    font-size: 1.2rem;
+  }
+
+  /* 포트폴리오 반응형 */
+  .portfolio-filter {
+    gap: var(--spacing-xs);
+    padding: 0 var(--spacing-xs);
+  }
+
+  .filter-btn {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+    min-width: 70px;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .portfolio-item {
+    max-width: 100%;
+  }
+
+  .overlay-content h3 {
+    font-size: 1.2rem;
+  }
+
+  .view-project {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  /* 푸터 반응형 */
+  .footer-content {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    text-align: center;
+  }
+
+  /* 컨택트 섹션 반응형 */
+  .contact-content {
+    flex-direction: column;
+  }
+}

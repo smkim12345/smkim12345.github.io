@@ -1,0 +1,273 @@
+/* 
+ * Cosmic Portfolio - 로켓 애니메이션 스타일시트
+ * 김성민의 우주 테마 포트폴리오
+ */
+
+/* 로켓 요소 기본 스타일 */
+#rocket-element {
+    position: fixed;
+    width: 80px;
+    height: 120px;
+    z-index: 900;
+    pointer-events: none;
+    transform-origin: center center;
+    transition: transform 0.3s ease;
+    will-change: transform, left, top;
+}
+
+/* 착륙한 로켓 스타일 - 절대 위치로 고정 */
+.rocket-has-landed #rocket-element {
+    position: absolute !important; /* 중요함 - 다른 스타일보다 우선 적용 */
+    pointer-events: none;
+    z-index: 900;
+    transition: none; /* 스크롤 시 전환 효과 제거 */
+}
+
+/* 착륙한 로켓의 화염은 숨김 처리 */
+.rocket-has-landed .rocket-flame {
+    display: none !important;
+}
+
+/* 로켓 이미지 스타일 */
+#rocket-element img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* 로켓 화염 효과 */
+.rocket-flame {
+    position: absolute;
+    bottom: -15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(255, 100, 0, 0.8), rgba(255, 200, 100, 0.5));
+    border-radius: 0 0 50% 50%;
+    filter: blur(2px);
+    opacity: 0.8;
+    will-change: height, opacity;
+    animation: flame 0.3s infinite alternate;
+}
+
+/* 로켓 화염 애니메이션 */
+@keyframes flame {
+    0% {
+        height: 40px;
+        opacity: 0.8;
+    }
+    100% {
+        height: 50px;
+        opacity: 0.6;
+    }
+}
+
+/* 로켓 궤적 */
+.rocket-trail {
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    z-index: 899;
+    pointer-events: none;
+    will-change: opacity, width, height;
+}
+
+.rocket-trail.enhanced {
+    background-color: rgba(255, 168, 0, 0.8);
+    box-shadow: 0 0 10px rgba(255, 100, 0, 0.8);
+}
+
+/* 로켓 경로 표시 (디버깅용, 필요 시 활성화) */
+.rocket-path {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 0, 0, 0.5);
+    border-radius: 50%;
+    z-index: 899;
+    opacity: 0.5;
+    pointer-events: none;
+    display: none; /* 기본 비활성화 */
+}
+
+/* 섹션별 로켓 스타일 변형 */
+
+/* 홈 섹션에서의 로켓 스타일 */
+.rocket-home {
+    transform: rotate(0deg) scale(1);
+}
+
+/* 소개 섹션에서의 로켓 스타일 */
+.rocket-about {
+    transform: rotate(-15deg) scale(0.9);
+}
+
+/* 경력 섹션에서의 로켓 스타일 */
+.rocket-experience {
+    transform: rotate(-30deg) scale(0.8);
+}
+
+/* 스킬 섹션에서의 로켓 스타일 */
+.rocket-skills {
+    transform: rotate(-45deg) scale(0.7);
+}
+
+/* 포트폴리오 섹션에서의 로켓 스타일 */
+.rocket-portfolio {
+    transform: rotate(-60deg) scale(0.6);
+}
+
+/* 컨택트 섹션에서의 로켓 스타일 */
+.rocket-contact {
+    transform: rotate(-90deg) scale(0.5);
+}
+
+/* 착륙 애니메이션 */
+@keyframes landing {
+    0% {
+        transform: rotate(-90deg) scale(0.5) translateY(0);
+    }
+    50% {
+        transform: rotate(-110deg) scale(0.5) translateY(20px);
+    }
+    100% {
+        transform: rotate(-90deg) scale(0.5) translateY(0);
+    }
+}
+
+/* 로켓 모양 부스터 효과 */
+.rocket-boost {
+    animation: boost 0.5s forwards;
+}
+
+@keyframes boost {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* 화면 크기에 따른 로켓 크기 조정 - 더 세분화된 반응형 설정 */
+@media (max-width: 1200px) {
+    #rocket-element {
+        width: 70px;
+        height: 105px;
+    }
+    
+    .rocket-flame {
+        width: 25px;
+        height: 35px;
+    }
+    
+    /* 궤적 크기 조정 */
+    .rocket-trail {
+        transform: scale(0.9);
+    }
+}
+
+@media (max-width: 992px) {
+    #rocket-element {
+        width: 65px;
+        height: 95px;
+    }
+    
+    .rocket-flame {
+        width: 22px;
+        height: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    #rocket-element {
+        width: 55px;
+        height: 85px;
+    }
+    
+    .rocket-flame {
+        width: 18px;
+        height: 28px;
+        bottom: -10%;
+    }
+    
+    /* 궤적 크기 및 개수 최적화 */
+    .rocket-trail {
+        transform: scale(0.8);
+    }
+}
+
+@media (max-width: 576px) {
+    #rocket-element {
+        width: 45px;
+        height: 70px;
+    }
+    
+    .rocket-flame {
+        width: 16px;
+        height: 24px;
+        bottom: -8%;
+    }
+    
+    /* 로켓 위치 조정 - 모바일에서 더 가까이 */
+    .rocket-home, .rocket-about, .rocket-experience, 
+    .rocket-skills, .rocket-portfolio, .rocket-contact {
+        transform-origin: center bottom;
+    }
+}
+
+@media (max-width: 480px) {
+    #rocket-element {
+        width: 35px;
+        height: 55px;
+    }
+    
+    .rocket-flame {
+        width: 14px;
+        height: 20px;
+        bottom: -6%;
+    }
+    
+    /* 궤적 최소화 */
+    .rocket-trail {
+        transform: scale(0.6);
+    }
+}
+
+/* 작은 모바일 화면에 최적화 */
+@media (max-width: 380px) {
+    #rocket-element {
+        width: 30px;
+        height: 45px;
+    }
+    
+    .rocket-flame {
+        width: 12px;
+        height: 16px;
+        bottom: -5%;
+    }
+}
+
+/* 로켓 착륙 관련 스타일 */
+#landed-rocket-footer {
+    transform-origin: center bottom;
+}
+
+#landed-rocket-footer img {
+    transform-origin: center bottom;
+}
+
+/* 착륙한 로켓 스타일 - 더 자연스러운 그림자 효과 */
+.rocket-has-landed #landed-rocket-footer img {
+    filter: drop-shadow(0 5px 15px rgba(255, 168, 106, 0.8));
+    animation: subtle-hover 4s infinite ease-in-out;
+}
+
+@keyframes subtle-hover {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-5px) rotate(1deg); }
+}

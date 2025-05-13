@@ -1,0 +1,140 @@
+/* 
+ * Cosmic Portfolio - GSAP 로켓 애니메이션 스타일시트
+ * GSAP 애니메이션용 향상된 스타일
+ */
+
+/* 로켓 요소 기본 스타일 - GSAP용 개선 */
+#rocket-element {
+    position: fixed;
+    z-index: 900; /* 내비게이션 아래, 콘텐츠 위 */
+    width: 80px;
+    height: 120px;
+    pointer-events: auto; /* 마우스 이벤트 활성화 - 로켓 클릭 가능 */
+    transform-origin: center center; /* GSAP 호환성 - 회전 중심점 변경 */
+    will-change: transform, opacity, left, top; /* 성능 최적화 - 위치 변경 추가 */
+    transition: transform 0.03s ease; /* 더 빠른 전환 효과 */
+}
+
+/* 로켓 이미지 스타일 */
+#rocket-element img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(255, 168, 106, 0.5));
+    transition: filter 0.3s ease; /* 부드러운 그림자 변화 */
+    transform: rotate(-45deg); /* 로켓 이미지 반시계 방향으로 45도 회전 */
+}
+
+/* 부스트 시 이미지 강화 효과 */
+#rocket-element img.boosting {
+    filter: drop-shadow(0 0 15px rgba(255, 168, 106, 0.8));
+}
+
+/* 로켓 화염 효과 - GSAP용 개선 */
+.rocket-flame {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 25px;
+    height: 40px;
+    border-radius: 40% 40% 60% 60%; /* 더 자연스러운 형태 */
+    background: linear-gradient(to bottom, #ff5e00, #ffcc00);
+    filter: blur(3px);
+    opacity: 0.8;
+    box-shadow: 0 0 15px rgba(255, 94, 0, 0.7);
+    will-change: height, opacity; /* 성능 최적화 */
+}
+
+/* 로켓 궤적 효과 - GSAP용 개선 */
+.rocket-trail {
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    filter: blur(2px);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+    z-index: 899;
+    will-change: opacity, transform; /* 성능 최적화 */
+}
+
+/* 강화된 궤적 (부스트 사용 시) */
+.rocket-trail.enhanced {
+    background-color: rgba(255, 168, 0, 0.8);
+    box-shadow: 
+        0 0 10px rgba(255, 100, 0, 0.8),
+        0 0 20px rgba(255, 60, 0, 0.4);
+    filter: blur(3px);
+}
+
+/* 로켓 상태에 따른 스타일 (섹션별) */
+/* GSAP에서도 활용하기 위해 유지 */
+.rocket-home {
+    transform: rotate(0deg) scale(1);
+}
+
+.rocket-about {
+    transform: rotate(-15deg) scale(0.9);
+}
+
+.rocket-experience {
+    transform: rotate(-30deg) scale(0.8);
+}
+
+.rocket-skills {
+    transform: rotate(-45deg) scale(0.7);
+}
+
+.rocket-portfolio {
+    transform: rotate(-60deg) scale(0.6);
+}
+
+.rocket-contact {
+    transform: rotate(-90deg) scale(0.5);
+}
+
+/* GSAP 전용 효과 */
+/* 로켓 부스트 효과 */
+@keyframes gsap-boost-glow {
+    0% { filter: drop-shadow(0 0 10px rgba(255, 168, 106, 0.5)); }
+    50% { filter: drop-shadow(0 0 20px rgba(255, 168, 106, 0.9)); }
+    100% { filter: drop-shadow(0 0 10px rgba(255, 168, 106, 0.5)); }
+}
+
+/* 전환 효과 (섹션 변경 시) */
+.section-transition-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+    z-index: 898;
+    opacity: 0;
+}
+
+/* 미디어 쿼리 - 반응형 지원 */
+@media (max-width: 768px) {
+    #rocket-element {
+        width: 60px;
+        height: 90px;
+    }
+    
+    .rocket-flame {
+        width: 20px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    #rocket-element {
+        width: 40px;
+        height: 60px;
+    }
+    
+    .rocket-flame {
+        width: 15px;
+        height: 25px;
+    }
+}

@@ -1,0 +1,205 @@
+/* 
+ * Cosmic Portfolio - 로켓 추가 효과 스타일시트
+ * 로켓 애니메이션을 위한 추가 효과
+ */
+
+/* 로켓 별자리 효과 */
+.star-constellation {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    z-index: 899;
+    pointer-events: none;
+    box-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff;
+    opacity: 0;
+    animation: twinkle 2s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* 섹션 전환 시 화면 플래시 효과 (비활성화) */
+.section-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0); /* 완전 투명으로 변경 */
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    display: none; /* 요소 자체를 화면에서 숨김 */
+}
+
+.section-flash.active {
+    /* 애니메이션 비활성화 */
+    opacity: 0;
+}
+
+@keyframes flash {
+    0% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* 로켓 환영 메시지 */
+.rocket-welcome {
+    position: fixed;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    background-color: rgba(10, 13, 31, 0.9);
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    border: 2px solid var(--color-primary);
+    box-shadow: 0 0 20px rgba(110, 68, 255, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    max-width: 400px;
+    backdrop-filter: blur(10px);
+}
+
+.rocket-welcome h3 {
+    margin-bottom: 10px;
+    color: var(--color-primary);
+}
+
+.rocket-welcome-show {
+    animation: welcome 5s forwards;
+}
+
+@keyframes welcome {
+    0% { opacity: 0; transform: translate(-50%, -40%); }
+    10% { opacity: 1; transform: translate(-50%, -50%); }
+    80% { opacity: 1; transform: translate(-50%, -50%); }
+    100% { opacity: 0; transform: translate(-50%, -60%); }
+}
+
+/* 모바일 로켓 사용법 팁 */
+.rocket-tip {
+    position: fixed;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    background-color: rgba(10, 13, 31, 0.9);
+    border-radius: 15px;
+    padding: 15px;
+    color: white;
+    text-align: center;
+    border: 1px solid var(--color-primary);
+    box-shadow: 0 0 15px rgba(110, 68, 255, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    max-width: 300px;
+    font-size: 0.9em;
+    backdrop-filter: blur(10px);
+}
+
+.rocket-tip h3 {
+    margin-bottom: 8px;
+    color: var(--color-primary);
+    font-size: 1.1em;
+}
+
+.rocket-tip p {
+    margin: 6px 0;
+    font-size: 0.9em;
+}
+
+.rocket-tip-show {
+    animation: rocket-tip 4s forwards;
+}
+
+@keyframes rocket-tip {
+    0% { opacity: 0; transform: translate(-50%, -45%); }
+    15% { opacity: 1; transform: translate(-50%, -50%); }
+    85% { opacity: 1; transform: translate(-50%, -50%); }
+    100% { opacity: 0; transform: translate(-50%, -55%); }
+}
+
+/* 터치 효과 표시 (모바일 전용) */
+.touch-effect {
+    position: fixed;
+    pointer-events: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+    z-index: 900;
+    opacity: 0.8;
+    transform: translate(-50%, -50%);
+}
+
+.touch-effect.boost {
+    background: radial-gradient(rgba(255, 168, 0, 0.8), rgba(255, 100, 0, 0));
+    width: 60px;
+    height: 60px;
+}
+
+/* 로켓 줌 효과 */
+.rocket-zoom {
+    animation: zoom 0.5s forwards;
+}
+
+@keyframes zoom {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+    100% { transform: scale(1); }
+}
+
+/* 로켓이 클릭된 경우 효과 */
+.rocket-element:active {
+    transform: scale(0.9);
+}
+
+/* 착륙 완료 메시지 */
+.landing-complete {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(10, 13, 31, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 1000;
+    pointer-events: none;
+    text-align: center;
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--color-primary);
+}
+
+.landing-complete.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 768px) {
+    .landing-complete {
+        width: 80%;
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+}
+
+/* 착륙 먼지 효과 */
+.landing-dust {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: rgba(100, 140, 180, 0.7);
+    border-radius: 50%;
+    pointer-events: none;
+}
