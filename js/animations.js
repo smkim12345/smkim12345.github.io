@@ -106,13 +106,13 @@ function initAboutAnimation() {
     const avatarElement = aboutSection.querySelector('.planet-avatar');
     
     if (orbitElement && avatarElement) {
-        // 오비트 회전 애니메이션
-        gsap.to(orbitElement, {
-            rotation: 360,
-            duration: 20,
-            repeat: -1,
-            ease: 'none'
-        });
+        // 오비트 회전 애니메이션 - 비활성화
+        // gsap.to(orbitElement, {
+        //     rotation: 360,
+        //     duration: 20,
+        //     repeat: -1,
+        //     ease: 'none'
+        // });
         
         // 아바타 펄스 애니메이션
         gsap.to(avatarElement, {

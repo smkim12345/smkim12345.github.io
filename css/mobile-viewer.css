@@ -1,0 +1,496 @@
+/**
+ * 🚀 Mobile Viewer Styles
+ * 현대적인 모바일 디바이스 뷰어 (2024년 최신 디자인)
+ */
+
+/* ===== 모바일 뷰어 모달 ===== */
+.mobile-viewer-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.mobile-viewer-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-viewer-modal.closing {
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.mobile-viewer-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.mobile-viewer-content {
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2a 50%, #0a0a1a 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-viewer-modal.show .mobile-viewer-content {
+  transform: scale(1);
+}
+
+/* ===== 모바일 뷰어 헤더 ===== */
+.mobile-viewer-header {
+  padding: 20px 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+}
+
+.mobile-viewer-header h2 {
+  color: #ffffff;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff 0%, #e0e0ff 50%, #c0c0ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.mobile-viewer-close {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-viewer-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+/* ===== 모바일 디바이스 컨테이너 ===== */
+.mobile-device-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  overflow: hidden;
+}
+
+.mobile-frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.phone-frame {
+  max-width: 90vw;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+  z-index: 1;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+}
+
+/* ===== 모바일 스크린 (iframe 영역) ===== */
+.mobile-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px; /* 스마트폰 프레임 내부 스크린 크기 */
+  height: 690px;
+  border-radius: 30px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+/* iframe 크로스 오리진 문제 해결을 위한 최적화 스타일 */
+.mobile-iframe {
+  width: 480px; /* 실제 모바일 뷰포트 크기로 설정 */
+  height: 812px; /* iPhone 기준 높이 */
+  border: none;
+  background: #ffffff;
+  transition: opacity 0.3s ease;
+  /* 크기를 조정하여 화면에 맞춤 */
+  transform: scale(0.5);
+  transform-origin: top center;
+  overflow: hidden;
+  /* 스크롤 제어 */
+  scrolling: auto;
+  /* iframe 내용 최적화 */
+  image-rendering: auto;
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  /* 크로스 오리진 iframe 안정성 향상 */
+  position: relative;
+}
+
+/* ===== 모바일 로딩 상태 ===== */
+.mobile-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  color: #666;
+  font-size: 1rem;
+  z-index: 10;
+}
+
+.mobile-loading .loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(123, 97, 255, 0.1);
+  border-top: 3px solid #7b61ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== 반응형 디자인 ===== */
+@media (max-width: 1024px) {
+  .mobile-device-container {
+    padding: 20px;
+  }
+
+  .mobile-screen {
+    width: 280px;
+    height: 580px;
+  }
+
+  .mobile-viewer-header h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-viewer-backdrop {
+    padding: 10px;
+  }
+
+  .mobile-viewer-header {
+    padding: 15px 20px;
+  }
+
+  .mobile-viewer-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .mobile-device-container {
+    padding: 15px;
+  }
+
+  .mobile-screen {
+    width: 260px;
+    height: 540px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobile-screen {
+    width: 240px;
+    height: 500px;
+  }
+
+  .mobile-viewer-header h2 {
+    font-size: 1.1rem;
+  }
+}
+
+/* ===== 인라인 모바일 목업 스타일 ===== */
+#mobileMockup {
+  position: fixed;
+  top: 5vh;
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  z-index: 10000;
+  width: 420px;
+  height: 85vh;
+  max-height: 780px;
+  background: #f8f8f8;
+  border: 10px solid #1a1a1a;
+  border-radius: 36px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  display: none;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* 상태바 (시간, 배터리 등) */
+#statusBar {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  padding: 0 15px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 3;
+  color: #000000;
+  font-size: 12px;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#mobileIframe {
+  width: 500px;
+  height: calc(100% - 50px);
+  border: none;
+  margin-top: 40px;
+  overflow: hidden auto;
+  display: block;
+  box-sizing: border-box;
+  background: #fff;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  transform: scale(0.8);
+  transform-origin: center top;
+}
+
+#mobileIframe.loaded {
+  opacity: 1;
+}
+
+#closeButton {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  width: 30px;
+  height: 30px;
+  font-size: 22px;
+  font-weight: bolder;
+  cursor: pointer;
+  z-index: 999;
+  color: #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+#closeButton::after {
+  content: "×";
+  display: block;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#closeButton:hover {
+  background: #333;
+  color: white;
+}
+
+/* 모바일 디바이스 홈 인디케이터 */
+#homeIndicator {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 5px;
+  background: #000;
+  border-radius: 3px;
+  z-index: 2;
+}
+
+/* 로딩 인디케이터 */
+#mobileLoading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-top: 3px solid #333;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  z-index: 1;
+}
+
+/* 반응형 처리 - 스케일 조정 */
+@media (max-width: 1024px) {
+  #mobileMockup {
+    width: 350px;
+    height: 80vh;
+    top: 7vh;
+  }
+
+  #homeIndicator {
+    width: 110px;
+  }
+}
+
+@media (max-width: 768px) {
+  #mobileMockup {
+    width: 320px;
+    height: 75vh;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px;
+    border-radius: 32px;
+  }
+
+  #dynamicIsland {
+    width: 100px;
+    height: 25px;
+  }
+
+  #homeIndicator {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  #mobileMockup {
+    width: 280px;
+    height: 70vh;
+    top: 10vh;
+    border-width: 7px;
+    border-radius: 28px;
+  }
+
+  #closeButton {
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+  }
+
+  #dynamicIsland {
+    width: 90px;
+    height: 22px;
+  }
+
+  #homeIndicator {
+    width: 90px;
+    height: 4px;
+  }
+}
+
+/* ===== 스마트폰 프레임 특별 효과 ===== */
+.mobile-frame::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: radial-gradient(
+    circle at center,
+    rgba(123, 97, 255, 0.1) 0%,
+    transparent 70%
+  );
+  border-radius: 30px;
+  z-index: 0;
+  animation: phoneGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes phoneGlow {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* ===== 피그마 프로토타입용 스타일 ===== */
+#mobileMockup.figma-prototype {
+  width: 820px; /* 피그마 iframe 크기에 맞게 조정 */
+  height: 470px; /* 피그마 iframe 크기에 맞게 조정 */
+  transform: translateX(-50%) scale(1);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+#mobileMockup.figma-prototype #dynamicIsland,
+#mobileMockup.figma-prototype #statusBar,
+#mobileMockup.figma-prototype #homeIndicator {
+  display: none; /* 피그마 프로토타입에서는 모바일 UI 요소 숨김 */
+}
+
+#mobileMockup.figma-prototype #mobileIframe {
+  width: 100%;
+  height: 100%;
+  transform: none;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+}
+
+/* 반응형 조정 */
+@media (max-width: 900px) {
+  #mobileMockup.figma-prototype {
+    width: 90vw;
+    height: calc(90vw * 0.57); /* 원본 비율 유지 */
+  }
+}
+
+/* ===== 피그마 모바일 디바이스 스타일 ===== */
+/* 이 섹션 제거 */

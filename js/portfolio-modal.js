@@ -6,11 +6,183 @@ class PortfolioImageModal {
     this.init();
   }
 
+  // 간단한 모바일 뷰어 (현대적인 디자인)
+  showMobilePreview(url, title, preserveDeviceSize = false) {
+    // 기존 목업이 있으면 제거
+    const existingMockup = document.getElementById("mobileMockup");
+    if (existingMockup) {
+      existingMockup.remove();
+    }
+
+    // 피그마 URL 파라미터 조정
+    let adjustedUrl = url;
+    if (url.includes("embed.figma.com") && preserveDeviceSize) {
+      // 피그마 URL에서 scale-down을 scale-to-fit으로 변경하고 모바일 프레임 제거
+      adjustedUrl = url
+        .replace("scaling=scale-down", "scaling=scale-to-fit")
+        .replace("content-scaling=fixed", "hide-ui=1");
+    }
+
+    // 현재 시간 구하기
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const currentTime = `${hours}:${minutes}`;
+
+    // 새로운 모바일 목업 생성
+    const mobileMockup = document.createElement("div");
+    mobileMockup.id = "mobileMockup";
+
+    // 피그마 프로토타입인 경우 모바일 디바이스 스타일 적용
+    if (preserveDeviceSize && url.includes("embed.figma.com")) {
+      mobileMockup.classList.add("figma-mobile-device");
+      mobileMockup.innerHTML = `
+        <button id="closeButton" type="button" aria-label="닫기"></button>
+        <div id="dynamicIsland"></div>
+        <div id="statusBar">
+          <span>${currentTime}</span>
+          <span><i class="fas fa-wifi"></i> <i class="fas fa-battery-three-quarters"></i></span>
+        </div>
+        <div id="mobileLoading"></div>
+        <iframe id="mobileIframe" src="${adjustedUrl}" scrolling="yes"></iframe>
+        <div id="homeIndicator"></div>
+        <div id="reflection"></div>
+      `;
+    } else {
+      mobileMockup.innerHTML = `
+        <button id="closeButton" type="button" aria-label="닫기"></button>
+        <div id="dynamicIsland"></div>
+        <div id="statusBar">
+          <span>${currentTime}</span>
+          <span><i class="fas fa-wifi"></i> <i class="fas fa-battery-three-quarters"></i></span>
+        </div>
+        <div id="mobileLoading"></div>
+        <iframe id="mobileIframe" src="${adjustedUrl}" scrolling="yes"></iframe>
+        <div id="homeIndicator"></div>
+        <div id="reflection"></div>
+      `;
+    }
+
+    document.body.appendChild(mobileMockup);
+
+    // 닫기 버튼에 직접 onclick 이벤트 할당
+    document.getElementById("closeButton").onclick = function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      window.hideMobilePreview();
+      return false;
+    };
+
+    // 모바일 목업 표시 (애니메이션 효과 추가)
+    setTimeout(() => {
+      mobileMockup.style.display = "block";
+      setTimeout(() => {
+        mobileMockup.style.opacity = "1";
+        mobileMockup.style.transform = "translateX(-50%) scale(1)";
+      }, 50);
+    }, 100);
+
+    // iframe 로드 이벤트
+    const iframe = document.getElementById("mobileIframe");
+    const loading = document.getElementById("mobileLoading");
+
+    // iframe 스타일 직접 설정
+    if (preserveDeviceSize && url.includes("embed.figma.com")) {
+      // 피그마 프로토타입의 경우 모바일 디바이스 스타일 적용
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.style.transformOrigin = "center center";
+      iframe.style.transform = "none";
+      iframe.style.margin = "0";
+    } else if (preserveDeviceSize) {
+      // 일반 preserve 모드 (기존 스타일)
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.style.transformOrigin = "center center";
+      iframe.style.transform = "none";
+      iframe.style.margin = "0";
+
+      // 목업 스타일 조정
+      mobileMockup.classList.add("figma-prototype");
+    } else {
+      // 일반 모바일 사이트의 경우 기존 스타일 적용
+      iframe.style.width = "600px";
+      iframe.style.height = "140%";
+      iframe.style.transformOrigin = "top left";
+      iframe.style.transform = "scale(0.68)";
+      iframe.style.margin = "40px 0";
+    }
+
+    iframe.style.display = "block";
+
+    iframe.onload = () => {
+      // 로딩 인디케이터 숨기기
+      if (loading) {
+        loading.style.display = "none";
+      }
+
+      // iframe 표시 애니메이션
+      setTimeout(() => {
+        iframe.classList.add("loaded");
+      }, 200);
+
+      // 피그마 프로토타입의 경우 스타일 조정하지 않음
+      if (!preserveDeviceSize) {
+        try {
+          // 모바일 화면에 맞게 스타일 조정 시도
+          const iframeDoc =
+            iframe.contentDocument || iframe.contentWindow.document;
+
+          // 모바일 뷰포트 메타 태그 추가
+          const meta = iframeDoc.createElement("meta");
+          meta.name = "viewport";
+          meta.content =
+            "width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=yes";
+
+          if (iframeDoc.head) {
+            iframeDoc.head.appendChild(meta);
+
+            // 모바일 스타일 추가
+            const style = iframeDoc.createElement("style");
+            style.textContent = `
+              body { 
+                width: 100% !important; 
+                max-width: 100% !important;
+                overflow-x: hidden !important;
+                zoom: 0.8;
+                transform-origin: top center;
+              }
+              * { -webkit-tap-highlight-color: transparent; }
+            `;
+            iframeDoc.head.appendChild(style);
+          }
+        } catch (e) {
+          console.log("iframe 컨텐츠 접근 제한 (크로스 오리진 정책)");
+        }
+      }
+    };
+
+    // 로딩 시간이 너무 오래 걸리면 로딩 인디케이터 숨기기
+    setTimeout(() => {
+      if (loading && loading.style.display !== "none") {
+        loading.style.display = "none";
+        iframe.classList.add("loaded");
+      }
+    }, 5000);
+  }
+
   init() {
     this.createModal();
+    this.createMobilePreviewStyles();
     this.bindEvents();
     this.updatePortfolioItems();
     this.exposeGlobalMethods();
+  }
+
+  // 모바일 미리보기 스타일 생성 (CSS 파일 사용)
+  createMobilePreviewStyles() {
+    // 스타일은 이제 mobile-viewer.css 파일에서 관리됨
+    console.log("모바일 뷰어 스타일 로드 완료 (CSS 파일 사용)");
   }
 
   createModal() {
@@ -28,12 +200,21 @@ class PortfolioImageModal {
                         <div class="modal-links">
                             <a href="#" class="modal-link-btn" id="link-btn" style="display: none;">
                                 <i class="fas fa-external-link-alt"></i>
-                                링크
+                                웹
                             </a>
-                            <a href="#" class="modal-link-btn" id="process-btn" style="display: none;">
+                        
+                            <button class="modal-link-btn responsive-view-btn" id="responsive-view-btn" style="display: none;">
+                                <i class="fas fa-tablet-alt"></i>
+                                반응형
+                            </button>
+                             <a href="#" class="modal-link-btn" id="process-btn" style="display: none;">
                                 <i class="fas fa-file-pdf"></i>
                                 작업과정
                             </a>
+                            <button class="modal-link-btn mobile-view-btn" id="mobile-view-btn" style="display: none;">
+                                <i class="fas fa-mobile-alt"></i>
+                                모바일
+                            </button>
                         </div>
                     </div>
                     <div class="pdf-container">
@@ -79,6 +260,7 @@ class PortfolioImageModal {
         title: "트로피카나 스파클링 패키지 리디자인",
         imagePath: "images/트로피카나/상세_트로피카나.jpg",
         tools: ["Photoshop", "Illustrator"],
+        process: "images/트로피카나/작업과정_트로피카나.pdf",
       },
       // 편의를 위해 URL 인코딩된 버전도 추가
       "%EC%84%AC%EB%84%A4%EC%9D%BC_%ED%8A%B8%EB%A1%9C%ED%94%BC%EC%B9%B4%EB%82%98":
@@ -86,41 +268,33 @@ class PortfolioImageModal {
           title: "트로피카나 스파클링 패키지 리디자인",
           imagePath: "images/트로피카나/상세_트로피카나.jpg",
           tools: ["Photoshop", "Illustrator"],
+          process: "images/트로피카나/작업과정_트로피카나.pdf",
         },
       twosome: {
         title: "투썸 에이리스트 패키지 리디자인",
-        imagePath: "images/portfolio/twosome-detail.jpg",
+        imagePath: "images/투썸/상세_투썸.jpg",
+        tools: ["Photoshop", "Illustrator"],
       },
+      // 투썸 URL 매핑 추가
+      섬네일_투썸: {
+        title: "투썸 에이리스트 패키지 리디자인",
+        imagePath: "images/투썸/상세_투썸.jpg",
+        tools: ["Photoshop", "Illustrator"],
+      },
+      "%EC%84%AC%EB%84%A4%EC%9D%BC_%ED%88%AC%EC%8D%B8": {
+        title: "투썸 에이리스트 패키지 리디자인",
+        imagePath: "images/투썸/상세_투썸.jpg",
+        tools: ["Photoshop", "Illustrator"],
+      },
+      // 갸스비 프로젝트 정보 (메인 데이터)
       gatsby: {
         title: "갸스비 웹 리디자인",
         imagePath: "images/갸스비/상세_갸스비.jpg",
-        tools: ["Adobe XD", "Photoshop", "HTML/CSS"],
         link: "images/갸스비/링크_갸스비 웹.url",
-      },
-      // 갸스비 프로젝트를 다양한 키워드로 접근 가능하도록 추가
-      갸스비: {
-        title: "갸스비 웹 리디자인",
-        imagePath: "images/갸스비/상세_갸스비.jpg",
-        tools: ["Adobe XD", "Photoshop", "HTML/CSS"],
-        link: "images/갸스비/링크_갸스비 웹.url",
-      },
-      "gatsby-redesign": {
-        title: "갸스비 웹 리디자인",
-        imagePath: "images/갸스비/상세_갸스비.jpg",
-        tools: ["Adobe XD", "Photoshop", "HTML/CSS"],
-        link: "images/갸스비/링크_갸스비 웹.url",
-      },
-      섬네일_갸스비: {
-        title: "갸스비 웹 리디자인",
-        imagePath: "images/갸스비/상세_갸스비.jpg",
-        tools: ["Adobe XD", "Photoshop", "HTML/CSS"],
-        link: "images/갸스비/링크_갸스비 웹.url",
-      },
-      "%EC%84%AC%EB%84%A4%EC%9D%BC_%EA%B0%B8%EC%8A%A4%EB%B9%84": {
-        title: "갸스비 웹 리디자인",
-        imagePath: "images/갸스비/상세_갸스비.jpg",
-        tools: ["Adobe XD", "Photoshop", "HTML/CSS"],
-        link: "images/갸스비/링크_갸스비 웹.url",
+        hasResponsive: true,
+        responsiveUrl: "https://smkim12345.github.io/project2/index.html",
+        hasMobile: true,
+        mobileUrl: "https://smkim12345.github.io/project2mobile/index.html",
       },
       genesis: {
         title: "제네시스 웹 리디자인",
@@ -128,6 +302,8 @@ class PortfolioImageModal {
         tools: ["Adobe XD", "Photoshop", "HTML/CSS"],
         link: "images/제네시스/링크_제네시스.url",
         process: "images/제네시스/작업과정_제네시스.pdf",
+        hasResponsive: true,
+        responsiveUrl: "https://smkim12345.github.io/project1/index.html",
       },
       섬네일_제네시스: {
         title: "제네시스 웹 리디자인",
@@ -135,20 +311,57 @@ class PortfolioImageModal {
         tools: ["Adobe XD", "Photoshop", "HTML/CSS"],
         link: "images/제네시스/링크_제네시스.url",
         process: "images/제네시스/작업과정_제네시스.pdf",
+        hasResponsive: true,
+        responsiveUrl: "https://smkim12345.github.io/project1/index.html",
       },
       mcdelivery: {
         title: "맥딜리버리 앱 리디자인",
-        imagePath: "images/portfolio/mcdelivery-detail.jpg",
+        imagePath: "images/맥도날드/상세_맥도날드.jpg",
+        tools: ["Adobe XD", "Photoshop"],
+        hasMobile: true,
+        mobileUrl:
+          "https://www.figma.com/proto/rbQY9g5Pl4imNGlIcJAeN7/%EA%B9%80%EC%84%B1%EB%AF%BC_%EB%A7%A5%EB%94%9C%EB%A6%AC%EB%B2%84%EB%A6%AC-%EC%95%B1%EB%A6%AC%EB%94%94%EC%9E%90%EC%9D%B8?node-id=0-1&t=iVqeKfXFMDC01kcH-1",
+        openInNewTab: true,
+      },
+      // 맥도날드 URL 매핑 추가
+      맥도날드: {
+        title: "맥딜리버리 앱 리디자인",
+        imagePath: "images/맥도날드/상세_맥도날드.jpg",
+        tools: ["Adobe XD", "Photoshop"],
+        hasMobile: true,
+        mobileUrl:
+          "https://www.figma.com/proto/rbQY9g5Pl4imNGlIcJAeN7/%EA%B9%80%EC%84%B1%EB%AF%BC_%EB%A7%A5%EB%94%9C%EB%A6%AC%EB%B2%84%EB%A6%AC-%EC%95%B1%EB%A6%AC%EB%94%94%EC%9E%90%EC%9D%B8?node-id=0-1&t=iVqeKfXFMDC01kcH-1",
+        openInNewTab: true,
+      },
+      섬네일_맥도날드: {
+        title: "맥딜리버리 앱 리디자인",
+        imagePath: "images/맥도날드/상세_맥도날드.jpg",
+        tools: ["Adobe XD", "Photoshop"],
+        hasMobile: true,
+        mobileUrl:
+          "https://www.figma.com/proto/rbQY9g5Pl4imNGlIcJAeN7/%EA%B9%80%EC%84%B1%EB%AF%BC_%EB%A7%A5%EB%94%9C%EB%A6%AC%EB%B2%84%EB%A6%AC-%EC%95%B1%EB%A6%AC%EB%94%94%EC%9E%90%EC%9D%B8?node-id=0-1&t=iVqeKfXFMDC01kcH-1",
+        openInNewTab: true,
+      },
+      "%EC%84%AC%EB%84%A4%EC%9D%BC_%EB%A7%A5%EB%8F%84%EB%82%A0%EB%93%9C": {
+        title: "맥딜리버리 앱 리디자인",
+        imagePath: "images/맥도날드/상세_맥도날드.jpg",
+        tools: ["Adobe XD", "Photoshop"],
+        hasMobile: true,
+        mobileUrl:
+          "https://www.figma.com/proto/rbQY9g5Pl4imNGlIcJAeN7/%EA%B9%80%EC%84%B1%EB%AF%BC_%EB%A7%A5%EB%94%9C%EB%A6%AC%EB%B2%84%EB%A6%AC-%EC%95%B1%EB%A6%AC%EB%94%94%EC%9E%90%EC%9D%B8?node-id=0-1&t=iVqeKfXFMDC01kcH-1",
+        openInNewTab: true,
       },
       riskeye: {
         title: "리스크아이 로고 디자인",
         imagePath: "images/리스크아이/상세_리스크아이 로고 디자인.jpg",
         tools: ["Illustrator", "Photoshop"],
+        process: "images/리스크아이/작업과정_리스크아이 로고 디자인.pdf",
       },
       "riskeye-logo": {
         title: "리스크아이 로고 디자인",
         imagePath: "images/리스크아이/상세_리스크아이 로고 디자인.jpg",
         tools: ["Illustrator", "Photoshop"],
+        process: "images/리스크아이/작업과정_리스크아이 로고 디자인.pdf",
       },
       "ai-expo": {
         title: "AI 박람회 리플렛",
@@ -168,34 +381,44 @@ class PortfolioImageModal {
         title: "갤럭시 버즈3 프로 상세페이지",
         imagePath: "images/갤럭시버즈/상세_갤럭시 버즈3프로.png",
         tools: ["Adobe XD", "Photoshop", "HTML/CSS"],
+        hasResponsive: true,
+        responsiveUrl: "https://smkim12345.github.io/galaxybuds/",
       },
       갤럭시버즈3프로: {
         title: "갤럭시 버즈3 프로 상세페이지",
         imagePath: "images/갤럭시버즈/상세_갤럭시 버즈3프로.png",
         tools: ["Adobe XD", "Photoshop", "HTML/CSS"],
+        hasResponsive: true,
+        responsiveUrl: "https://smkim12345.github.io/galaxybuds/",
       },
       // 추가 매핑 - 새로 추가된 프로젝트들
       "섬네일_갤럭시 버즈3프로 상세페이지": {
         title: "갤럭시 버즈3 프로 상세페이지",
         imagePath: "images/갤럭시버즈/상세_갤럭시 버즈3프로.png",
         tools: ["Adobe XD", "Photoshop", "HTML/CSS"],
+        hasResponsive: true,
+        responsiveUrl: "https://smkim12345.github.io/galaxybuds/",
       },
       "%EC%84%AC%EB%84%A4%EC%9D%BC_%EA%B0%A4%EB%9F%AD%EC%8B%9C%20%EB%B2%84%EC%A6%883%ED%94%84%EB%A1%9C%20%EC%83%81%EC%84%B8%ED%8E%98%EC%9D%B4%EC%A7%80":
         {
           title: "갤럭시 버즈3 프로 상세페이지",
           imagePath: "images/갤럭시버즈/상세_갤럭시 버즈3프로.png",
           tools: ["Adobe XD", "Photoshop", "HTML/CSS"],
+          hasResponsive: true,
+          responsiveUrl: "https://smkim12345.github.io/galaxybuds/",
         },
       "섬네일_리스크아이 로고 디자인": {
         title: "리스크아이 로고 디자인",
         imagePath: "images/리스크아이/상세_리스크아이 로고 디자인.jpg",
         tools: ["Illustrator", "Photoshop"],
+        process: "images/리스크아이/작업과정_리스크아이 로고 디자인.pdf",
       },
       "%EC%84%AC%EB%84%A4%EC%9D%BC_%EB%A6%AC%EC%8A%A4%ED%81%AC%EC%95%84%EC%9D%B4%20%EB%A1%9C%EA%B3%A0%20%EB%94%94%EC%9E%90%EC%9D%B8":
         {
           title: "리스크아이 로고 디자인",
           imagePath: "images/리스크아이/상세_리스크아이 로고 디자인.jpg",
           tools: ["Illustrator", "Photoshop"],
+          process: "images/리스크아이/작업과정_리스크아이 로고 디자인.pdf",
         },
       "섬네일_인스타그램 광고배너디자인": {
         title: "인스타그램 광고 배너",
@@ -242,6 +465,17 @@ class PortfolioImageModal {
       // 방법 2: URL 인코딩 상태 그대로
       let encodedName = img.src.split("/").pop().split(".")[0];
 
+      // 갸스비 관련 키워드 처리
+      if (
+        imageName === "섬네일_갸스비" ||
+        imageName === "갸스비" ||
+        encodedName ===
+          "%EC%84%AC%EB%84%A4%EC%9D%BC_%EA%B0%B8%EC%8A%A4%EB%B9%84" ||
+        imageName === "gatsby-redesign"
+      ) {
+        return "gatsby";
+      }
+
       // 두 방법 모두 시도
       if (this.portfolioData[imageName]) {
         return imageName;
@@ -271,9 +505,25 @@ class PortfolioImageModal {
     // 확장자 제거
     const filenameWithoutExt = filename.split(".")[0];
 
+    // 갸스비 관련 키워드 처리
+    if (
+      filenameWithoutExt === "섬네일_갸스비" ||
+      filenameWithoutExt === "갸스비" ||
+      filenameWithoutExt ===
+        "%EC%84%AC%EB%84%A4%EC%9D%BC_%EA%B0%B8%EC%8A%A4%EB%B9%84" ||
+      filenameWithoutExt === "gatsby-redesign"
+    ) {
+      return "gatsby";
+    }
+
     // URL 디코딩 시도
     try {
       const decodedName = decodeURIComponent(filenameWithoutExt);
+      // 갸스비 관련 키워드 디코딩 후 처리
+      if (decodedName === "섬네일_갸스비" || decodedName === "갸스비") {
+        return "gatsby";
+      }
+
       if (this.portfolioData[decodedName]) {
         return decodedName;
       }
@@ -296,6 +546,8 @@ class PortfolioImageModal {
     const loading = document.getElementById("modal-loading");
     const linkBtn = document.getElementById("link-btn");
     const processBtn = document.getElementById("process-btn");
+    const responsiveViewBtn = document.getElementById("responsive-view-btn");
+    const mobileViewBtn = document.getElementById("mobile-view-btn");
 
     // 모달 제목 설정
     modalTitle.textContent = projectData.title;
@@ -305,7 +557,26 @@ class PortfolioImageModal {
       linkBtn.style.display = "block";
       linkBtn.onclick = async () => {
         try {
-          // URL 파일 내용 읽기
+          // 갸스비 프로젝트인 경우 별도 처리
+          if (projectData === this.portfolioData.gatsby) {
+            // 갸스비용 URL은 링크_반응형.url 파일에서 가져오기
+            const response = await fetch("images/갸스비/반응형.url");
+            const urlContent = await response.text();
+            const urlMatch = urlContent.match(/URL=(.+)/);
+
+            if (urlMatch && urlMatch[1]) {
+              window.open(urlMatch[1], "_blank");
+            } else {
+              // 파일에서 URL을 추출할 수 없는 경우 기본 URL 사용
+              window.open(
+                "https://smkim12345.github.io/project2/index.html",
+                "_blank"
+              );
+            }
+            return;
+          }
+
+          // 다른 프로젝트의 경우 기존 로직 유지
           const response = await fetch(projectData.link);
           const urlContent = await response.text();
           const urlMatch = urlContent.match(/URL=(.+)/);
@@ -320,11 +591,21 @@ class PortfolioImageModal {
             );
           }
         } catch (error) {
-          // 제네시스 링크를 직접 설정
-          window.open(
-            "https://smkim12345.github.io/project1/index.html",
-            "_blank"
-          );
+          console.log("URL 파일 로드 오류:", error);
+
+          // 갸스비 프로젝트인 경우 별도 처리
+          if (projectData === this.portfolioData.gatsby) {
+            window.open(
+              "https://smkim12345.github.io/project2/index.html",
+              "_blank"
+            );
+          } else {
+            // 제네시스 링크를 직접 설정
+            window.open(
+              "https://smkim12345.github.io/project1/index.html",
+              "_blank"
+            );
+          }
         }
       };
     } else {
@@ -339,6 +620,67 @@ class PortfolioImageModal {
       };
     } else {
       processBtn.style.display = "none";
+    }
+
+    // 반응형 보기 버튼 설정
+    if (projectData.hasResponsive && projectData.responsiveUrl) {
+      responsiveViewBtn.style.display = "block";
+      console.log(
+        "모바일 보기 버튼 표시:",
+        projectData.title,
+        "URL:",
+        projectData.responsiveUrl
+      );
+
+      // 기존 이벤트 리스너 제거
+      const newBtn = responsiveViewBtn.cloneNode(true);
+      responsiveViewBtn.parentNode.replaceChild(newBtn, responsiveViewBtn);
+
+      // 새로운 이벤트 리스너 추가 (참고 자료 방식 사용)
+      newBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("모바일 보기 버튼 클릭 시도:", projectData.responsiveUrl);
+        this.showMobilePreview(projectData.responsiveUrl, projectData.title);
+      });
+    } else {
+      responsiveViewBtn.style.display = "none";
+    }
+
+    // 모바일 보기 버튼 설정
+    if (projectData.hasMobile && projectData.mobileUrl) {
+      mobileViewBtn.style.display = "block";
+      console.log(
+        "모바일 보기 버튼 표시:",
+        projectData.title,
+        "URL:",
+        projectData.mobileUrl
+      );
+
+      // 기존 이벤트 리스너 제거
+      const newBtn = mobileViewBtn.cloneNode(true);
+      mobileViewBtn.parentNode.replaceChild(newBtn, mobileViewBtn);
+
+      // 새로운 이벤트 리스너 추가
+      newBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("모바일 보기 버튼 클릭 시도:", projectData.mobileUrl);
+
+        // openInNewTab 속성이 있으면 새 창에서 열기
+        if (projectData.openInNewTab) {
+          window.open(projectData.mobileUrl, "_blank");
+        } else {
+          // 기존 방식으로 모바일 프리뷰 표시
+          this.showMobilePreview(
+            projectData.mobileUrl,
+            projectData.title,
+            projectData.preserveDeviceSize || false
+          );
+        }
+      });
+    } else {
+      mobileViewBtn.style.display = "none";
     }
 
     // 로딩 표시
@@ -401,6 +743,35 @@ class PortfolioImageModal {
         }
       }
     };
+
+    // 모바일 미리보기 닫기 전역 함수 추가
+    window.hideMobilePreview = () => {
+      const mobileMockup = document.getElementById("mobileMockup");
+      if (mobileMockup) {
+        // 닫기 애니메이션 추가
+        mobileMockup.style.opacity = "0";
+        mobileMockup.style.transform = "translateX(-50%) scale(0.9)";
+
+        setTimeout(() => {
+          mobileMockup.style.display = "none";
+          const iframe = document.getElementById("mobileIframe");
+          if (iframe) {
+            iframe.src = ""; // iframe 초기화
+          }
+          mobileMockup.remove(); // DOM에서 제거
+        }, 300);
+      }
+    };
+
+    // ESC 키로 모바일 뷰어 닫기
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        const mobileMockup = document.getElementById("mobileMockup");
+        if (mobileMockup && mobileMockup.style.display === "block") {
+          window.hideMobilePreview();
+        }
+      }
+    });
   }
 }
 

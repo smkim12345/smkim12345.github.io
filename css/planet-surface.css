@@ -9,10 +9,11 @@
     width: 100%;
     min-height: 150px;
     background: linear-gradient(to bottom, #1a3a5f, #0f2a47);
-    overflow: visible; /* hidden에서 visible로 변경 - 로켓이 푸터를 벗어날 수 있도록 함 */
-    padding: 60px 0 30px;
+    padding: 60px 0;
     margin-top: 50px;
     border-top: 4px solid rgba(76, 149, 219, 0.3);
+    z-index: 100;
+    isolation: isolate;
 }
 
 /* 지형 표면 */
@@ -22,8 +23,9 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, #15304f, #0a1d35);
+    background: linear-gradient(to bottom, #0f2541, #061525);
     z-index: 1;
+    opacity: 1;
 }
 
 /* 지형 오버레이 (질감) */
@@ -34,8 +36,8 @@
     width: 100%;
     height: 100%;
     background-image: 
-        radial-gradient(circle at 10% 20%, rgba(76, 149, 219, 0.1) 0%, transparent 80%),
-        radial-gradient(circle at 80% 60%, rgba(61, 118, 192, 0.1) 0%, transparent 60%);
+        radial-gradient(circle at 10% 20%, rgba(76, 149, 219, 0.1) 0%),
+        radial-gradient(circle at 80% 60%, rgba(61, 118, 192, 0.1) 0%);
     opacity: 0.8;
 }
 
@@ -75,15 +77,15 @@
     border-radius: 60%;
 }
 
-/* 행성 표면 글로우 효과 */
+/* 행성 표면 배경 불투명하게 만들기 위한 추가 요소 */
 .planet-glow {
     position: absolute;
-    top: -50px;
+    top: 0;
     left: 0;
     width: 100%;
-    height: 60px;
-    background: linear-gradient(to bottom, rgba(76, 149, 219, 0.2), transparent);
-    z-index: 2;
+    height: 100%;
+    background-color: #0a1d35;
+    z-index: 0;
 }
 
 /* 푸터 콘텐츠를 지형 위에 표시 */
@@ -128,40 +130,6 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* 로켓 착륙 지점 */
-#rocket-landing-spot {
-    position: absolute;
-    bottom: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 20px;
-    z-index: 5;
-}
-
-/* 착륙 마커 */
-.landing-marker {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    border-radius: 50%;
-    opacity: 0;
-    background: radial-gradient(circle at center, rgba(76, 149, 219, 0.4) 0%, transparent 70%);
-}
-
-/* 착륙 마커 활성화 시 애니메이션 */
-.landing-marker.active {
-    animation: pulse-marker 2s infinite ease-in-out;
-    opacity: 1;
-}
-
-@keyframes pulse-marker {
-    0% { transform: scale(1); opacity: 0.4; }
-    50% { transform: scale(1.2); opacity: 0.6; }
-    100% { transform: scale(1); opacity: 0.4; }
-}
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {

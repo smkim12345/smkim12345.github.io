@@ -489,72 +489,75 @@ class RocketLanding {
             }
         });
         
-        // 먼지 효과 생성 - 모바일에서는 개수 감소
-        const particleCount = this.isMobile ? 6 : 10;
-        for (let i = 0; i < particleCount; i++) {
-            this.createDustParticle();
-        }
+        // 먼지 효과 생성 비활성화
+        // const particleCount = this.isMobile ? 6 : 10;
+        // for (let i = 0; i < particleCount; i++) {
+        //     this.createDustParticle();
+        // }
     }
     
     /**
-     * 먼지 입자 생성 - 모바일 최적화 버전
+     * 먼지 입자 생성 - 모바일 최적화 버전 (비활성화됨)
      */
     createDustParticle() {
-        const dust = document.createElement('div');
-        dust.className = 'dust-particle';
-        this.landingSpot.appendChild(dust);
+        // 먼지 입자 생성 비활성화
+        return;
         
-        // 모바일 환경에 따른 크기 및 효과 조정
-        const baseSize = this.isMobile ? 1.5 : 2;  // 모바일에서 작게
-        const maxSize = this.isMobile ? 4 : 6;     // 모바일에서 작게
+        // const dust = document.createElement('div');
+        // dust.className = 'dust-particle';
+        // this.landingSpot.appendChild(dust);
         
-        // 랜덤 위치와 크기
-        const size = Math.random() * baseSize + maxSize;
-        const xOffset = (Math.random() - 0.5) * (this.isMobile ? 40 : 60); // 모바일에서 작게
+        // // 모바일 환경에 따른 크기 및 효과 조정
+        // const baseSize = this.isMobile ? 1.5 : 2;  // 모바일에서 작게
+        // const maxSize = this.isMobile ? 4 : 6;     // 모바일에서 작게
         
-        // 먼지 기본 스타일
-        gsap.set(dust, {
-            position: 'absolute',
-            left: 'calc(50% + ' + xOffset + 'px)',
-            top: '50%',
-            width: size + 'px',
-            height: size + 'px',
-            borderRadius: '50%',
-            backgroundColor: 'rgba(100, 140, 180, ' + (Math.random() * 0.5 + 0.2) + ')',
-            opacity: 1,
-            zIndex: 5
-        });
+        // // 랜덤 위치와 크기
+        // const size = Math.random() * baseSize + maxSize;
+        // const xOffset = (Math.random() - 0.5) * (this.isMobile ? 40 : 60); // 모바일에서 작게
         
-        // 모바일에서는 낮은 높이, 짧은 지속 시간
-        const moveY = this.isMobile ? (Math.random() * 30 + 8) : (Math.random() * 40 + 10);
-        const moveX = (Math.random() - 0.5) * (this.isMobile ? 50 : 80);
-        const animDuration = this.isMobile ? (Math.random() * 0.8 + 0.4) : (Math.random() * 1 + 0.5);
+        // // 먼지 기본 스타일
+        // gsap.set(dust, {
+        //     position: 'absolute',
+        //     left: 'calc(50% + ' + xOffset + 'px)',
+        //     top: '50%',
+        //     width: size + 'px',
+        //     height: size + 'px',
+        //     borderRadius: '50%',
+        //     backgroundColor: 'rgba(100, 140, 180, ' + (Math.random() * 0.5 + 0.2) + ')',
+        //     opacity: 1,
+        //     zIndex: 5
+        // });
         
-        // 먼지 애니메이션
-        gsap.to(dust, {
-            y: '-=' + moveY,
-            x: moveX,
-            opacity: 0,
-            duration: animDuration,
-            ease: 'power2.out',
-            onComplete: () => {
-                // 애니메이션 완료 후 제거
-                if (dust.parentNode) {
-                    dust.parentNode.removeChild(dust);
-                }
-            }
-        });
+        // // 모바일에서는 낮은 높이, 짧은 지속 시간
+        // const moveY = this.isMobile ? (Math.random() * 30 + 8) : (Math.random() * 40 + 10);
+        // const moveX = (Math.random() - 0.5) * (this.isMobile ? 50 : 80);
+        // const animDuration = this.isMobile ? (Math.random() * 0.8 + 0.4) : (Math.random() * 1 + 0.5);
+        
+        // // 먼지 애니메이션
+        // gsap.to(dust, {
+        //     y: '-=' + moveY,
+        //     x: moveX,
+        //     opacity: 0,
+        //     duration: animDuration,
+        //     ease: 'power2.out',
+        //     onComplete: () => {
+        //         // 애니메이션 완료 후 제거
+        //         if (dust.parentNode) {
+        //             dust.parentNode.removeChild(dust);
+        //         }
+        //     }
+        // });
     }
     
     /**
      * 이륙 효과 - 모바일 최적화 버전
      */
     createLaunchEffect() {
-        // 먼지 입자 - 모바일에서는 개수 감소
-        const particleCount = this.isMobile ? 12 : 20;
-        for (let i = 0; i < particleCount; i++) {
-            this.createDustParticle();
-        }
+        // 먼지 입자 생성 비활성화
+        // const particleCount = this.isMobile ? 12 : 20;
+        // for (let i = 0; i < particleCount; i++) {
+        //     this.createDustParticle();
+        // }
         
         // 진동 효과 - 모바일에서는 강도 감소
         gsap.to(this.planetSurface, {

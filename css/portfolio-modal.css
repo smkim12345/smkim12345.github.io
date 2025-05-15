@@ -86,9 +86,6 @@
   font-weight: 600;
   border: 1px solid rgba(107, 188, 255, 0.795);
   text-decoration: none;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -96,10 +93,10 @@
 }
 
 .modal-link-btn:hover {
-  background: rgba(255, 59, 92, 0.25);
-  border-color: rgba(255, 59, 92, 0.4);
+  background: rgba(0, 85, 134, 0.25);
+  border-color: rgba(107, 188, 255, 0.9);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 59, 92, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
   color: #ffffff;
 }
 
@@ -128,6 +125,13 @@
   -webkit-backdrop-filter: blur(10px);
   margin-left: 10px;
   flex-shrink: 0;
+}
+
+.modal-close:hover {
+  background: rgba(255, 59, 92, 0.3);
+  border-color: rgba(255, 59, 92, 0.6);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(255, 59, 92, 0.3);
 }
 
 .pdf-container {
@@ -212,6 +216,34 @@
   background: linear-gradient(135deg, #9575ff 0%, #b085ff 100%);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(123, 97, 255, 0.4);
+}
+
+/* 동기화 스크롤 버튼 스타일 ===== */
+.modal-link-btn.responsive-view-btn {
+  background: rgba(0, 85, 134, 0.15);
+  border-color: rgba(107, 188, 255, 0.795);
+  color: #4ad9fd;
+}
+
+.modal-link-btn.responsive-view-btn:hover {
+  background: rgba(0, 85, 134, 0.25);
+  border-color: rgba(107, 188, 255, 0.9);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+}
+
+/* 모바일 보기 버튼 스타일 */
+.modal-link-btn.mobile-view-btn {
+  background: rgba(0, 85, 134, 0.15);
+  border-color: rgba(107, 188, 255, 0.795);
+  color: #4ad9fd;
+}
+
+.modal-link-btn.mobile-view-btn:hover {
+  background: rgba(0, 85, 134, 0.25);
+  border-color: rgba(107, 188, 255, 0.9);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
 }
 
 /* 모바일 최적화 */

@@ -1,0 +1,517 @@
+/**
+ * 🚀 Interactive Device Gallery Styles
+ * 우주 테마에 맞는 디바이스 갤러리 스타일링
+ */
+
+/* ===== 갤러리 전체 컨테이너 ===== */
+.device-gallery-wrapper {
+    position: relative;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2a 50%, #0a0a1a 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    margin: 40px 0;
+}
+
+.device-gallery-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></svg>') repeat;
+    background-size: 50px 50px;
+    opacity: 0.3;
+    animation: starfield 20s linear infinite;
+}
+
+@keyframes starfield {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-50px, -50px); }
+}
+
+/* ===== 갤러리 헤더 ===== */
+.device-gallery-header {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 2;
+}
+
+.gallery-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #ffffff 0%, #e0e0ff 50%, #c0c0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gallery-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    font-weight: 300;
+}
+
+/* ===== 디바이스 프레임 컨테이너 ===== */
+.device-frames-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding: 20px;
+    min-height: 500px;
+    position: relative;
+    z-index: 2;
+}
+
+/* ===== 개별 디바이스 프레임 ===== */
+.device-frame {
+    position: relative;
+    border-radius: 15px;
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    background: #1a1a2e;
+}
+
+.device-frame:hover {
+    transform: translateY(-10px);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+/* ===== 디바이스별 특별 스타일 ===== */
+.device-frame.desktop {
+    border: 8px solid #2c2c3e;
+    border-radius: 10px;
+}
+
+.device-frame.tablet {
+    border: 12px solid #2c2c3e;
+    border-radius: 20px;
+}
+
+.device-frame.mobile {
+    border: 10px solid #2c2c3e;
+    border-radius: 25px;
+    position: relative;
+}
+
+/* 모바일 홈 버튼 시뮬레이션 */
+.device-frame.mobile::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: #555;
+    border-radius: 2px;
+}
+
+/* ===== 디바이스 레이블 ===== */
+.device-label {
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 8px 16px;
+    border-radius: 20px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.device-label::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===== 갤러리 컨트롤 ===== */
+.gallery-controls {
+    text-align: center;
+    margin-top: 30px;
+    position: relative;
+    z-index: 2;
+}
+
+.sync-scroll-btn {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #4a4a6a 0%, #5a5a8a 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.sync-scroll-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.sync-scroll-btn:hover::before {
+    left: 100%;
+}
+
+.sync-scroll-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.sync-scroll-btn.active {
+    background: linear-gradient(135deg, #6a4a8a 0%, #8a5aaa 100%);
+    box-shadow: 0 4px 15px rgba(138, 90, 170, 0.4);
+}
+
+/* ===== 반응형 미디어 쿼리 ===== */
+@media (max-width: 1200px) {
+    .device-frames-container {
+        gap: 20px;
+    }
+    
+    .gallery-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .device-frames-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+    }
+    
+    .device-gallery-wrapper {
+        padding: 25px 15px;
+        margin: 20px 0;
+    }
+    
+    .gallery-title {
+        font-size: 1.8rem;
+    }
+    
+    .gallery-subtitle {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .device-frames-container {
+        padding: 15px;
+    }
+    
+    .device-gallery-wrapper {
+        padding: 20px 10px;
+    }
+}
+
+/* ===== 로딩 상태 애니메이션 ===== */
+.device-frame.loading {
+    opacity: 0.6;
+}
+
+.device-frame.loading::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid #ffffff;
+    border-radius: 50%;
+    animation: deviceLoading 1s linear infinite;
+    z-index: 10;
+}
+
+@keyframes deviceLoading {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ===== 에러 상태 스타일 ===== */
+.device-frame.error {
+    border-color: #ff4444;
+    box-shadow: 0 0 20px rgba(255, 68, 68, 0.3);
+}
+
+.device-frame.error::before {
+    content: '⚠️';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    z-index: 10;
+}
+
+/* ===== 디바이스 스크린 및 iframe 스타일 ===== */
+.device-screen {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: inherit;
+    background: #000;
+}
+
+.iframe-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.device-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #fff;
+    transition: opacity 0.3s ease;
+}
+
+/* ===== 로딩 스타일 ===== */
+.iframe-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #1a1a2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9;
+}
+
+.loading-text {
+    color: #ffffff;
+    font-size: 1rem;
+    margin-top: 20px;
+    opacity: 0.7;
+}
+
+/* ===== 디바이스 레이블 개선 ===== */
+.device-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+}
+
+.device-icon {
+    font-size: 1.2rem;
+}
+
+.device-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.device-size {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin-left: auto;
+}
+
+/* ===== 진입 애니메이션 (CSS 대안) ===== */
+@keyframes deviceFrameEntry {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* ===== 호버 효과 개선 ===== */
+.device-frame:hover .device-label {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    transition: all 0.3s ease;
+}
+
+/* ===== 동기화 스크롤 표시 ===== */
+.device-frame.sync-scroll {
+    outline: 2px solid rgba(106, 74, 138, 0.5);
+    outline-offset: 4px;
+}
+
+.device-frame.sync-scroll .device-label::after {
+    content: '🔗';
+    margin-left: 8px;
+    opacity: 0.8;
+}
+
+/* ===== Device Gallery 모달 스타일 ===== */
+.device-gallery-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.device-gallery-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.device-gallery-modal.closing {
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.device-gallery-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.device-gallery-modal-content {
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2a 50%, #0a0a1a 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 95vw;
+    max-height: 95vh;
+    overflow: hidden;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.device-gallery-modal.show .device-gallery-modal-content {
+    transform: scale(1);
+}
+
+.device-gallery-header {
+    padding: 20px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.device-gallery-header h2 {
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+    background: linear-gradient(135deg, #ffffff 0%, #e0e0ff 50%, #c0c0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.device-gallery-close {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.device-gallery-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+.device-gallery-modal .device-gallery-wrapper {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    background: transparent;
+}
+
+.device-gallery-modal .device-gallery-wrapper::before {
+    opacity: 0.1;
+}
+
+/* ===== Device Gallery 모달 반응형 스타일 ===== */
+@media (max-width: 1024px) {
+    .device-gallery-modal-content {
+        max-width: 98vw;
+        max-height: 98vh;
+    }
+    
+    .device-gallery-header {
+        padding: 15px 20px;
+    }
+    
+    .device-gallery-header h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .device-gallery-header h2 {
+        font-size: 1.2rem;
+    }
+    
+    .device-gallery-close {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+}
