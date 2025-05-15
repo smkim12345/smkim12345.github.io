@@ -416,7 +416,7 @@ input {
 
 /* 카테고리 섹션 */
 .category-section {
-  padding: 0.7rem 0.1rem; /* 10px 8px */
+  padding: 0.7rem 0.3rem; /* 10px 8px */
 }
 
 .category-grid {
@@ -424,8 +424,8 @@ input {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  padding: 0 0.1rem; /* 0 16px */
-  grid-gap: 1rem; /* 33px */
+  padding: 0.5rem 0.1rem; /* 0 16px */
+  grid-gap: 2.8rem; /* 33px */
 }
 
 .category-item {
@@ -664,6 +664,7 @@ input {
   height: 0;
   padding-bottom: 100%; /* 기존 400px에서 비율 유지로 변경 */
   width: 100%;
+  margin: 0 auto;
 }
 
 .tab-btn {
@@ -684,7 +685,8 @@ input {
 .tab-content {
   display: none;
   padding: 0 1rem; /* 0 16px */
-  width: 100%;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .tab-content.active {
@@ -762,7 +764,9 @@ input {
 }
 
 .brand-img {
-  height: 12.5rem; /* 200px */
+  height: 13.5rem; /* 200px */
+  width: 80%;
+  margin: 0 auto;
   border-radius: 0.5rem; /* 8px */
   background-size: cover;
   background-position: center;
