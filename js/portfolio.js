@@ -81,8 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 프로필 섹션의 탭 기능 제거 - 모든 콘텐츠가 순차적으로 표시됨
-
   // 스킬 프로그레스 바 애니메이션
   function animateSkills() {
     const skillItems = document.querySelectorAll(".skill-level");
@@ -135,6 +133,9 @@ document.addEventListener("DOMContentLoaded", () => {
     item.classList.add("show");
     item.classList.remove("hide");
     item.style.display = "block";
+    item.style.opacity = "1";
+    item.style.transform = "scale(1)";
+    item.style.pointerEvents = "auto";
 
     // 이미지 영역에 클릭 이벤트 추가
     const imageContainer = item.querySelector(".portfolio-image");
@@ -178,22 +179,38 @@ document.addEventListener("DOMContentLoaded", () => {
       this.classList.add("active");
 
       const filterValue = this.getAttribute("data-filter");
+      
+      // 현재 카테고리 저장 (페이지 이동 후 돌아올 때 사용)
+      sessionStorage.setItem('lastPortfolioFilter', filterValue);
 
+      // GSAP으로 부드러운 애니메이션 적용
       portfolioItems.forEach((item) => {
-        if (
-          filterValue === "all" ||
-          item.getAttribute("data-category") === filterValue
-        ) {
-          item.classList.remove("hide");
-          item.classList.add("show");
-          item.style.display = "block";
+        const category = item.getAttribute("data-category");
+        
+        if (filterValue === "all" || category === filterValue) {
+          // 보여질 항목
+          gsap.to(item, {
+            scale: 1,
+            opacity: 1,
+            duration: 0.3,
+            ease: "power2.out",
+            onStart: () => {
+              item.style.display = "block";
+              item.style.pointerEvents = "auto";
+            }
+          });
         } else {
-          item.classList.remove("show");
-          item.classList.add("hide");
-          // 숨김 처리를 display: none으로 변경하여 그리드가 자동정렬되도록 함
-          item.style.display = "none";
-          item.style.opacity = "0";
-          item.style.pointerEvents = "none";
+          // 숨겨질 항목
+          gsap.to(item, {
+            scale: 0.8,
+            opacity: 0,
+            duration: 0.3,
+            ease: "power2.out",
+            onComplete: () => {
+              item.style.display = "none";
+              item.style.pointerEvents = "none";
+            }
+          });
         }
       });
     });
@@ -211,12 +228,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // 모든 포트폴리오 아이템 표시
         portfolioItems.forEach((item) => {
-          item.classList.remove("hide");
-          item.classList.add("show");
-          item.style.display = "block";
+          gsap.to(item, {
+            scale: 1,
+            opacity: 1,
+            duration: 0.3,
+            ease: "power2.out",
+            onStart: () => {
+              item.style.display = "block";
+              item.style.pointerEvents = "auto";
+            }
+          });
         });
       }, 300);
     });
+  }
+  
+  // 페이지 로드 시 마지막으로 선택한 필터 복원
+  const lastFilter = sessionStorage.getItem('lastPortfolioFilter');
+  if (lastFilter) {
+    const targetButton = document.querySelector(`.filter-btn[data-filter="${lastFilter}"]`);
+    if (targetButton) {
+      setTimeout(() => {
+        targetButton.click();
+      }, 500);
+    }
   }
 
   // 포트폴리오 모달
@@ -264,8 +299,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 모달 닫기 버튼
     closeModal.addEventListener("click", function () {
+      // 스크롤 위치 저장
+      const scrollPosition = window.scrollY;
+      
+      // 모달 닫기
       modal.classList.remove("active");
       document.body.classList.remove("modal-open");
+      
+      // 스크롤 위치 복원
+      setTimeout(() => {
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: 'auto'
+        });
+      }, 100);
     });
 
     // 이미지 경로에서 프로젝트 ID 추출 함수
@@ -282,6 +329,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 모달 열기 함수
     function openModal(imgSrc, imgAlt) {
+      // 스크롤 위치 저장
+      window.modalScrollPosition = window.scrollY;
+      
       // 모달 활성화
       modal.classList.add("active");
       document.body.classList.add("modal-open");
@@ -306,12 +356,32 @@ document.addEventListener("DOMContentLoaded", () => {
 function createParticles() {
   const canvas = document.getElementById("space-background");
 
-  if (!canvas) return;
+  if (!canvas) {
+    console.warn("space-background 캔버스를 찾을 수 없습니다");
+    return;
+  }
 
   const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    console.warn("캔버스 컨텍스트를 가져올 수 없습니다");
+    return;
+  }
+  
+  // 애니메이션이 이미 실행 중인지 확인 (중복 실행 방지)
+  if (window.particleAnimationRunning) {
+    console.log("파티클 애니메이션이 이미 실행 중입니다");
+    return;
+  }
+  
+  // 전역 플래그 설정
+  window.particleAnimationRunning = true;
+  
   const particlesArray = [];
-  // 파티클 개수를 반으로 줄임 (최적화)
-  const numberOfParticles = Math.min(50, Math.floor(window.innerWidth / 20));
+  // 파티클 개수를 화면 크기에 맞게 최적화 (기기 성능에 따라 조정)
+  const isMobile = window.innerWidth <= 768;
+  const numberOfParticles = isMobile ? 
+    Math.min(30, Math.floor(window.innerWidth / 25)) : 
+    Math.min(60, Math.floor(window.innerWidth / 20));
 
   // 파티클 클래스
   class Particle {
@@ -377,34 +447,78 @@ function createParticles() {
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    
+    // 캔버스 크기가 변경되면 파티클을 다시 생성
+    if (particlesArray.length > 0) {
+      particlesArray.length = 0;
+      init();
+    }
   }
 
   // 초기 파티클 생성
   function init() {
-    resizeCanvas();
     particlesArray.length = 0;
-
     for (let i = 0; i < numberOfParticles; i++) {
       particlesArray.push(new Particle());
     }
   }
 
-  // 애니메이션
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // 애니메이션 최적화 (requestAnimationFrame 사용)
+  let animationId = null;
+  let lastFrameTime = 0;
+  // 모바일 기기에서는 더 적은 FPS로 렌더링 (배터리 최적화)
+  const targetFPS = isMobile ? 30 : 60;
+  const frameInterval = 1000 / targetFPS;
+  
+  function animate(timestamp = 0) {
+    // 페이지가 숨겨져 있을 때는 애니메이션 일시 중지 (성능 최적화)
+    if (document.hidden) {
+      animationId = requestAnimationFrame(animate);
+      return;
+    }
+    
+    // 프레임 속도 제한 (성능 최적화)
+    const elapsed = timestamp - lastFrameTime;
+    if (elapsed < frameInterval) {
+      animationId = requestAnimationFrame(animate);
+      return;
+    }
+    
+    lastFrameTime = timestamp - (elapsed % frameInterval);
+    
+    // 캔버스 지우기 (높은 투명도 적용으로 잔상 효과)
+    ctx.fillStyle = 'rgba(10, 13, 31, 0.2)';  // 배경 색상에 맞춘 높은 투명도의 색상
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     for (let i = 0; i < particlesArray.length; i++) {
       particlesArray[i].update();
       particlesArray[i].draw();
     }
 
-    requestAnimationFrame(animate);
+    animationId = requestAnimationFrame(animate);
   }
 
   // 이벤트 리스너
-  window.addEventListener("resize", init);
+  window.addEventListener("resize", resizeCanvas);
+  
+  // 가시성 변경 감지 (탭 전환 시 성능 최적화)
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      // 페이지가 숨겨져 있을 때 애니메이션 일시 중지
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+      }
+    } else if (!animationId) {
+      // 페이지가 다시 보일 때 애니메이션 재개
+      animate();
+    }
+  });
 
   // 초기화 및 애니메이션 시작
+  resizeCanvas();
   init();
   animate();
+  
+  console.log("우주 배경 파티클 효과 초기화 완료");
 }

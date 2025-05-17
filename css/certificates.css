@@ -1,0 +1,23 @@
+.certificates-section {
+  position: relative;
+  z-index: 20;
+  padding: var(--spacing-xxl) 0;
+  overflow: visible;
+}
+
+.certificates-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-xl);
+  position: relative;
+  z-index: 10;
+  overflow: visible;
+}
+
+.certificates-display {
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  overflow: visible;
+} 

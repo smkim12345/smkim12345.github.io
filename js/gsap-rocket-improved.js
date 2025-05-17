@@ -3,917 +3,430 @@
  * 매끄러운 이동과 회전이 적용된 로켓 애니메이션
  */
 
-// 개선된 GSAP 로켓 애니메이션 클래스
+// 개선된 GSAP 로켓 애니메이션 클래스 - 간소화된 버전
 class ImprovedRocketAnimation {
     constructor() {
-        // 로켓 요소
+        // DOM 요소 참조
         this.rocket = document.getElementById('rocket-element');
         this.rocketImg = this.rocket ? this.rocket.querySelector('img') : null;
         this.flame = this.rocket ? this.rocket.querySelector('.rocket-flame') : null;
         
-        // 섹션 요소
-        this.sections = {
-            home: document.getElementById('home'),
-            about: document.getElementById('about'),
-            experience: document.getElementById('experience'),
-            skills: document.getElementById('skills'),
-            portfolio: document.getElementById('portfolio'),
-            contact: document.getElementById('contact')
-        };
-        
-        // 애니메이션 관련 상태
-        this.currentSection = 'home';
-        this.targetSection = 'home';
-        this.mouseX = 0;
-        this.mouseY = 0;
-        this.trailElements = [];
-        this.maxTrailElements = 15; // 기본값 (데스크톱)
-        this.trailInterval = null;
+        // 상태 값 초기화
+        this.isActive = true; // 기본값을 true로 변경
+        this.isPaused = false;
+        this.mouseX = window.innerWidth / 2;
+        this.mouseY = window.innerHeight / 2;
         this.isAnimating = false;
+        this.animationFrameId = null;
+        this.lastMouseMoveTime = Date.now();
         
-        // 터치 관련 상태
-        this.isTouchMoving = false; // 터치 움직임 상태
-        this.touchStartX = null;    // 터치 시작 X 좌표
-        this.touchStartY = null;    // 터치 시작 Y 좌표
-        this.touchStartTime = null; // 터치 시작 시간
-        this.lastTapTime = 0;       // 마지막 탭 시간 (더블 탭 감지용)
+        // 오프셋 설정 - 로켓과 마우스 사이의 거리(변경하지말것 직접적인 지시없는 이상 고정 내용)
+        this.offsetDistance = -100; // 마우스와 로켓 사이 거리 (픽셀)
+        this.fixedRotation = 0; // 고정된 로켓 방향 (불꽃이 아래로)
         
-        // 성능 최적화 관련
-        this.lastMoveTime = 0;      // 마지막 이동 시간 (쓰로틀링용)
-        this.lastTouchMoveTime = 0; // 마지막 터치 이동 시간 (쓰로틀링용)
-        this.moveThrottle = 16;     // 이동 쓰로틀링 (약 60fps)
-        this.pendingMove = false;   // 대기 중인 이동 여부
-        this.isRotationFixed = false; // 회전 고정 상태
+        console.log('로켓 애니메이션 인스턴스 생성됨');
         
-        // 모바일 환경 감지 및 설정 최적화
-        this.isMobile = window.innerWidth <= 768;
-        if (this.isMobile) {
-            this.maxTrailElements = 8; // 모바일에서는 효과 감소
-            this.moveThrottle = 32; // 모바일에서는 쓰로틀링 증가 (약 30fps)
-        }
-        
-        // 경로 포인트 배열
-        this.pathPoints = [];
-        this.generateFullPath();
-        
-        // 초기화
+        // 생성자에서 요소가 존재하는지 확인
         if (this.rocket) {
             this.init();
+        } else {
+            console.error('로켓 요소를 찾을 수 없습니다.');
+            
+            // DOM 컨텐츠가 로드되면 다시 시도
+            document.addEventListener('DOMContentLoaded', () => {
+                this.rocket = document.getElementById('rocket-element');
+                this.rocketImg = this.rocket ? this.rocket.querySelector('img') : null;
+                this.flame = this.rocket ? this.rocket.querySelector('.rocket-flame') : null;
+                
+                if (this.rocket) {
+                    this.init();
+                } else {
+                    // 5ms 간격으로 최대 10번 다시 시도
+                    let attempts = 0;
+                    const checkInterval = setInterval(() => {
+                        attempts++;
+                        this.rocket = document.getElementById('rocket-element');
+                        
+                        if (this.rocket || attempts >= 10) {
+                            clearInterval(checkInterval);
+                            if (this.rocket) {
+                                this.rocketImg = this.rocket.querySelector('img');
+                                this.flame = this.rocket.querySelector('.rocket-flame');
+                                this.init();
+                            }
+                        }
+                    }, 5);
+                }
+            });
         }
-        
-        // 화면 크기 변경 감지
-        window.addEventListener('resize', this.handleDeviceChange.bind(this));
     }
     
     /**
      * 초기화 함수
      */
     init() {
-        // GSAP 플러그인 확인
-        if (!window.gsap || !window.ScrollTrigger) {
-            console.error('GSAP 또는 ScrollTrigger 플러그인이 로드되지 않았습니다.');
-            return;
-        }
+        // 로켓 요소 스타일 강제 설정
+        this.setRocketStyles();
         
         // 초기 위치 설정
         gsap.set(this.rocket, {
-            left: '50%', // 화면 중앙
-            top: '50%',  // 화면 중앙
+            left: '50%',
+            top: '50%',
             xPercent: -50,
             yPercent: -50,
-            opacity: 0,
+            opacity: 1, // 투명도를 1로 시작 (바로 보이게)
             scale: 1,
-            rotation: 0, // 회전 없음
-            transformOrigin: "center center" // 로켓 회전 기준점 변경
+            rotation: this.fixedRotation, // 고정 회전값 적용
+            transformOrigin: "center center"
         });
         
-        // 로딩 후 로켓 등장 애니메이션
+        // 로딩 후 로켓 등장 애니메이션 (더 짧게 조정)
         gsap.to(this.rocket, {
             opacity: 1,
-            duration: 1,
-            delay: 2.5,
-            ease: 'power2.out',
+            duration: 0.3, // 빠른 등장
+            ease: 'power1.out', 
             onComplete: () => {
-                // 로켓 초기 부스트 효과
-                this.boostEffect();
-                
-                // 지속적인 화염 애니메이션 시작
-                this.startFlameAnimation();
-                
-                // 궤적 생성 시작
-                this.startTrailCreation();
+                // 즉시 활성화 및 마우스 추적 설정
+                this.isActive = true;
+                this.setupMouseTracking();
+                // 애니메이션 루프 시작
+                this.startAnimationLoop();
+                console.log('로켓 애니메이션 활성화');
             }
         });
         
-        // 마우스 움직임에 따른 로켓 위치 설정
-        this.setupMouseRotation();
-        
-        // 화면 크기 변경 이벤트 처리
-        window.addEventListener('resize', this.handleResize.bind(this));
-        
-        // 로켓 클릭 효과 비활성화
-        // 네비게이션 링크 클릭 효과도 비활성화
+        // 초기 위치 강제 업데이트
+        this.updateRocketPosition();
     }
     
     /**
-     * 전체 경로 생성 - 모든 섹션을 연결하는 부드러운 경로 생성
+     * 로켓 요소 스타일 강제 설정
      */
-    generateFullPath() {
-        // 각 섹션별 위치 정보
-        const sectionPositions = {
-            home: { x: 50, y: 50, rotation: 0, scale: 1 },
-            about: { x: 30, y: 50, rotation: -15, scale: 0.9 },
-            experience: { x: 60, y: 50, rotation: -30, scale: 0.8 },
-            skills: { x: 40, y: 50, rotation: -45, scale: 0.7 },
-            portfolio: { x: 70, y: 50, rotation: -60, scale: 0.6 },
-            contact: { x: 50, y: 60, rotation: -90, scale: 0.5 }
-        };
-        
-        // 섹션 순서
-        const sectionOrder = ['home', 'about', 'experience', 'skills', 'portfolio', 'contact'];
-        
-        // 각 섹션 사이에 중간 포인트 생성 (부드러운 곡선을 위해)
-        for (let i = 0; i < sectionOrder.length - 1; i++) {
-            const currentSection = sectionOrder[i];
-            const nextSection = sectionOrder[i + 1];
-            
-            const startPos = sectionPositions[currentSection];
-            const endPos = sectionPositions[nextSection];
-            
-            // 시작점 추가
-            this.pathPoints.push({
-                x: startPos.x,
-                y: startPos.y,
-                rotation: startPos.rotation,
-                scale: startPos.scale,
-                section: currentSection
-            });
-            
-            // 섹션 사이에 5개의 중간 포인트 추가 (더 부드러운 곡선 효과)
-            for (let j = 1; j <= 5; j++) {
-                const progress = j / 6;
-                
-                // 직선 보간과 곡선 효과 조합
-                let midX, midY;
-                
-                // 베지어 곡선 효과를 위한 중간 제어점 계산
-                if (j === 3) { // 중간 지점에서는 약간의 곡선 효과 추가
-                    // x 좌표에 곡선 효과 추가
-                    const controlX = (startPos.x + endPos.x) / 2;
-                    const offsetX = (endPos.y - startPos.y) * 0.3; // 수직 거리에 기반한 오프셋
-                    midX = controlX + offsetX;
-                    
-                    // y 좌표에 곡선 효과 추가
-                    const controlY = (startPos.y + endPos.y) / 2;
-                    const offsetY = (endPos.x - startPos.x) * 0.1; // 수평 거리에 기반한 오프셋
-                    midY = controlY + offsetY;
-                } else {
-                    // 나머지 중간 포인트는 선형 보간
-                    midX = startPos.x + (endPos.x - startPos.x) * progress;
-                    midY = startPos.y + (endPos.y - startPos.y) * progress;
-                }
-                
-                // 회전 및 크기 보간
-                const midRotation = startPos.rotation + (endPos.rotation - startPos.rotation) * progress;
-                const midScale = startPos.scale + (endPos.scale - startPos.scale) * progress;
-                
-                this.pathPoints.push({
-                    x: midX,
-                    y: midY,
-                    rotation: midRotation,
-                    scale: midScale,
-                    section: progress < 0.5 ? currentSection : nextSection
-                });
-            }
-        }
-        
-        // 마지막 섹션 추가
-        const lastSection = sectionOrder[sectionOrder.length - 1];
-        const lastPos = sectionPositions[lastSection];
-        
-        this.pathPoints.push({
-            x: lastPos.x,
-            y: lastPos.y,
-            rotation: lastPos.rotation,
-            scale: lastPos.scale,
-            section: lastSection
-        });
-    }
-    
-    /**
-     * 스크롤 진행도에 따른 경로 포인트 가져오기
-     * @param {number} progress - 스크롤 진행도 (0-1)
-     * @returns {Object} - 위치, 회전, 크기 정보
-     */
-    getPathPointAtProgress(progress) {
-        if (this.pathPoints.length === 0) return null;
-        
-        // 진행도에 해당하는 인덱스 계산
-        const index = Math.min(
-            Math.floor(progress * (this.pathPoints.length - 1)),
-            this.pathPoints.length - 2
-        );
-        
-        // 두 포인트 사이의 진행도 계산
-        const pointProgress = (progress * (this.pathPoints.length - 1)) - index;
-        
-        // 현재 포인트와 다음 포인트
-        const currentPoint = this.pathPoints[index];
-        const nextPoint = this.pathPoints[index + 1];
-        
-        // 두 포인트 사이 보간
-        return {
-            x: currentPoint.x + (nextPoint.x - currentPoint.x) * pointProgress,
-            y: currentPoint.y + (nextPoint.y - currentPoint.y) * pointProgress,
-            rotation: currentPoint.rotation + (nextPoint.rotation - currentPoint.rotation) * pointProgress,
-            scale: currentPoint.scale + (nextPoint.scale - currentPoint.scale) * pointProgress,
-            section: pointProgress < 0.5 ? currentPoint.section : nextPoint.section
-        };
-    }
-    
-    /**
-     * 스크롤 애니메이션 설정 (비활성화됨)
-     * 스크롤에 따른 로켓 이동을 제거하고 마우스에만 반응하도록 수정
-     */
-    setupScrollAnimation() {
-        // 비활성화 - 로켓이 스크롤에 반응하지 않도록 함
-        console.log("스크롤 기반 로켓 애니메이션이 비활성화되었습니다. 마우스 움직임에만 반응합니다.");
-    }
-    
-    /**
-     * 경로를 따라 로켓 애니메이션 (비활성화됨)
-     * 스크롤에 따른 애니메이션을 제거하고 마우스에만 반응하도록 수정
-     * @param {number} progress - 스크롤 진행도 (0-1)
-     */
-    animateAlongPath(progress) {
-        // 비활성화 - 스크롤 애니메이션이 제거되었으므로 이 함수는 아무 동작도 하지 않음
-        return;
-    }
-    
-    /**
-     * 섹션 클래스 업데이트
-     * @param {string} sectionName - 섹션 이름
-     */
-    updateSectionClass(sectionName) {
+    setRocketStyles() {
         if (!this.rocket) return;
         
-        // CSS 클래스 업데이트
-        this.rocket.className = '';
-        this.rocket.classList.add(`rocket-${sectionName}`);
+        // 최고 z-index로 강제 설정
+        this.rocket.style.zIndex = '10000';
+        this.rocket.style.pointerEvents = 'auto !important';
         
-        // 로켓 착륙은 rocket-landing.js에서 처리합니다
-        // contact 섹션 처리는 명시적으로 삭제 (충돌 방지)
-    }
-    
-    /**
-     * 터치 시작 이벤트 핸들러
-     * 별도의 메서드로 분리하여 기능 확장
-     * @param {TouchEvent} e - 터치 이벤트
-     */
-    handleTouchStart(e) {
-        if (e.touches.length > 0) {
-            this.isTouchMoving = true;
-            const touch = e.touches[0];
+        if (this.rocketImg) {
+            this.rocketImg.style.pointerEvents = 'auto !important';
+        }
+        
+        if (this.flame) {
+            this.flame.style.pointerEvents = 'none';
+        }
+        
+        // 네비게이션이 이벤트를 차단하지 않도록 설정
+        const navElement = document.querySelector('.main-nav');
+        if (navElement) {
+            navElement.style.pointerEvents = 'none';
             
-            // 터치 위치에 시각적 효과 표시 (모바일 전용)
-            if (this.isMobile) {
-                this.createTouchEffect(touch.clientX, touch.clientY);
-            }
-            
-            // 터치 시작 시 위치 기록 (터치 제스처 감지용)
-            this.touchStartX = touch.clientX;
-            this.touchStartY = touch.clientY;
-            this.touchStartTime = Date.now();
-            
-            // 터치 위치로 로켓 이동
-            this.handlePointerMove(touch.clientX, touch.clientY, 'touch');
+            // 네비게이션 내부 요소들은 이벤트 받도록 설정
+            const navContainers = navElement.querySelectorAll('.nav-container, .logo, .menu-toggle, .nav-links, .nav-links li, .nav-links a');
+            navContainers.forEach(element => {
+                element.style.pointerEvents = 'auto';
+            });
         }
     }
     
     /**
-     * 터치 효과 생성 (모바일 사용자 피드백용)
+     * 간소화된 마우스 트래킹 설정
      */
-    createTouchEffect(x, y, isBoost = false) {
-        const effect = document.createElement('div');
-        effect.className = isBoost ? 'touch-effect boost' : 'touch-effect';
+    setupMouseTracking() {
+        // 이전 이벤트 리스너 제거
+        if (this._mouseMoveHandler) {
+            document.removeEventListener('mousemove', this._mouseMoveHandler);
+            document.removeEventListener('touchmove', this._touchMoveHandler);
+        }
         
-        // 위치 설정
-        effect.style.left = x + 'px';
-        effect.style.top = y + 'px';
-        
-        // 문서에 추가
-        document.body.appendChild(effect);
-        
-        // 애니메이션
-        gsap.to(effect, {
-            scale: isBoost ? 1.5 : 1.2,
-            opacity: 0,
-            duration: isBoost ? 0.6 : 0.4,
-            ease: 'power1.out',
-            onComplete: () => {
-                if (effect.parentNode) {
-                    effect.parentNode.removeChild(effect);
-                }
+        // 새 이벤트 리스너 생성 및 등록
+        this._mouseMoveHandler = (e) => {
+            if (this.isActive && !this.isPaused) {
+                // 마우스 위치 저장
+                this.mouseX = e.clientX;
+                this.mouseY = e.clientY;
+                this.lastMouseMoveTime = Date.now();
             }
-        });
-    }
-    
-    /**
-     * 마우스/터치 움직임에 따른 로켓 위치 설정
-     * 커서/터치의 하단에 일정 거리를 유지하며 따라다니도록 수정
-     * 모바일 환경을 위한 터치 이벤트 지원 추가
-     */
-    setupMouseRotation() {
-        // 마우스 이벤트 리스너
-        document.addEventListener('mousemove', (e) => {
-            this.handlePointerMove(e.clientX, e.clientY, 'mouse');
-        });
+        };
         
-        // 터치 시작 이벤트
-        document.addEventListener('touchstart', this.handleTouchStart.bind(this));
-        
-        // 터치 이동 이벤트 리스너
-        document.addEventListener('touchmove', (e) => {
-            if (e.touches.length > 0) {
-                // 멀티 터치 중 첫 번째 터치 사용
-                const touch = e.touches[0];
+        // 터치 이벤트 핸들러 추가 (모바일 지원)
+        this._touchMoveHandler = (e) => {
+            if (this.isActive && !this.isPaused && e.touches && e.touches[0]) {
+                // 터치 위치 저장
+                this.mouseX = e.touches[0].clientX;
+                this.mouseY = e.touches[0].clientY;
+                this.lastMouseMoveTime = Date.now();
                 
-                // 현재 시간 체크 (쓰로틀링)
-                const now = Date.now();
-                if (now - this.lastTouchMoveTime >= this.moveThrottle) {
-                    this.handlePointerMove(touch.clientX, touch.clientY, 'touch');
-                    this.lastTouchMoveTime = now;
-                }
-                
-                // 스와이프 속도 계산 (부스트 효과용)
-                if (this.touchStartX && this.touchStartY) {
-                    const dx = touch.clientX - this.touchStartX;
-                    const dy = touch.clientY - this.touchStartY;
-                    const timeDiff = now - this.touchStartTime;
-                    
-                    // 스와이프 속도가 일정 임계값을 넘으면 부스트 효과 활성화
-                    if (timeDiff > 0) {
-                        const speed = Math.sqrt(dx*dx + dy*dy) / timeDiff;
-                        if (speed > 1.5 && !this.isAnimating) { // 빠른 스와이프 감지
-                            this.boostEffect();
-                            
-                            // 부스트 효과 표시 (모바일 전용)
-                            if (this.isMobile) {
-                                this.createTouchEffect(touch.clientX, touch.clientY, true);
-                            }
-                            
-                            // 부스트 후 상태 초기화
-                            this.touchStartX = touch.clientX;
-                            this.touchStartY = touch.clientY;
-                            this.touchStartTime = now;
-                        }
-                    }
-                }
-                
-                // 페이지 스크롤 허용 (사용자 경험 저하 방지)
-                // 하지만 빠른 제스처 시에는 방지 (우발적 스크롤 방지)
-                if (Math.abs(touch.clientY - this.touchStartY) > 50) {
-                    // 빠른 세로 스와이프는 스크롤로 간주 (로켓 조작 아님)
-                    this.isTouchMoving = false;
-                } else if (this.isTouchMoving) {
+                // 터치 이벤트는 스크롤을 방해할 수 있으므로 로켓에만 적용
+                if (e.target === this.rocket || e.target === this.rocketImg) {
                     e.preventDefault();
                 }
             }
-        }, { passive: false });
-        
-        // 터치 종료 이벤트
-        document.addEventListener('touchend', (e) => {
-            this.isTouchMoving = false;
-            
-            // 터치 종료 시 제스처 감지 (탭, 더블 탭 등)
-            if (this.touchStartTime && !this.isAnimating) {
-                const endTime = Date.now();
-                const timeDiff = endTime - this.touchStartTime;
-                
-                // 짧은 탭 감지 (300ms 이내)
-                if (timeDiff < 300) {
-                    // 최근 탭 시간 확인 (더블 탭 감지용)
-                    if (this.lastTapTime && (endTime - this.lastTapTime < 500)) {
-                        // 더블 탭 - 부스트 효과
-                        this.boostEffect();
-                        
-                        // 부스트 효과 표시 (모바일 전용)
-                        if (this.isMobile && this.touchStartX && this.touchStartY) {
-                            this.createTouchEffect(this.touchStartX, this.touchStartY, true);
-                        }
-                        
-                        this.lastTapTime = 0; // 재설정
-                    } else {
-                        // 단일 탭 - 마지막 탭 시간 기록
-                        this.lastTapTime = endTime;
-                    }
-                }
-            }
-            
-            // 상태 초기화
-            this.touchStartX = null;
-            this.touchStartY = null;
-            this.touchStartTime = null;
-        });
-        
-        // 터치 취소 이벤트
-        document.addEventListener('touchcancel', () => {
-            this.isTouchMoving = false;
-            this.touchStartX = null;
-            this.touchStartY = null;
-            this.touchStartTime = null;
-        });
-        
-        // 모바일에서 로켓 소개 메시지
-        if (this.isMobile) {
-            // 약간의 지연 후 모바일 사용법 표시
-            setTimeout(() => {
-                this.showMobileTip();
-            }, 5000);
-        }
-    }
-    
-    /**
-     * 모바일 로켓 사용법 표시
-     */
-    showMobileTip() {
-        // 팁 메시지가 이미 표시됐는지 확인
-        if (localStorage.getItem('rocketMobileTipShown')) {
-            return;
-        }
-        
-        // 팁 메시지 생성
-        const tipElement = document.createElement('div');
-        tipElement.className = 'rocket-tip rocket-tip-show';
-        tipElement.innerHTML = `
-            <h3>로켓 조작 방법</h3>
-            <p>• 화면을 터치하여 로켓을 움직여보세요</p>
-            <p>• 빠르게 스와이프하거나 더블 탭하면 부스트!</p>
-            <p>• 마지막 섹션에서 로켓이 착륙합니다</p>
-        `;
-        
-        // 문서에 추가
-        document.body.appendChild(tipElement);
-        
-        // 팁 표시 기록
-        localStorage.setItem('rocketMobileTipShown', 'true');
-        
-        // 일정 시간 후 제거
-        setTimeout(() => {
-            if (tipElement.parentNode) {
-                gsap.to(tipElement, {
-                    opacity: 0,
-                    y: -20,
-                    duration: 0.5,
-                    onComplete: () => {
-                        if (tipElement.parentNode) {
-                            tipElement.parentNode.removeChild(tipElement);
-                        }
-                    }
-                });
-            }
-        }, 5000);
-    }
-    
-    /**
-     * 포인터(마우스/터치) 이동 처리 통합 함수
-     * @param {number} pointerX - X 좌표
-     * @param {number} pointerY - Y 좌표
-     * @param {string} inputType - 입력 유형 ('mouse' 또는 'touch')
-     */
-    handlePointerMove(pointerX, pointerY, inputType) {
-        this.mouseX = pointerX;
-        this.mouseY = pointerY;
-        
-        // 로켓이 없거나 착륙 상태인 경우 처리하지 않음
-        const isRocketLanded = localStorage.getItem('rocketLanded') === 'true';
-        
-        if (!this.rocket || 
-            isRocketLanded || 
-            (window.rocketLanding && !window.rocketLanding.isMouseFollowEnabled())) {
-            return;
-        }
-        
-        // 현재 시간 체크 (프레임 기반 움직임 최적화)
-        const now = Date.now();
-        if (now - this.lastMoveTime < this.moveThrottle) {
-            // 너무 빈번한 호출 방지 (프레임 스킵)
-            if (!this.pendingMove) {
-                // 다음 프레임에서 처리하도록 예약
-                this.pendingMove = true;
-                requestAnimationFrame(() => {
-                    this.updateRocketPosition(inputType);
-                    this.pendingMove = false;
-                });
-            }
-            return;
-        }
-        
-        // 일반 경우 바로 업데이트
-        this.lastMoveTime = now;
-        this.updateRocketPosition(inputType);
-    }
-    
-    /**
-     * 로켓 위치 업데이트 (최적화 버전)
-     * @param {string} inputType - 입력 유형 ('mouse' 또는 'touch')
-     */
-    updateRocketPosition(inputType) {
-        // 고정된 회전 각도 설정 (회전 없음)
-        if (!this.isRotationFixed) {
-            gsap.to(this.rocket, {
-                rotation: 0, // 회전 없음
-                duration: 0.3,
-                ease: 'power2.out',
-                overwrite: 'auto'
-            });
-            this.isRotationFixed = true;
-        }
-        
-        // 현재 화면 크기 가져오기
-        const windowWidth = window.innerWidth;
-        const windowHeight = window.innerHeight;
-        
-        // 마우스/터치 위치를 퍼센트로 변환
-        const pointerXPercent = (this.mouseX / windowWidth) * 100;
-        const pointerYPercent = (this.mouseY / windowHeight) * 100;
-        
-        // 기기 감지 - 모바일에서는 오프셋 값 조정
-        const isMobile = window.innerWidth <= 768;
-        
-        // 포인터 하단에 로켓 위치시키기 (일정 거리 아래에 위치)
-        // 모바일에서는 더 가까운 거리에 배치
-        const offsetY = isMobile ? 8 : 12; // 모바일에서는 8%, 데스크톱에서는 12%
-        
-        // 애니메이션 지속 시간 - 터치는 더 빠르게 반응
-        const animDuration = inputType === 'touch' ? 0.1 : 0.2;
-        
-        // 부드러운 움직임을 위한 이징 선택
-        // 터치에서는 더 즉각적인 이징 사용
-        const easeType = inputType === 'touch' ? 'power1.out' : 'power1.out';
-        
-        // 로켓 위치 업데이트 - 포인터 바로 아래에 위치
-        gsap.to(this.rocket, {
-            left: pointerXPercent + '%',
-            top: (pointerYPercent + offsetY) + '%', // 포인터 아래에 위치
-            duration: animDuration, // 부드럽게 따라감 (터치는 더 빠르게)
-            ease: easeType,
-            overwrite: 'auto',
-            skewX: 0, // 기울임 효과 제거
-            skewY: 0  // 기울임 효과 제거
-        });
-    }
-    
-    /**
-     * 화면 크기 변경 이벤트 처리
-     */
-    handleResize() {
-        // 위치 업데이트
-        const scrollProgress = ScrollTrigger.getAll()[0]?.progress || 0;
-        this.animateAlongPath(scrollProgress);
-    }
-    
-    /**
-     * 기기 변경 감지 및 설정 최적화
-     */
-    handleDeviceChange() {
-        // 현재 모바일 여부 확인
-        const wasMobile = this.isMobile;
-        this.isMobile = window.innerWidth <= 768;
-        
-        // 기기 유형이 변경되었을 때만 설정 업데이트
-        if (wasMobile !== this.isMobile) {
-            if (this.isMobile) {
-                // 모바일 설정으로 변경
-                this.maxTrailElements = 8;
-                this.moveThrottle = 32;
-                
-                // 이미 생성된 효과 요소 일부 제거 (성능 향상)
-                while (this.trailElements.length > this.maxTrailElements) {
-                    const oldTrail = this.trailElements.shift();
-                    if (oldTrail && oldTrail.parentNode) {
-                        oldTrail.parentNode.removeChild(oldTrail);
-                    }
-                }
-                
-                // 로켓 크기 조정 (JS에서 추가 설정)
-                gsap.to(this.rocket, {
-                    scale: 0.9,
-                    duration: 0.3
-                });
-                
-                // 모바일에서 궤적 생성 간격 늘리기 (배터리 절약)
-                if (this.trailInterval) {
-                    clearInterval(this.trailInterval);
-                    this.trailInterval = setInterval(() => {
-                        this.createTrail();
-                    }, 250); // 250ms 간격 (초당 4회)
-                }
-            } else {
-                // 데스크톱 설정으로 변경
-                this.maxTrailElements = 15;
-                this.moveThrottle = 16;
-                
-                // 로켓 크기 원래대로
-                gsap.to(this.rocket, {
-                    scale: 1,
-                    duration: 0.3
-                });
-                
-                // 데스크톱에서 궤적 생성 간격 기본값으로
-                if (this.trailInterval) {
-                    clearInterval(this.trailInterval);
-                    this.trailInterval = setInterval(() => {
-                        this.createTrail();
-                    }, 150); // 150ms 간격 (초당 약 6.6회)
-                }
-            }
-            
-            console.log(`기기 유형 변경: ${this.isMobile ? '모바일' : '데스크톱'} 모드로 최적화됨`);
-        }
-        
-        // 화면 크기 변경에 따른 위치 업데이트
-        this.handleResize();
-    }
-    
-    /**
-     * 화염 애니메이션 시작
-     */
-    startFlameAnimation() {
-        if (!this.flame) return;
-        
-        // 지속적인 화염 애니메이션
-        gsap.to(this.flame, {
-            height: '40px',
-            opacity: 0.8,
-            duration: 0.3,
-            repeat: -1,
-            yoyo: true,
-            ease: 'power1.inOut'
-        });
-    }
-    
-    /**
-     * 부스트 효과 - 모바일 환경 최적화 버전
-     */
-    boostEffect() {
-        if (!this.flame || !this.rocketImg) return;
-        
-        // 애니메이션 중 플래그 설정
-        this.isAnimating = true;
-        
-        // 기기 유형에 따른 설정 조정
-        const flameHeight = this.isMobile ? '45px' : '60px'; // 모바일에서 작게
-        const pulseScale = this.isMobile ? 1.05 : 1.1; // 모바일에서 작게
-        const repeatCount = this.isMobile ? 2 : 3; // 모바일에서 반복 감소
-        
-        // 화염 강화 애니메이션
-        gsap.to(this.flame, {
-            height: flameHeight,
-            opacity: 1,
-            duration: 0.2,
-            repeat: repeatCount,
-            yoyo: true,
-            ease: 'power1.inOut'
-        });
-        
-        // 로켓 펄스 애니메이션
-        gsap.to(this.rocketImg, {
-            scale: pulseScale,
-            duration: 0.2,
-            yoyo: true,
-            repeat: 1,
-            ease: 'power1.inOut'
-        });
-        
-        // 강화된 궤적 생성
-        this.createEnhancedTrail();
-        
-        // 부스트 효과음 재생 (오디오 구현 시 활성화)
-        // this.playBoostSound();
-        
-        // 일정 시간 후 애니메이션 플래그 해제
-        setTimeout(() => {
-            this.isAnimating = false;
-        }, this.isMobile ? 800 : 1000); // 모바일에서 더 빠르게 정리
-    }
-    
-    /**
-     * 부스트 효과음 재생 (미래 구현용)
-     */
-    playBoostSound() {
-        // 오디오 효과 구현 예정
-        console.log('부스트 효과음 재생');
-    }
-    
-    /**
-     * 궤적 생성 시작 - 모바일 최적화 버전
-     */
-    startTrailCreation() {
-        // 이전 인터벌 제거
-        if (this.trailInterval) {
-            clearInterval(this.trailInterval);
-        }
-        
-        // 기기 유형에 따른 다른 간격 설정 (간격 증가로 최적화)
-        const interval = this.isMobile ? 400 : 300; // 모바일: 400ms, 데스크톱: 300ms (이전: 250ms, 150ms)
-        
-        // 새 인터벌 설정
-        this.trailInterval = setInterval(() => {
-            // 현재 시간 체크 (쓰로틀링)
-            const now = Date.now();
-            
-            // 마지막 이동 후 쓰로틀 시간이 지났으면 궤적 생성
-            if (now - this.lastMoveTime >= this.moveThrottle) {
-                this.createTrail();
-                this.lastMoveTime = now;
-            }
-        }, interval);
-        
-        console.log(`궤적 생성 시작 - ${this.isMobile ? '모바일' : '데스크톱'} 최적화 (${interval}ms 간격)`);
-    }
-    
-    /**
-     * 일반 궤적 생성 - 모바일 환경 최적화 버전
-     */
-    createTrail() {
-        if (!this.rocket) return;
-        
-        // 오래된 궤적 제거
-        if (this.trailElements.length >= this.maxTrailElements) {
-            const oldTrail = this.trailElements.shift();
-            if (oldTrail && oldTrail.parentNode) {
-                oldTrail.parentNode.removeChild(oldTrail);
-            }
-        }
-        
-        // 랜덤 생성 확률 - 성능 최적화를 위해 생성 확률 감소
-        if ((this.isMobile && Math.random() > 0.5) || (!this.isMobile && Math.random() > 0.7)) {
-            return; // 모바일: 50% 확률로 건너뛰기, 데스크톱: 30% 확률로 건너뛰기
-        }
-        
-        // 새 궤적 생성
-        const trail = document.createElement('div');
-        trail.className = 'rocket-trail';
-        
-        // 로켓 위치에 궤적 배치
-        const rocketRect = this.rocket.getBoundingClientRect();
-        
-        // 기기 유형에 따른 크기 조정
-        const baseSize = this.isMobile ? 3 : 4; // 크기 감소
-        const trailSize = Math.random() * baseSize + baseSize;
-        
-        gsap.set(trail, {
-            width: trailSize,
-            height: trailSize,
-            left: rocketRect.left + rocketRect.width / 2,
-            top: rocketRect.bottom - (this.isMobile ? 10 : 15),
-            backgroundColor: 'rgba(255, 255, 255, 0.8)',
-            borderRadius: '50%',
-            filter: this.isMobile ? 'blur(0.5px)' : 'blur(1px)' // 블러 효과 감소
-        });
-        
-        // 문서에 궤적 추가
-        document.body.appendChild(trail);
-        this.trailElements.push(trail);
-        
-        // 애니메이션 지속 시간 - 짧게 설정
-        const animDuration = this.isMobile ? 0.8 : 1.2;
-        
-        // 궤적 페이드 아웃 애니메이션
-        gsap.to(trail, {
-            width: trailSize * (this.isMobile ? 1.1 : 1.3), // 확장 효과 감소
-            height: trailSize * (this.isMobile ? 1.1 : 1.3),
-            opacity: 0,
-            duration: animDuration,
-            ease: 'power1.out',
-            onComplete: () => {
-                // 애니메이션 완료 후 DOM에서 제거
-                if (trail.parentNode) {
-                    trail.parentNode.removeChild(trail);
-                    const index = this.trailElements.indexOf(trail);
-                    if (index > -1) {
-                        this.trailElements.splice(index, 1);
-                    }
-                }
-            }
-        });
-    }
-    
-    /**
-     * 강화된 궤적 생성 (부스트 효과 때 사용) - 모바일 환경 최적화
-     */
-    createEnhancedTrail() {
-        if (!this.rocket) return;
-        
-        // 기기 유형에 따른 궤적 수 조정 (개수 감소로 최적화)
-        const particleCount = this.isMobile ? 3 : 5; // 모바일: 3개, 데스크톱: 5개 (이전: 5개, 10개)
-        const particleDelay = this.isMobile ? 100 : 70; // 모바일: 100ms, 데스크톱: 70ms (이전: 80ms, 50ms)
-        
-        // 다수의 궤적을 빠르게 생성
-        for (let i = 0; i < particleCount; i++) {
-            setTimeout(() => {
-                // 새 궤적 생성
-                const trail = document.createElement('div');
-                trail.className = 'rocket-trail enhanced';
-                
-                // 로켓 위치에 궤적 배치
-                const rocketRect = this.rocket.getBoundingClientRect();
-                
-                // 기기 유형에 따른 크기 조정
-                const baseSize = this.isMobile ? 5 : 7; // 모바일: 5px, 데스크톱: 7px (이전: 6px, 8px)
-                const trailSize = Math.random() * baseSize + baseSize;
-                
-                // 약간의 무작위성 추가
-                const offsetX = (Math.random() - 0.5) * (this.isMobile ? 5 : 8);
-                const offsetY = Math.random() * (this.isMobile ? 5 : 8);
-                
-                gsap.set(trail, {
-                    width: trailSize,
-                    height: trailSize,
-                    left: rocketRect.left + rocketRect.width / 2 + offsetX,
-                    top: rocketRect.bottom - 15 + offsetY,
-                    backgroundColor: 'rgba(255, 168, 0, 0.8)',
-                    borderRadius: '50%',
-                    boxShadow: this.isMobile ? 
-                        '0 0 3px rgba(255, 100, 0, 0.6)' : // 그림자 효과 감소
-                        '0 0 5px rgba(255, 100, 0, 0.7)'
-                });
-                
-                // 문서에 궤적 추가
-                document.body.appendChild(trail);
-                
-                // 애니메이션 지속 시간 - 모바일에서 짧게
-                const animDuration = this.isMobile ? 0.7 : 0.9;
-                
-                // 애니메이션 거리 - 모바일에서 작게
-                const yDistance = this.isMobile ? 
-                    (Math.random() * 15 + 10) : // 모바일: 10-25px (이전: 15-35px)
-                    (Math.random() * 20 + 15);  // 데스크톱: 15-35px (이전: 20-50px)
-                
-                // 궤적 페이드 아웃 애니메이션
-                gsap.to(trail, {
-                    width: trailSize * (this.isMobile ? 1.3 : 1.5), // 확장 효과 감소
-                    height: trailSize * (this.isMobile ? 1.3 : 1.5),
-                    opacity: 0,
-                    y: '+=' + yDistance,
-                    x: offsetX * (this.isMobile ? 1.5 : 2),
-                    duration: animDuration,
-                    ease: 'power2.out',
-                    onComplete: () => {
-                        if (trail.parentNode) {
-                            trail.parentNode.removeChild(trail);
-                        }
-                    }
-                });
-            }, i * particleDelay);
-        }
-    }
-    
-    /**
-     * 착륙 애니메이션 시작 
-     * (비활성화 - rocket-landing.js에서 처리)
-     */
-    startLandingAnimation() {
-        // 착륙 애니메이션은 rocket-landing.js에서 처리하므로 이 함수는 아무 동작도 하지 않음
-        console.log("착륙 애니메이션이 rocket-landing.js로 위임되었습니다");
-    }
-    
-    /**
-     * 착륙 애니메이션 중지
-     * (비활성화 - rocket-landing.js에서 처리)
-     */
-    stopLandingAnimation() {
-        // 착륙 애니메이션은 rocket-landing.js에서 처리하므로 이 함수는 아무 동작도 하지 않음
-        if (this.landingAnimation) {
-            this.landingAnimation.kill();
-            this.landingAnimation = null;
-        }
-    }
-    
-    /**
-     * 섹션에 따른 기본 회전 각도 가져오기
-     * @param {string} section - 섹션 이름
-     * @returns {number} - 회전 각도
-     */
-    getSectionRotation(section) {
-        const rotations = {
-            home: 0,
-            about: -15,
-            experience: -30,
-            skills: -45,
-            portfolio: -60,
-            contact: -90
         };
         
-        return rotations[section] || 0;
+        // passive: true로 이벤트 리스너 최적화 (터치는 false로 설정하여 preventDefault 사용)
+        document.addEventListener('mousemove', this._mouseMoveHandler, { passive: true });
+        document.addEventListener('touchmove', this._touchMoveHandler, { passive: false });
+        
+        // 로켓 요소에 직접 이벤트 리스너 추가 (마우스 이벤트가 다른 요소에 가려질 경우를 대비)
+        if (this.rocket) {
+            this.rocket.addEventListener('mousemove', this._mouseMoveHandler, { passive: true });
+            this.rocket.addEventListener('touchmove', this._touchMoveHandler, { passive: false });
+        }
+        
+        // 클릭/터치 이벤트 핸들러 추가 - 로켓을 마우스 위치에서 일정 거리 유지
+        const clickHandler = (e) => {
+            if (this.isActive && !this.isPaused) {
+                const x = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : null);
+                const y = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : null);
+                
+                if (x !== null && y !== null) {
+                    this.mouseX = x;
+                    this.mouseY = y;
+                    this.lastMouseMoveTime = Date.now();
+                    
+                    // 마우스 위치에서 위쪽으로 오프셋 적용하여 로켓 위치 계산
+                    const targetX = x;
+                    const targetY = y - this.offsetDistance; // 위쪽으로 오프셋
+                    
+                    // 즉시 애니메이션 (매우 빠른 이동)
+                    gsap.to(this.rocket, {
+                        left: targetX,
+                        top: targetY,
+                        duration: 0.1, // 즉각적인 이동
+                        ease: "none",
+                        rotation: this.fixedRotation, // 고정 회전
+                        xPercent: -50,
+                        yPercent: -50,
+                        overwrite: true
+                    });
+                }
+            }
+        };
+        
+        // 클릭/터치 이벤트 추가
+        document.addEventListener('click', clickHandler, { passive: true });
+        document.addEventListener('touchstart', clickHandler, { passive: true });
+        
+        console.log('마우스/터치 트래킹 활성화됨');
+    }
+    
+    /**
+     * 애니메이션 루프 시작
+     */
+    startAnimationLoop() {
+        if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+        }
+        
+        // 애니메이션 프레임 요청
+        let lastFrame = Date.now();
+        const fps = 60; // 목표 FPS
+        const frameInterval = 1000 / fps;
+        
+        const animate = () => {
+            const now = Date.now();
+            const elapsed = now - lastFrame;
+            
+            // 프레임 간격 조절 (CPU 과부하 방지)
+            if (elapsed > frameInterval) {
+                lastFrame = now - (elapsed % frameInterval);
+                
+                // 마우스 이동이 있을 때만 애니메이션 적용 (성능 최적화)
+                if (this.isActive && !this.isPaused && !this.isAnimating) {
+                    // 마지막 마우스 이동 후 5초가 지나면 업데이트 빈도 줄임
+                    const timeSinceLastMove = now - this.lastMouseMoveTime;
+                    if (timeSinceLastMove < 5000 || now % 500 < 100) { // 5초 이후에는 0.5초마다 한 번씩만 업데이트
+                        this.updateRocketPosition();
+                    }
+                }
+            }
+            
+            this.animationFrameId = requestAnimationFrame(animate);
+        };
+        
+        this.animationFrameId = requestAnimationFrame(animate);
+        console.log('애니메이션 루프 시작됨');
+    }
+    
+    /**
+     * 로켓 위치 업데이트 - 최적화된 버전
+     */
+    updateRocketPosition() {
+        if (!this.rocket || !this.isActive || this.isPaused) return;
+        
+        try {
+            this.isAnimating = true;
+            
+            // 현재 로켓 위치 가져오기
+            const rocketRect = this.rocket.getBoundingClientRect();
+            const rocketCenterX = rocketRect.left + rocketRect.width / 2;
+            const rocketCenterY = rocketRect.top + rocketRect.height / 2;
+            
+            // 마우스 위치에서 오프셋 적용
+            const targetX = this.mouseX;
+            const targetY = this.mouseY - this.offsetDistance; // 마우스보다 위쪽에 위치
+            
+            // 로켓과 목표 위치 사이의 거리 계산
+            const deltaX = targetX - rocketCenterX;
+            const deltaY = targetY - rocketCenterY;
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            
+            // 일정 거리 이상 떨어졌을 때만 애니메이션 적용 (미세한 떨림 방지)
+            if (distance > 5) {
+                // 거리에 따라 애니메이션 속도 조절 (가까울수록 빠르게)
+                const maxDuration = 0.12; // 최대 지속시간 (더 빠르게)
+                const minDuration = 0.05; // 최소 지속시간
+                const dynamicDuration = Math.max(minDuration, Math.min(maxDuration, 0.05 + (distance / 10000)));
+                
+                // GSAP 애니메이션 적용
+                gsap.to(this.rocket, {
+                    left: targetX,
+                    top: targetY,
+                    rotation: this.fixedRotation, // 항상 고정된 방향 사용
+                    duration: dynamicDuration,
+                    ease: "power1.out", // 더 빠른 ease 사용
+                    xPercent: -50,
+                    yPercent: -50,
+                    overwrite: "auto", // 이전 애니메이션 덮어쓰기
+                    onComplete: () => {
+                        this.isAnimating = false;
+                    }
+                });
+                
+                // 화염 효과 조절 (거리에 따라 크기 조절)
+                if (this.flame) {
+                    // 거리가 멀수록 화염 크기 증가
+                    const flameHeight = Math.min(30 + distance / 15, 60);
+                    const flameOpacity = Math.min(0.7 + distance / 1000, 1);
+                    
+                    gsap.to(this.flame, {
+                        height: flameHeight + "px",
+                        opacity: flameOpacity,
+                        duration: 0.1,
+                        ease: "none",
+                        overwrite: true
+                    });
+                }
+            } else {
+                // 거리가 가까우면 애니메이션 완료 상태로 전환
+                this.isAnimating = false;
+            }
+        } catch (error) {
+            console.error('로켓 위치 업데이트 오류:', error);
+            this.isAnimating = false;
+        }
+    }
+    
+    /**
+     * 애니메이션 일시 정지
+     */
+    pauseAnimation() {
+        this.isPaused = true;
+        console.log('로켓 애니메이션 일시 정지됨');
+    }
+    
+    /**
+     * 애니메이션 재개
+     */
+    resumeAnimation() {
+        this.isPaused = false;
+        this.lastMouseMoveTime = Date.now(); // 마지막 마우스 이동 시간 업데이트
+        console.log('로켓 애니메이션 재개됨');
+    }
+    
+    /**
+     * 오프셋 거리 설정
+     */
+    setOffsetDistance(distance) {
+        if (typeof distance === 'number' && distance >= 0) {
+            this.offsetDistance = distance;
+            console.log(`로켓 오프셋 거리가 ${distance}px로 설정됨`);
+        }
+    }
+    
+    /**
+     * 회전 방향 설정
+     */
+    setFixedRotation(angle) {
+        if (typeof angle === 'number') {
+            this.fixedRotation = angle;
+            console.log(`로켓 고정 회전각이 ${angle}도로 설정됨`);
+        }
+    }
+    
+    /**
+     * 클린업 함수
+     */
+    cleanup() {
+        if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+        }
+        
+        if (this._mouseMoveHandler) {
+            document.removeEventListener('mousemove', this._mouseMoveHandler);
+            document.removeEventListener('touchmove', this._touchMoveHandler);
+            
+            if (this.rocket) {
+                this.rocket.removeEventListener('mousemove', this._mouseMoveHandler);
+                this.rocket.removeEventListener('touchmove', this._touchMoveHandler);
+            }
+        }
+        
+        this.isActive = false;
+        this.isPaused = true;
     }
 }
 
-// DOM이 로드된 후 실행
+// 로켓 인스턴스 생성 함수
+function createRocketInstance() {
+    try {
+        window.rocketInstance = new ImprovedRocketAnimation();
+        window.COSMIC_PORTFOLIO = window.COSMIC_PORTFOLIO || {};
+        window.COSMIC_PORTFOLIO.rocket = window.rocketInstance;
+        console.log('로켓 인스턴스가 성공적으로 생성되었습니다.');
+        return window.rocketInstance;
+    } catch (error) {
+        console.error('로켓 인스턴스 생성 오류:', error);
+        return null;
+    }
+}
+
+// 즉시 인스턴스 생성
 document.addEventListener('DOMContentLoaded', () => {
-    // 로딩 화면이 제거된 후 로켓 애니메이션 초기화
-    setTimeout(() => {
-        window.improvedRocketAnimation = new ImprovedRocketAnimation();
-    }, 2000);
+    // 즉시 로켓 애니메이션 인스턴스 생성
+    createRocketInstance();
 });
+
+// 페이지 로드 완료 시 추가 확인
+window.addEventListener('load', () => {
+    if (!window.rocketInstance) {
+        console.log('로드 완료 후 로켓 인스턴스 다시 확인 - 없으면 생성');
+        createRocketInstance();
+    } else {
+        // 이미 존재하는 인스턴스 강제 활성화
+        window.rocketInstance.isActive = true;
+        window.rocketInstance.isPaused = false;
+        window.rocketInstance.setRocketStyles();
+        window.rocketInstance.setupMouseTracking();
+        window.rocketInstance.startAnimationLoop();
+        console.log('로켓 인스턴스 강제 활성화 완료');
+    }
+});
+
+// 전역 함수로 노출 (필요시 다른 스크립트에서 호출할 수 있도록)
+window.activateRocket = function() {
+    if (!window.rocketInstance) {
+        window.rocketInstance = createRocketInstance();
+    }
+    
+    if (window.rocketInstance) {
+        window.rocketInstance.isActive = true;
+        window.rocketInstance.isPaused = false;
+        window.rocketInstance.setRocketStyles();
+        window.rocketInstance.setupMouseTracking();
+        window.rocketInstance.startAnimationLoop();
+        console.log('로켓 활성화 함수 호출됨');
+    }
+};

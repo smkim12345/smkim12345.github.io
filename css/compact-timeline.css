@@ -65,6 +65,10 @@
 .timeline-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border-color: var(--color-primary);
+    z-index: 10;
 }
 
 .timeline-card:hover::before {
@@ -163,6 +167,7 @@
     margin: 0 auto;
     padding: var(--spacing-xl) 0;
     position: relative;
+    overflow: visible;
 }
 
 /* 자격증 컨테이너 */
@@ -171,8 +176,9 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     gap: var(--spacing-md);
-    overflow-x: auto;
-    padding-bottom: var(--spacing-sm);
+    overflow: visible;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 /* 자격증 뱃지 */
@@ -191,7 +197,7 @@
     backdrop-filter: blur(10px);
     transition: all var(--transition-fast);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     z-index: 1;
 }
 
@@ -209,8 +215,10 @@
 }
 
 .certificate-badge:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border-color: var(--color-primary);
+    z-index: 10;
 }
 
 .certificate-badge:hover::before {

@@ -21,7 +21,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 99%;
     height: 100%;
     background: linear-gradient(to bottom, #0f2541, #061525);
     z-index: 1;
@@ -130,6 +130,20 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
+/* 우주소년 스타일 */
+.space-boy {
+    position: absolute;
+    bottom: -35px;
+    left: 5%;
+    z-index: 10;
+    transform: translateY(-20%);
+}
+
+.space-boy-img {
+    width: 250px;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(110, 68, 255, 0.3));
+}
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
@@ -145,5 +159,14 @@
     
     #rocket-landing-spot {
         bottom: 40px;
+    }
+    
+    .space-boy {
+        left: 0;
+        transform: translateY(-10%);
+    }
+    
+    .space-boy-img {
+        width: 100px;
     }
 }

@@ -7,28 +7,88 @@
 document.addEventListener("DOMContentLoaded", () => {
   // 로딩 화면 처리
   const loadingScreen = document.querySelector(".loading-screen");
+  const rocket = document.getElementById("rocket-element");
+  
+  console.log("DOM 로드: 로켓 초기화 준비");
+  
+  // 로켓 인스턴스 즉시 초기화 (지연 없이)
+  if (!window.rocketInstance && typeof ImprovedRocketAnimation === 'function') {
+    console.log("로켓 인스턴스 초기화 중...");
+    try {
+      window.rocketInstance = new ImprovedRocketAnimation();
+      window.COSMIC_PORTFOLIO = {
+        rocket: window.rocketInstance
+      };
+      console.log("로켓 인스턴스 생성 완료");
+    } catch (error) {
+      console.error("로켓 인스턴스 생성 오류:", error);
+    }
+  }
 
   window.addEventListener("load", () => {
+    // 로딩 화면 숨기기
     setTimeout(() => {
       gsap.to(loadingScreen, {
         opacity: 0,
-        duration: 1,
+        duration: 0.5, // 로딩화면 전환 속도 단축
         onComplete: () => {
+          // 로딩 화면 숨김
           loadingScreen.style.display = "none";
+          loadingScreen.style.visibility = "hidden";
+          loadingScreen.style.zIndex = "-1";
+          
           // 인트로 애니메이션 시작
           startIntroAnimation();
 
-          // 로켓 애니메이션 시작 효과
-          const rocket = document.getElementById("rocket-element");
+          // 로켓 활성화 확인
           if (rocket) {
+            // 로켓 부스터 효과
             rocket.classList.add("rocket-boost");
             setTimeout(() => {
               rocket.classList.remove("rocket-boost");
             }, 1000);
+            
+            // 로켓 인스턴스 활성화
+            if (window.rocketInstance) {
+              console.log("로켓 인스턴스 활성화");
+              
+              // 강제로 활성화 상태 설정
+              window.rocketInstance.isActive = true;
+              window.rocketInstance.isPaused = false;
+              
+              // 마우스 추적 강제 활성화
+              if (typeof window.rocketInstance.setupMouseTracking === 'function') {
+                window.rocketInstance.setupMouseTracking();
+              } else if (typeof window.rocketInstance.setupMouseRotation === 'function') {
+                window.rocketInstance.setupMouseRotation();
+              }
+              
+              // 초기 위치 강제 업데이트
+              if (typeof window.rocketInstance.updateRocketPosition === 'function') {
+                // 마우스 포인터 위치 강제 설정 (화면 중앙)
+                window.rocketInstance.mouseX = window.innerWidth / 2;
+                window.rocketInstance.mouseY = window.innerHeight / 2;
+                window.rocketInstance.updateRocketPosition();
+              }
+            } else {
+              console.warn("로켓 인스턴스가 없습니다. 새로 생성합니다.");
+              try {
+                // 로켓 인스턴스 새로 생성
+                window.rocketInstance = new ImprovedRocketAnimation();
+                window.COSMIC_PORTFOLIO = {
+                  rocket: window.rocketInstance
+                };
+                window.rocketInstance.isActive = true;
+              } catch (error) {
+                console.error("로켓 인스턴스 재생성 오류:", error);
+              }
+            }
+          } else {
+            console.error("로켓 요소를 찾을 수 없습니다.");
           }
-        },
+        }
       });
-    }, 2000); // 2초 후 로딩 화면 페이드 아웃
+    }, 300); // 로딩 시간 단축 (500ms -> 300ms)
   });
 
   // 스크롤 시 내비게이션 스타일 변경
@@ -101,7 +161,48 @@ document.addEventListener("DOMContentLoaded", () => {
         link.classList.add("active");
       }
     });
+    
+    // 네비게이션 바 업데이트
+    updateNavbar();
   });
+  
+  // 페이지 로드 시 현재 활성 섹션에 맞게 네비게이션 바 업데이트
+  updateNavbar();
+  
+  // 네비게이션 바 업데이트 함수
+  function updateNavbar() {
+    // 현재 활성화된 링크 찾기
+    const activeLink = document.querySelector('.nav-link.active');
+    
+    if (activeLink) {
+      // 활성 링크의 위치와 너비 가져오기
+      const linkRect = activeLink.getBoundingClientRect();
+      const linkWidth = linkRect.width;
+      const linkLeft = linkRect.left;
+      
+      // active-indicator 요소 가져오기 (없으면 생성)
+      let activeIndicator = document.querySelector('.active-indicator');
+      
+      if (!activeIndicator) {
+        activeIndicator = document.createElement('div');
+        activeIndicator.className = 'active-indicator';
+        document.querySelector('.nav-links').appendChild(activeIndicator);
+        
+        // 인디케이터 스타일 설정
+        activeIndicator.style.position = 'absolute';
+        activeIndicator.style.bottom = '-4px';
+        activeIndicator.style.height = '3px';
+        activeIndicator.style.background = 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))';
+        activeIndicator.style.borderRadius = '2px';
+        activeIndicator.style.transition = 'all 0.3s ease';
+      }
+      
+      // 인디케이터 위치와 너비 설정
+      activeIndicator.style.width = `${linkWidth}px`;
+      activeIndicator.style.left = `${linkLeft}px`;
+      activeIndicator.style.opacity = '1';
+    }
+  }
 
   // 포트폴리오 필터링
   const filterBtns = document.querySelectorAll(".filter-btn");

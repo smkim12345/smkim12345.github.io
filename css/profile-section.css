@@ -6,7 +6,8 @@
 .profile-section {
     position: relative;
     padding: var(--spacing-xxl) 0;
-    background-color: rgba(10, 13, 31, 0.7);
+    /* 배경색 제거 - 우주 배경이 보이도록 */
+    /* background-color: rgba(10, 13, 31, 0.7); */
     overflow: hidden;
 }
 
@@ -33,9 +34,12 @@
 
 .lead-text {
     font-size: 1.5rem;
-    font-weight: 500;
+    font-weight: 700;
     margin-bottom: var(--spacing-md);
-    color: var(--color-primary);
+    background-image: linear-gradient(to top left, #3063b3, #a2a2d4, #5c0b8a);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
 }
 
 .image-container {
@@ -44,18 +48,41 @@
     position: relative;
 }
 
-
 .planet-avatar {
     position: absolute;
     width: 220px;
     height: 220px;
     top: 30px;
-    left: 30px;
+    left: 220px;
     border-radius: 50%;
-    background-image: url('../assets/images/profile.jpg');
-    background-size: cover;
-    background-position: center;
+    background-image: none; /* 배경 이미지 제거 */
     box-shadow: 0 0 30px rgba(110, 68, 255, 0.4);
+    overflow: hidden; /* 추가: 이미지를 원 안에 가두기 위해 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-tertiary));
+}
+
+/* 프로필 섹션의 독립적인 이미지 스타일 */
+.profile-section-photo {
+    position: absolute;
+    width: 600px;
+    height: auto;
+    top: 50%;
+    right: 0px;
+    transform: translateY(-50%);
+    z-index: 20;    
+    border-radius: 30%;
+    box-shadow: 0 0 30px rgba(110, 68, 255, 0.4);
+}
+
+.planet-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
 }
 
 /* 프로필 탭 네비게이션 제거 */
@@ -78,11 +105,12 @@
 
 /* 각 섹션 제목 스타일 */
 .section-subtitle {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 600;
-    color: var(--color-primary);
+    color: #bbbfff; /* 더 밝은 연한 보라색으로 변경 */
     margin-bottom: var(--spacing-lg);
     text-align: center;
+    text-shadow: 0 0 4px rgba(163, 168, 255, 0.5); /* 텍스트에 빛나는 효과 추가 */
 }
 
 /* 가상 요소로 생성된 중복 제목 제거 */
@@ -147,8 +175,9 @@
     animation-delay: 1s;
 }
 
-/* 유성 효과 유지 */
+/* 유성 효과 제거 */
 .meteor {
+    display: none; /* 유성 효과 숨김 */
     position: absolute;
     width: 150px;
     height: 2px;
@@ -213,6 +242,12 @@
         height: 180px;
         top: 20px;
         left: 20px;
+    }
+    
+    .profile-section-photo {
+        width: 350px;
+        right: 50%;
+        transform: translate(50%, -50%);
     }
     
     .profile-tabs {

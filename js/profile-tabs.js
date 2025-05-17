@@ -49,35 +49,52 @@ function initProfileTabs() {
  * 스킬 프로그레스바 애니메이션 초기화
  */
 function initSkillAnimations() {
-    // ScrollTrigger를 사용하여 스킬 섹션이 보일 때 애니메이션 실행
-    gsap.registerPlugin(ScrollTrigger);
-    
-    const skillSection = document.getElementById('profile');
+    // 스킬 섹션이 보일 때 애니메이션 실행
+    const skillSection = document.getElementById('skills-tab') || document.getElementById('profile');
     
     if (skillSection) {
         const skillBars = document.querySelectorAll('.skill-level');
         
-        // ScrollTrigger 설정
+        // 스킬 바 초기화
+        skillBars.forEach(bar => {
+            const progress = bar.querySelector('.skill-progress');
+            if (progress) {
+                gsap.set(progress, { width: '0%' });
+            }
+        });
+        
+        // 페이지 로드 시 애니메이션 실행
+        setTimeout(animateSkills, 500);
+        
+        // 스크롤 이벤트를 통한 애니메이션 트리거
+        gsap.registerPlugin(ScrollTrigger);
         ScrollTrigger.create({
             trigger: skillSection,
             start: 'top 70%',
             onEnter: () => animateSkills(),
+            onEnterBack: () => animateSkills(),
             once: false
         });
         
-        // 탭 변경 시에도 애니메이션이 작동하도록 호출될 수 있음
+        // 애니메이션 함수
         function animateSkills() {
             skillBars.forEach(bar => {
                 const level = bar.getAttribute('data-level');
                 const progress = bar.querySelector('.skill-progress');
                 
-                gsap.to(progress, {
-                    width: `${level}%`,
-                    duration: 1.2,
-                    ease: 'power2.out'
-                });
+                if (progress) {
+                    gsap.killTweensOf(progress); // 기존 애니메이션 중단
+                    gsap.to(progress, {
+                        width: `${level}%`,
+                        duration: 1.5,
+                        ease: 'power2.out'
+                    });
+                }
             });
         }
+        
+        // 전역 스코프에 애니메이션 함수 노출
+        window.animateSkills = animateSkills;
     }
 }
 

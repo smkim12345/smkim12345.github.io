@@ -8,24 +8,11 @@
     position: fixed;
     width: 80px;
     height: 120px;
-    z-index: 900;
-    pointer-events: none;
+    z-index: 10000;
+    pointer-events: auto !important;
     transform-origin: center center;
     transition: transform 0.3s ease;
     will-change: transform, left, top;
-}
-
-/* 착륙한 로켓 스타일 - 절대 위치로 고정 */
-.rocket-has-landed #rocket-element {
-    position: absolute !important; /* 중요함 - 다른 스타일보다 우선 적용 */
-    pointer-events: none;
-    z-index: 900;
-    transition: none; /* 스크롤 시 전환 효과 제거 */
-}
-
-/* 착륙한 로켓의 화염은 숨김 처리 */
-.rocket-has-landed .rocket-flame {
-    display: none !important;
 }
 
 /* 로켓 이미지 스타일 */
@@ -33,6 +20,20 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+    pointer-events: auto !important;
+}
+
+/* 착륙한 로켓 스타일 - 절대 위치로 고정 */
+.rocket-has-landed #rocket-element {
+    position: absolute !important;
+    pointer-events: none;
+    z-index: 9999;
+    transition: none;
+}
+
+/* 착륙한 로켓의 화염은 숨김 처리 */
+.rocket-has-landed .rocket-flame {
+    display: none !important;
 }
 
 /* 로켓 화염 효과 */
@@ -49,6 +50,7 @@
     opacity: 0.8;
     will-change: height, opacity;
     animation: flame 0.3s infinite alternate;
+    pointer-events: none;
 }
 
 /* 로켓 화염 애니메이션 */
@@ -68,7 +70,7 @@
     position: fixed;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 50%;
-    z-index: 899;
+    z-index: 8999;
     pointer-events: none;
     will-change: opacity, width, height;
 }
@@ -88,7 +90,7 @@
     z-index: 899;
     opacity: 0.5;
     pointer-events: none;
-    display: none; /* 기본 비활성화 */
+    display: none;
 }
 
 /* 섹션별 로켓 스타일 변형 */
