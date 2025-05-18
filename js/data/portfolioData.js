@@ -161,6 +161,34 @@ export const portfolioData = {
   },
   "%EC%84%AC%EB%84%A4%EC%9D%BC_%EA%B0%A4%EB%9F%AD%EC%8B%9C%20%EB%B2%84%EC%A6%883%ED%94%84%EB%A1%9C%20%EC%83%81%EC%84%B8%ED%8E%98%EC%9D%B4%EC%A7%80": {
     ref: "galaxy-buds", // 참조 형태로 중복 데이터 방지
+  },
+
+  // 광고 포스터 프로젝트
+  "ad-poster": {
+    title: "광고 포스터 디자인",
+    imagePath: "images/광고 포스터/상세_광고 포스터.png",
+    tools: ["Photoshop", "Illustrator"],
+    category: "print",
+  },
+  "섬네일_광고 포스터": {
+    ref: "ad-poster", // 참조 형태로 중복 데이터 방지
+  },
+  "%EC%84%AC%EB%84%A4%EC%9D%BC_%EA%B4%91%EA%B3%A0%20%ED%8F%AC%EC%8A%A4%ED%84%B0": {
+    ref: "ad-poster", // 참조 형태로 중복 데이터 방지
+  },
+
+  // 내지 디자인 프로젝트
+  "inner-page": {
+    title: "내지 디자인",
+    imagePath: "images/광고 포스터/상세_내지 디자인.png",
+    tools: ["Photoshop", "InDesign"],
+    category: "print",
+  },
+  "섬네일_내지": {
+    ref: "inner-page", // 참조 형태로 중복 데이터 방지
+  },
+  "%EC%84%AC%EB%84%A4%EC%9D%BC_%EB%82%B4%EC%A7%80": {
+    ref: "inner-page", // 참조 형태로 중복 데이터 방지
   }
 };
 

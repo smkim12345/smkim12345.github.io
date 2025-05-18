@@ -492,9 +492,23 @@ class PortfolioImageModal {
         title: "갤럭시 버즈3 프로 상세페이지",
         imagePath: "images/갤럭시버즈/상세_갤럭시 버즈3프로.jpg", // 확장자 수정: .png → .jpg
         tools: ["Adobe XD", "Photoshop", "HTML/CSS"],
-        // hasResponsive 제거하여 반응형 버튼 제거
-        // responsiveUrl 제거
         category: "web"
+      },
+      
+      // 광고 포스터 프로젝트
+      "섬네일_광고 포스터": {
+        title: "광고 포스터 디자인",
+        imagePath: "images/광고 포스터/상세_광고 포스터.png",
+        tools: ["Photoshop", "Illustrator"],
+        category: "print"
+      },
+      
+      // 내지 디자인 프로젝트
+      "섬네일_내지": {
+        title: "내지 디자인",
+        imagePath: "images/광고 포스터/상세_내지 디자인.png",
+        tools: ["Photoshop", "InDesign"],
+        category: "print"
       }
     };
     
@@ -796,7 +810,7 @@ class PortfolioImageModal {
 
 // 페이지 로드 후 모달 초기화
 document.addEventListener("DOMContentLoaded", () => {
-  new PortfolioImageModal();
+  const modal = new PortfolioImageModal();
   
   // 페이지 로드 시 이전에 저장된 스크롤 위치 복원
   if (window.savedPortfolioScrollPosition) {
@@ -808,5 +822,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }, 300);
   }
+  
+  // DOM 업데이트 후 이벤트 리스너 다시 연결
+  setTimeout(() => {
+    console.log("포트폴리오 항목 이벤트 리스너 다시 연결");
+    modal.updatePortfolioItems();
+  }, 1000);
 });
 
