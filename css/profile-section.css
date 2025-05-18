@@ -18,11 +18,27 @@
     align-items: center;
     gap: var(--spacing-xl);
     margin-bottom: var(--spacing-xl);
+    
 }
 
 .profile-text {
     flex: 1;
     min-width: 300px;
+}
+
+/* 일반 소개글 p 태그 스타일 */
+.profile-text p {
+    font-size: 1.2rem; /* 글자 크기 증가 */
+    line-height: 1.5; /* 줄 간격 조정 */
+    margin-bottom: 1.2rem;
+    font-family: var(--font-korean); /* 한글 폰트 적용 */
+}
+
+/* strong 태그 강조 효과 */
+.profile-text p strong {
+    color: #cb7eff;
+    font-weight: 600;
+    font-size: 1.25rem; /* 제목 부분을 일반 텍스트보다 약간 더 크게 */
 }
 
 .profile-image {
@@ -33,9 +49,11 @@
 }
 
 .lead-text {
-    font-size: 1.5rem;
+    font-size: 2rem !important; /* 더 크게 변경 */
     font-weight: 700;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: 1.5rem;
+    color: var(--color-primary);
+    font-family: var(--font-korean);
     background-image: linear-gradient(to top left, #3063b3, #a2a2d4, #5c0b8a);
     background-clip: text;
     -webkit-background-clip: text;
@@ -235,7 +253,6 @@
         width: 220px;
         height: 220px;
     }
-
     
     .planet-avatar {
         width: 180px;
@@ -246,8 +263,7 @@
     
     .profile-section-photo {
         width: 350px;
-        right: 50%;
-        transform: translate(50%, -50%);
+        top: -25%;
     }
     
     .profile-tabs {
@@ -258,3 +274,24 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* 프로필 텍스트 스타일 추가 */
+.profile-text p {
+  margin-bottom: 20px;
+  font-family: var(--font-korean);
+}
+
+/* 프로필 섹션 스타일 - 애니메이션 준비 */
+.profile-section .section-header,
+.profile-text p,
+.profile-image,
+#history-tab .section-subtitle,
+#history-tab .timeline-card,
+#certificates-tab .section-subtitle,
+#certificates-tab .certificate-badge,
+#skills-tab .section-subtitle,
+#skills-tab .skill-category {
+  will-change: transform, opacity;
+}
+
+/* 애니메이션 전 초기 상태 설정 제거 - 요소가 보이지 않는 문제 해결 */

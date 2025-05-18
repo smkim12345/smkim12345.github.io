@@ -31,8 +31,13 @@
   );
 
   /* 폰트 */
-  --font-primary: "Poppins", sans-serif;
-  --font-secondary: "Raleway", sans-serif;
+  --font-primary: "Orbitron", "Poppins", sans-serif;
+  --font-secondary: "Orbitron", "Raleway", sans-serif;
+  --font-korean: "HakgyoansimWoojuR", "Noto Sans KR", sans-serif;
+  
+  /* 특정 요소를 위한 폰트 설정 */
+  --font-heading: "Orbitron", "HakgyoansimWoojuR", sans-serif;
+  --font-body: "Poppins", "HakgyoansimWoojuR", sans-serif;
 
   /* 간격 및 크기 */
   --spacing-xs: 0.25rem;
@@ -78,7 +83,7 @@ section {
 }
 
 body {
-  font-family: var(--font-primary);
+  font-family: var(--font-body);
   background-color: var(--color-background);
   color: var(--color-text);
   line-height: 1.6;
@@ -141,6 +146,7 @@ textarea {
   cursor: pointer;
   transition: all var(--transition-fast);
   border: none;
+  font-family: var(--font-heading);
 }
 
 .primary-btn {
@@ -178,6 +184,7 @@ textarea {
   margin-bottom: var(--spacing-sm);
   position: relative;
   display: inline-block;
+  font-family: var(--font-heading);
 }
 
 .section-line {
@@ -301,10 +308,10 @@ textarea {
 }
 
 .nav-link {
+  padding: 0.5rem 1rem;
   font-weight: 500;
-  margin: 0 var(--spacing-md);
   position: relative;
-  padding: 0.5rem 0;
+  font-family: var(--font-heading);
 }
 
 .nav-link::after {
@@ -380,28 +387,33 @@ textarea {
   min-width: 300px;
 }
 
-.text-reveal {
-  margin-bottom: var(--spacing-lg);
-}
+
 
 .name {
   font-size: 4rem;
-  font-weight: 500;
-  line-height: 1.2;
-  margin-bottom: var(--spacing-sm);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+  line-height: 1.1;
+  font-family: var(--font-heading);
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: 3.5rem;
   font-weight: 700;
-  color: var(--color-primary);
-  margin-bottom: var(--spacing-sm);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  font-family: var(--font-korean);
 }
 
 .tagline {
-  font-size: 1.25rem;
-  margin-bottom: var(--spacing-xl);
-  max-width: 600px;
+  font-size: 1.5rem;
+  color: var(--color-text-muted);
+  margin-bottom: 2rem;
+  font-family: var(--font-korean);
 }
 
 .cta-buttons {
@@ -1099,4 +1111,12 @@ body.modal-open {
     margin: 0.3rem !important;
     min-width: auto;
   }
+}
+
+.loading-text {
+  margin-top: 20px;
+  font-size: 2rem;
+  color: var(--color-text);
+  letter-spacing: 2px;
+  font-family: var(--font-heading);
 }

@@ -38,6 +38,7 @@
 
 /* 로켓 화염 효과 */
 .rocket-flame {
+    display: none; /* 불꽃 효과 제거 */
     position: absolute;
     bottom: -15%;
     left: 50%;

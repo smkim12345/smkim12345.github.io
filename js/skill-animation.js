@@ -88,13 +88,13 @@ class SkillAnimationManager {
     setupIntersectionObserver() {
         const options = {
             root: null,
-            rootMargin: '-10% 0px -10% 0px', // 요소가 10% 더 보이면 트리거
-            threshold: 0.3 // 30% 이상 보이면 트리거
+            rootMargin: '0px 0px 0px 0px', // 여백 없음
+            threshold: 0.2 // 20% 이상 보이면 트리거
         };
         
         this.observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && !this.animationCompleted) {
+                if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
                     this.animateSkill(entry.target);
                 }
             });
@@ -140,7 +140,7 @@ class SkillAnimationManager {
      * @param {number} targetLevel - 목표 레벨 (0-100)
      */
     runProgressAnimation(progressBar, percentElement, targetLevel) {
-        const duration = 1500; // 애니메이션 지속 시간 (ms)
+        const duration = 1000; // 애니메이션 지속 시간 (ms) 조정
         const frameRate = 60; // 초당 프레임 수
         const totalFrames = (duration / 1000) * frameRate;
         const increment = targetLevel / totalFrames;
@@ -148,19 +148,19 @@ class SkillAnimationManager {
         let currentLevel = 0;
         let frame = 0;
         
-        // easeOutCubic 이징 함수
-        const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+        // easeOutQuart 이징 함수 - 더 자연스러운 진행
+        const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
         
         const animate = () => {
             frame++;
             const progress = frame / totalFrames;
-            const easedProgress = easeOutCubic(progress);
+            const easedProgress = easeOutQuart(progress);
             currentLevel = targetLevel * easedProgress;
             
             // 진행 바 너비 업데이트
             progressBar.style.width = `${currentLevel}%`;
             
-            // 퍼센트 텍스트 업데이트
+            // 퍼센트 텍스트 업데이트 (정수로 반올림)
             percentElement.textContent = `${Math.round(currentLevel)}%`;
             
             // 애니메이션 계속 또는 완료

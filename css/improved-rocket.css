@@ -43,6 +43,7 @@
 
 /* 로켓 화염 효과 - 개선 */
 .rocket-flame {
+    display: none; /* 불꽃 효과 제거 */
     position: absolute;
     bottom: -20px;
     left: 50%;

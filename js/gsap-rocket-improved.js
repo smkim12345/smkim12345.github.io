@@ -297,13 +297,10 @@ class ImprovedRocketAnimation {
                 
                 // 화염 효과 조절 (거리에 따라 크기 조절)
                 if (this.flame) {
-                    // 거리가 멀수록 화염 크기 증가
-                    const flameHeight = Math.min(30 + distance / 15, 60);
-                    const flameOpacity = Math.min(0.7 + distance / 1000, 1);
-                    
+                    // 화염 효과 비활성화
                     gsap.to(this.flame, {
-                        height: flameHeight + "px",
-                        opacity: flameOpacity,
+                        height: 0,
+                        opacity: 0,
                         duration: 0.1,
                         ease: "none",
                         overwrite: true

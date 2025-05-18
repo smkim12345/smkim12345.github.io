@@ -114,7 +114,7 @@
   }
 
   .lead-text {
-    font-size: 1.2rem;
+    font-size: 2rem !important;
   }
 
   /* 포트폴리오 모바일 반응형 */
@@ -237,7 +237,7 @@
   }
 
   .lead-text {
-    font-size: 1.1rem;
+    font-size: 2rem !important;
   }
 
   /* 내비게이션 모바일 스타일 */
