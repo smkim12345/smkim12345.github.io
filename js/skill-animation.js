@@ -124,11 +124,8 @@ class SkillAnimationManager {
         // 애프터 이펙트 특별 처리
         const isAfterEffect = skillItem.classList.contains('aftereffect-item');
         
-        // 애니메이션 지연 시간 계산 (스태거 효과)
-        const allSkillItems = document.querySelectorAll('.skill-item');
-        const index = Array.from(allSkillItems).indexOf(skillItem);
-        // 애프터 이펙트는 지연 시간을 조정
-        const delay = isAfterEffect ? 100 : index * 150; // 애프터 이펙트는 더 빠르게 시작
+        // 애니메이션 지연 시간 (모든 스킬 동시에 채워지도록 수정)
+        const delay = 100; // 모든 스킬 아이템에 동일한 지연 시간 적용
         
         // 지연 후 애니메이션 시작
         setTimeout(() => {
@@ -209,7 +206,7 @@ class SkillAnimationManager {
         this.skillItems.forEach((item, index) => {
             setTimeout(() => {
                 this.animateSkill(item);
-            }, index * 100);
+            }, 100); // 모든 스킬에 동일한 지연 시간 적용
         });
         
         this.animationCompleted = true;

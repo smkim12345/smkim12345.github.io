@@ -16,6 +16,136 @@
     <!-- 파비콘 -->
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
 
+    <!-- 우주 무중력 효과 스타일 -->
+    <style>
+      /* 무중력 애니메이션 - 메인 섹션 프로필 사진 */
+      @keyframes floatingInSpace {
+        0% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        25% {
+          transform: translate(5px, -5px) rotate(1deg);
+        }
+        50% {
+          transform: translate(0, -8px) rotate(0deg);
+        }
+        75% {
+          transform: translate(-5px, -3px) rotate(-1deg);
+        }
+        100% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+      }
+      
+      /* 더 미세한 별도의 회전 애니메이션 */
+      @keyframes subtleRotation {
+        0% {
+          transform: rotate(0deg);
+        }
+        50% {
+          transform: rotate(1.5deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+      
+      /* 프로필 이미지 컨테이너에 애니메이션 적용 */
+      .floating-profile-photo {
+        animation: floatingInSpace 12s ease-in-out infinite;
+        will-change: transform;
+        transform-origin: center center;
+        transition: all 0.3s ease;
+        position: relative;
+        top: 0px;  
+    
+      }
+      
+      /* 메인 섹션의 프로필 사진만 위치 조정 */
+      .hero-profile .floating-profile-photo {
+        top: 0px;
+
+      }
+      
+      /* 별도의 미세한 회전 효과를 위한 추가 클래스 */
+      .profile-frame {
+        position: relative;
+        will-change: transform;
+      }
+      
+      /* 그림자 효과 강화 */
+      .floating-profile-photo {
+        filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
+      }
+      
+      /* 호버 시 애니메이션 일시 정지 및 확대 효과 */
+      .floating-profile-photo:hover {
+        animation-play-state: paused;
+        transform: scale(1.05);
+        filter: drop-shadow(0 15px 20px rgba(0, 0, 0, 0.3));
+      }
+      
+      /* 우주 내 미세한 광채 효과 */
+      .hero-profile .profile-frame::before {
+        content: '';
+        position: absolute;
+        width: 110%;
+        height: 110%;
+        top: -5%;
+        left: -5%;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at center,
+          rgba(52, 152, 219, 0.1) 10%, 
+          rgba(155, 89, 182, 0.05) 50%, 
+          transparent 70%
+        );
+        z-index: -1;
+        opacity: 0.6;
+        animation: pulsate 5s ease-in-out infinite alternate;
+      }
+      
+      @keyframes pulsate {
+        0% {
+          transform: scale(1);
+          opacity: 0.4;
+        }
+        100% {
+          transform: scale(1.05);
+          opacity: 0.6;
+        }
+      }
+      
+      /* 우주 속의 무중력 효과를 더 강화하기 위한 스타일 */
+      .hero-profile {
+        position: relative;
+      }
+      
+      /* 메인 프로필 사진 주변의 미세한 별(파티클) 효과 */
+      .profile-frame::after {
+        content: '';
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background-color: white;
+        border-radius: 50%;
+        top: 20%;
+        right: 15%;
+        box-shadow: 
+          0 0 10px 2px rgba(255, 255, 255, 0.7),
+          15px 15px 0 0 rgba(255, 255, 255, 0.5),
+          -20px 5px 0 0 rgba(255, 255, 255, 0.3),
+          10px -15px 0 0 rgba(255, 255, 255, 0.4),
+          -5px -25px 0 0 rgba(255, 255, 255, 0.2);
+        animation: twinkle 4s infinite alternate;
+      }
+      
+      @keyframes twinkle {
+        0% { opacity: 0.3; }
+        100% { opacity: 1; }
+      }
+    </style>
+
     <!-- 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -67,7 +197,7 @@
             <div class="rocket-loader"></div>
           </div>
         </div>
-        <div class="loading-text">WELCOME TO MY UNIVERSE</div>
+        <div class="loading-text">WELCOME TO MY PORTFOLIO</div>
         <div class="progress-bar">
           <div class="progress-fill"></div>
         </div>
@@ -699,8 +829,8 @@
             <div class="portfolio-item" data-category="print">
               <div class="portfolio-image">
                 <img
-                  src="images/portfolio/ai-expo.jpg"
-                  alt="AI 박람회 리플렛"
+                  src="images/박람회/섬네일_박람회.jpg"
+                  alt="박람회 리플렛"
                 />
                 <div class="portfolio-overlay">
                   <div class="overlay-content">
@@ -862,6 +992,52 @@
           }
           
           console.log('로켓 요소 스타일 강제 적용 완료');
+        }
+        
+        // 프로필 사진 무중력 효과 강화 (GSAP)
+        if (window.gsap) {
+          // 메인 섹션 프로필 사진
+          const mainProfilePhoto = document.querySelector(".hero-profile .floating-profile-photo");
+          if (mainProfilePhoto) {
+            // 기본 CSS 애니메이션에 추가적인 GSAP 애니메이션 적용
+            gsap.to(mainProfilePhoto, {
+              y: "+=10", // 현재 위치에서 상대적으로 움직이도록 설정
+              duration: 2.5,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+              delay: Math.random()
+            });
+            
+            // 프로필 프레임 회전 애니메이션
+            const profileFrame = document.querySelector(".hero-profile .profile-frame");
+            if (profileFrame) {
+              gsap.to(profileFrame, {
+                rotation: 1.5, // 회전 각도 감소
+                duration: 3,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut", 
+                delay: 0.5
+              });
+            }
+            
+            console.log('프로필 사진 무중력 효과 강화 적용 완료');
+          }
+          
+          // 프로필 섹션 사진에도 적용 (있다면)
+          const profileSectionPhoto = document.querySelector(".profile-section-photo");
+          if (profileSectionPhoto) {
+            gsap.to(profileSectionPhoto, {
+              y: "+=8", // 현재 위치에서 상대적 움직임 증가
+              rotation: 1.5,
+              duration: 3.5,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+              delay: Math.random() * 0.5
+            });
+          }
         }
       });
       

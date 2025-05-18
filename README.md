@@ -1,7 +1,7 @@
-# 🌌 Cosmic Portfolio - 김성민의 우주 테마 웹 포트폴리오
+# 🚀 Cosmic Portfolio - 김성민의 우주 테마 웹 포트폴리오
 
 ![Portfolio Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)
-![Version](https://img.shields.io/badge/Version-3.0-blue.svg)
+![Version](https://img.shields.io/badge/Version-3.5-blue.svg)
 ![Tech Stack](https://img.shields.io/badge/Tech-HTML%20%7C%20CSS%20%7C%20JavaScript%20%7C%20GSAP-green.svg)
 ![Performance](https://img.shields.io/badge/Performance-Optimized-orange.svg)
 
@@ -12,10 +12,9 @@
 > **"우주의 무한한 가능성처럼, 창의적인 디자인으로 무한한 사용자 경험을 만들어갑니다."**
 
 기계공학 배경과 디자인 감각을 결합하여 독특하고 효과적인 디지털 경험을 창출하는 것을 목표로 합니다.
-test
 
 ## ✨ 주요 특징
-
+ㅁㄴㅇ
 ### 🌟 **우주 테마 인터랙티브 배경**
 - **반짝이는 별자리**: 60개(데스크톱)/40개(모바일) 다양한 크기의 별
 - **떠다니는 입자**: 우주 먼지를 모사한 15개(데스크톱)/8개(모바일) 입자

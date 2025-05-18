@@ -464,7 +464,15 @@ class PortfolioImageModal {
         category: "branding"
       },
       
-      // AI 박람회 프로젝트
+      // 박람회 프로젝트
+      "섬네일_박람회": {
+        title: "2025 국제인공지능 박람회 리플렛 디자인",
+        imagePath: "images/박람회/상세_박람회.jpg",
+        tools: ["Photoshop", "Illustrator"],
+        category: "print"
+      },
+      
+      // AI 박람회 프로젝트 (이전 데이터, 호환성을 위해 유지)
       "ai-expo": {
         title: "AI 박람회 리플렛",
         imagePath: "images/portfolio/ai-expo-detail.jpg",
