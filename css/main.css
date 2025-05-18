@@ -92,6 +92,7 @@ body {
   min-height: 100vh; /* 최소 높이 설정 */
   height: auto !important; /* 높이 자동 조정 */
   max-height: 100%; /* 최대 높이 제한 */
+  letter-spacing: 0.5 px; /* 기본 자간을 0.5px로 설정 */
 }
 
 a {
@@ -386,8 +387,6 @@ textarea {
   padding-right: 2rem;
   min-width: 300px;
 }
-
-
 
 .name {
   font-size: 4rem;
