@@ -34,6 +34,92 @@ class PortfolioImageModal {
     const mobileMockup = document.createElement("div");
     mobileMockup.id = "mobileMockup";
 
+    // 외부 영역 클릭으로 닫는 기능 추가 - 수정된 버전
+    // setTimeout을 사용해 약간의 지연 후 이벤트 리스너 등록 (클릭 이벤트 충돌 방지)
+    setTimeout(() => {
+      // 전역 리스너 배열 초기화
+      if (!window._mobilePreviewClickListeners) {
+        window._mobilePreviewClickListeners = [];
+      }
+
+      // 새 이벤트 리스너 함수
+      function handleOutsideClick(e) {
+        // 클릭한 요소가 mobileMockup 또는 그 자식요소인지 확인
+        const mockup = document.getElementById("mobileMockup");
+        if (!mockup) {
+          // 모달이 이미 닫혔으면 이벤트 리스너 제거
+          document.removeEventListener("click", handleOutsideClick, {
+            capture: true,
+          });
+          // 리스너 배열에서 제거
+          const index =
+            window._mobilePreviewClickListeners.indexOf(handleOutsideClick);
+          if (index > -1) {
+            window._mobilePreviewClickListeners.splice(index, 1);
+          }
+          return;
+        }
+
+        // 클릭된 요소 또는 그 부모 중에 mobileMockup이나 closeButton이 있는지 확인
+        let targetElement = e.target;
+        let isInsideMockup = false;
+        const deviceElements = [
+          "#mobileIframe",
+          "#closeButton",
+          "#dynamicIsland",
+          "#statusBar",
+          "#homeIndicator",
+        ];
+
+        // 디바이스 요소들을 바로 체크
+        if (
+          deviceElements.some(
+            (selector) =>
+              targetElement.matches && targetElement.matches(selector)
+          )
+        ) {
+          isInsideMockup = true;
+        }
+
+        // 디바이스 내부 요소인지 확인
+        while (targetElement != null) {
+          if (targetElement === mockup) {
+            // 디바이스 요소에는 클릭됐지만, 실제 디바이스 외곽(예: 테두리, 외부 배경 등)에 클릭된 경우
+            const rect = mockup.getBoundingClientRect();
+            // 클릭 좌표
+            const x = e.clientX;
+            const y = e.clientY;
+
+            // 실제 디바이스 테두리나 외부 배경을 클릭했는지 확인
+            if (
+              x < rect.left + 10 ||
+              x > rect.right - 10 ||
+              y < rect.top + 10 ||
+              y > rect.bottom - 10 ||
+              e.target === mockup
+            ) {
+              window.hideMobilePreview();
+            }
+
+            isInsideMockup = true;
+            break;
+          }
+          targetElement = targetElement.parentElement;
+        }
+
+        // 디바이스 요소 외부를 클릭한 경우 모달 닫기
+        if (!isInsideMockup) {
+          window.hideMobilePreview();
+        }
+      }
+
+      // 이벤트 리스너 등록
+      document.addEventListener("click", handleOutsideClick, { capture: true });
+
+      // 참조 저장
+      window._mobilePreviewClickListeners.push(handleOutsideClick);
+    }, 300); // 모달이 표시된 후에 이벤트 리스너 등록
+
     // 피그마 프로토타입인 경우 모바일 디바이스 스타일 적용
     if (preserveDeviceSize && url.includes("embed.figma.com")) {
       mobileMockup.classList.add("figma-mobile-device");
@@ -816,6 +902,13 @@ class PortfolioImageModal {
         // 애니메이션 후 요소 제거
         setTimeout(() => {
           mobileMockup.remove();
+
+          // 전역 클릭 이벤트 리스너가 등록되어 있으면 모두 제거
+          const oldListeners = window._mobilePreviewClickListeners || [];
+          oldListeners.forEach((listener) => {
+            document.removeEventListener("click", listener, { capture: true });
+          });
+          window._mobilePreviewClickListeners = [];
         }, 300);
 
         // 로켓 애니메이션 재개
