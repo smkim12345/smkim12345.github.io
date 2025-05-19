@@ -508,6 +508,10 @@ class PortfolioImageModal {
         hasMobile: true,
         mobileUrl: "https://smkim12345.github.io/project2mobile/index.html",
         category: "web",
+        // 비교 슬라이더 이미지 추가
+        hasComparisonSlider: true,
+        beforeImage: "images/갸스비/갸스비(웹_BEFORE).jpg",
+        afterImage: "images/갸스비/갸스비(웹_AFTER).png",
       },
       섬네일_갸스비: {
         title: "갸스비 웹 리디자인",
@@ -518,6 +522,10 @@ class PortfolioImageModal {
         hasMobile: true,
         mobileUrl: "https://smkim12345.github.io/project2mobile/index.html",
         category: "web",
+        // 비교 슬라이더 이미지 추가
+        hasComparisonSlider: true,
+        beforeImage: "images/갸스비/갸스비(웹_BEFORE).jpg",
+        afterImage: "images/갸스비/갸스비(웹_AFTER).png",
       },
 
       // 제네시스 프로젝트
@@ -601,6 +609,11 @@ class PortfolioImageModal {
       },
     };
 
+    // 디버깅 - 특정 프로젝트 ID에 대한 로그 출력
+    if (projectId === "섬네일_갸스비" || projectId === "gatsby") {
+      console.log("갸스비 프로젝트 데이터 로드:", projectsData[projectId]);
+    }
+
     return projectsData[projectId];
   }
 
@@ -613,6 +626,7 @@ class PortfolioImageModal {
     const modalTitle = document.querySelector(".modal-title");
     const detailImage = document.getElementById("detail-image");
     const loading = document.getElementById("modal-loading");
+    const pdfContainer = document.querySelector(".pdf-container");
     const linkBtn = document.getElementById("link-btn");
     const processBtn = document.getElementById("process-btn");
     const responsiveViewBtn = document.getElementById("responsive-view-btn");
@@ -768,28 +782,105 @@ class PortfolioImageModal {
       mobileViewBtn.style.display = "none";
     }
 
-    // 로딩 표시
-    loading.style.display = "flex";
-    detailImage.style.display = "none";
+    // 이미지 로딩 관련 코드
+    if (projectData.hasComparisonSlider) {
+      // 비교 슬라이더가 있는 경우 슬라이더 표시
+      loading.style.display = "flex";
+      detailImage.style.display = "none";
 
-    // 이미지 사전 로드
-    const preloadImage = new Image();
-    preloadImage.src = projectData.imagePath;
+      // URL 인코딩하여 특수문자 처리
+      const beforeImageURL = projectData.beforeImage
+        ? encodeURI(projectData.beforeImage)
+        : "";
+      const afterImageURL = projectData.afterImage
+        ? encodeURI(projectData.afterImage)
+        : "";
 
-    preloadImage.onload = () => {
-      // 이미지 로드 성공 시
-      detailImage.src = projectData.imagePath;
-      loading.style.display = "none";
-      detailImage.style.display = "block";
-    };
+      console.log("이미지 URL 확인:", {
+        before: beforeImageURL,
+        after: afterImageURL,
+      });
 
-    preloadImage.onerror = () => {
-      // 이미지 로드 실패 시
-      loading.innerHTML = `
-        <div class="loading-spinner"></div>
-        <span>이미지를 불러올 수 없습니다.</span>
+      // 비교 슬라이더 컨테이너 생성 - 구조 변경
+      const sliderContainer = document.createElement("div");
+      sliderContainer.classList.add("comparison-slider-wrapper");
+      sliderContainer.innerHTML = `
+        <div class="comparison-slider">
+          <div class="slider-container">
+            <img src="${afterImageURL}" alt="After" class="after-image">
+            <img src="${beforeImageURL}" alt="Before" class="before-image">
+            <div class="slider-divider"></div>
+            <div class="slider-handle"></div>
+            <div class="slider-label before-label">BEFORE</div>
+            <div class="slider-label after-label">AFTER</div>
+          </div>
+        </div>
       `;
-    };
+
+      // 기존 pdfContainer의 내용을 지우고 슬라이더 추가
+      pdfContainer.innerHTML = "";
+      pdfContainer.appendChild(sliderContainer);
+
+      // 이미지 수동 체크
+      const checkImagesLoaded = () => {
+        const afterImage = sliderContainer.querySelector(".after-image");
+        const beforeImage = sliderContainer.querySelector(".before-image");
+
+        if (afterImage && beforeImage) {
+          console.log("이미지 상태:", {
+            after: {
+              complete: afterImage.complete,
+              naturalWidth: afterImage.naturalWidth,
+              src: afterImage.src,
+            },
+            before: {
+              complete: beforeImage.complete,
+              naturalWidth: beforeImage.naturalWidth,
+              src: beforeImage.src,
+            },
+          });
+
+          // 이미지가 로드된 후 로딩 표시 제거
+          if (afterImage.complete && beforeImage.complete) {
+            loading.style.display = "none";
+          }
+        }
+      };
+
+      // 1초 후 이미지 상태 확인
+      setTimeout(checkImagesLoaded, 1000);
+
+      // 로딩 메시지 숨기기 위한 타이머 추가 (백업)
+      setTimeout(() => {
+        loading.style.display = "none";
+      }, 2000);
+
+      // 슬라이더 기능 초기화
+      this.initComparisonSlider();
+    } else {
+      // 일반 이미지 표시
+      loading.style.display = "flex";
+      detailImage.style.display = "none";
+
+      // 이미지 사전 로드
+      const preloadImage = new Image();
+      preloadImage.src = projectData.imagePath;
+
+      preloadImage.onload = () => {
+        // 이미지 로드 성공 시
+        detailImage.src = projectData.imagePath;
+        loading.style.display = "none";
+        detailImage.style.display = "block";
+      };
+
+      preloadImage.onerror = () => {
+        // 이미지 로드 실패 시
+        loading.innerHTML = `
+          <div class="loading-spinner"></div>
+          <span>이미지를 불러올 수 없습니다.</span>
+        `;
+      };
+    }
 
     // 모달 표시
     this.modal.classList.add("show");
@@ -801,11 +892,29 @@ class PortfolioImageModal {
     this.modal.classList.remove("show");
     document.body.style.overflow = "auto";
 
+    // 이미지 및 슬라이더 관련 이벤트 리스너 정리
+    if (window._cleanupComparisonSlider) {
+      window._cleanupComparisonSlider();
+      window._cleanupComparisonSlider = null;
+    }
+
     // 이미지 숨기기 (성능 최적화)
     const detailImage = document.getElementById("detail-image");
     if (detailImage) {
       detailImage.style.display = "none";
       detailImage.src = "";
+    }
+
+    // PDF 컨테이너 초기화
+    const pdfContainer = document.querySelector(".pdf-container");
+    if (pdfContainer) {
+      pdfContainer.innerHTML = `
+        <div class="modal-loading" id="modal-loading">
+          <div class="loading-spinner"></div>
+          <span>이미지를 불러오는 중...</span>
+        </div>
+        <img id="detail-image" style="display: none;">
+      `;
     }
 
     // 관련 버튼들 숨기기
@@ -927,6 +1036,177 @@ class PortfolioImageModal {
         // 로켓 애니메이션 재개
         self.resumeRocketAnimation();
       }
+    };
+  }
+
+  // 이미지 비교 슬라이더 초기화 함수 - 로직 변경
+  initComparisonSlider() {
+    const slider = document.querySelector(".comparison-slider");
+    if (!slider) return;
+
+    const sliderContainer = slider.querySelector(".slider-container");
+    const beforeImage = slider.querySelector(".before-image");
+    const afterImage = slider.querySelector(".after-image");
+    const sliderDivider = slider.querySelector(".slider-divider");
+    const sliderHandle = slider.querySelector(".slider-handle");
+    let isDragging = false;
+
+    // 디버깅 로그 추가
+    console.log("슬라이더 초기화:", {
+      beforeImage: beforeImage ? "요소 있음" : "요소 없음",
+      afterImage: afterImage ? "요소 있음" : "요소 없음",
+      sliderContainer: sliderContainer ? "요소 있음" : "요소 없음",
+    });
+
+    if (beforeImage && afterImage) {
+      // BEFORE 이미지가 이미 로드되었는지 확인
+      if (beforeImage.complete) {
+        console.log("BEFORE 이미지 이미 로드됨");
+      } else {
+        // 이미지 로드 이벤트 처리
+        beforeImage.onload = () => {
+          console.log("BEFORE 이미지 로드 완료");
+        };
+      }
+
+      // BEFORE 이미지 로드 오류 처리
+      beforeImage.onerror = (e) => {
+        console.error("BEFORE 이미지 로드 실패:", beforeImage.src);
+        // 이미지 로드 실패 시 직접 에러 메시지 표시
+        const errorText = document.createElement("div");
+        errorText.style.position = "absolute";
+        errorText.style.top = "0";
+        errorText.style.left = "0";
+        errorText.style.width = "100%";
+        errorText.style.height = "100%";
+        errorText.style.display = "flex";
+        errorText.style.alignItems = "center";
+        errorText.style.justifyContent = "center";
+        errorText.style.backgroundColor = "#1a1a2e";
+        errorText.style.color = "#ffffff";
+        errorText.style.fontSize = "20px";
+        errorText.textContent = "이미지를 불러올 수 없습니다";
+        errorText.style.zIndex = "2";
+
+        // 기존 이미지를 숨기고 에러 메시지 추가
+        beforeImage.style.display = "none";
+        beforeImage.insertAdjacentElement("afterend", errorText);
+      };
+
+      // AFTER 이미지가 이미 로드되었는지 확인
+      if (afterImage.complete) {
+        console.log("AFTER 이미지 이미 로드됨");
+        const height = afterImage.offsetHeight || 600;
+        sliderContainer.style.height = height + "px";
+      } else {
+        // 이미지 로드 이벤트 처리
+        afterImage.onload = () => {
+          console.log("AFTER 이미지 로드 완료");
+          // 이미지 로드 완료 후, 컨테이너 높이 설정
+          const height = afterImage.offsetHeight || 600;
+          sliderContainer.style.height = height + "px";
+
+          // 로딩 메시지 숨기기
+          const loading = document.getElementById("modal-loading");
+          if (loading) loading.style.display = "none";
+        };
+      }
+
+      // AFTER 이미지 로드 오류 처리
+      afterImage.onerror = (e) => {
+        console.error("AFTER 이미지 로드 실패:", afterImage.src);
+        // 이미지 로드 실패 시 직접 에러 메시지 표시
+        const errorText = document.createElement("div");
+        errorText.style.position = "absolute";
+        errorText.style.top = "0";
+        errorText.style.left = "0";
+        errorText.style.width = "100%";
+        errorText.style.height = "100%";
+        errorText.style.display = "flex";
+        errorText.style.alignItems = "center";
+        errorText.style.justifyContent = "center";
+        errorText.style.backgroundColor = "#1a1a2e";
+        errorText.style.color = "#ffffff";
+        errorText.style.fontSize = "20px";
+        errorText.textContent = "이미지를 불러올 수 없습니다";
+        errorText.style.zIndex = "2";
+
+        // 기존 이미지를 숨기고 에러 메시지 추가
+        afterImage.style.display = "none";
+        afterImage.insertAdjacentElement("afterend", errorText);
+      };
+    }
+
+    // 슬라이더 초기화 - 중앙에 위치
+    const initialPosition = slider.offsetWidth * 0.5; // 초기 위치 50%
+    sliderDivider.style.left = initialPosition + "px";
+    sliderHandle.style.left = initialPosition + "px";
+
+    // BEFORE 이미지의 초기 클립 패스 설정
+    if (beforeImage) {
+      beforeImage.style.clipPath = `polygon(0 0, ${initialPosition}px 0, ${initialPosition}px 100%, 0 100%)`;
+    }
+
+    // 마우스 이벤트 리스너
+    function startDrag(e) {
+      e.preventDefault();
+      isDragging = true;
+    }
+
+    function endDrag() {
+      isDragging = false;
+    }
+
+    function drag(e) {
+      if (!isDragging) return;
+
+      let clientX;
+
+      // 터치와 마우스 이벤트 처리
+      if (e.touches) {
+        clientX = e.touches[0].clientX;
+      } else {
+        clientX = e.clientX;
+      }
+
+      // 슬라이더 경계 계산
+      const rect = slider.getBoundingClientRect();
+      const leftBound = rect.left;
+      const sliderWidth = slider.offsetWidth;
+
+      // 위치 계산
+      let position = clientX - leftBound;
+
+      // 경계 제한
+      if (position < 0) position = 0;
+      if (position > sliderWidth) position = sliderWidth;
+
+      // 슬라이더 위치 업데이트
+      sliderDivider.style.left = position + "px";
+      sliderHandle.style.left = position + "px";
+
+      // BEFORE 이미지 클립 패스 업데이트
+      if (beforeImage) {
+        beforeImage.style.clipPath = `polygon(0 0, ${position}px 0, ${position}px 100%, 0 100%)`;
+      }
+    }
+
+    // 이벤트 리스너 등록
+    sliderHandle.addEventListener("mousedown", startDrag);
+    sliderHandle.addEventListener("touchstart", startDrag);
+
+    document.addEventListener("mousemove", drag);
+    document.addEventListener("touchmove", drag);
+
+    document.addEventListener("mouseup", endDrag);
+    document.addEventListener("touchend", endDrag);
+
+    // 이벤트 리스너 클린업 위한 함수 등록
+    window._cleanupComparisonSlider = () => {
+      document.removeEventListener("mousemove", drag);
+      document.removeEventListener("touchmove", drag);
+      document.removeEventListener("mouseup", endDrag);
+      document.removeEventListener("touchend", endDrag);
     };
   }
 }
