@@ -328,6 +328,7 @@
   position: relative;
   width: 100%;
   overflow: hidden;
+  cursor: ew-resize;
 }
 
 /* AFTER 이미지는 기본 배경으로 전체 화면을 차지 */
@@ -366,11 +367,12 @@
   top: 0;
   bottom: 0;
   left: 50%; /* 기본값 */
-  width: 2px; /* 얇은 선 */
+  width: 8px; /* 약간 더 넓게 */
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.5); /* 반투명 흰색 */
+  background-color: rgba(7, 1, 92, 0.7); /* 더 잘 보이게 */
   z-index: 3;
   pointer-events: none;
+  cursor: ew-resize; /* 커서 추가 */
 }
 
 .slider-handle {
@@ -378,27 +380,14 @@
   top: 0;
   bottom: 0;
   left: 50%;
-  width: 5px;
-  background: #7b61ff;
+  width: 30px; /* 넓게 설정하여 클릭 영역 확장 */
+  background: transparent; /* 배경 투명하게 */
   transform: translateX(-50%);
   cursor: ew-resize;
-  animation: pulse 1.5s ease-in-out infinite;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   z-index: 4;
 }
 
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 15px rgba(123, 97, 255, 0.8);
-  }
-  100% {
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-  }
-}
-
+/* 슬라이더 핸들 가운데 부분 */
 .slider-handle::after {
   content: "";
   position: absolute;
@@ -411,8 +400,10 @@
   border-radius: 50%;
   border: 3px solid #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  animation: pulse 1.5s ease-in-out infinite;
 }
 
+/* 핸들 주변 효과 */
 .slider-handle::before {
   content: "";
   position: absolute;
@@ -424,6 +415,35 @@
   background: transparent;
   border-radius: 50%;
   border: 2px solid rgba(123, 97, 255, 0.3);
+  animation: pulse-ring 1.5s ease-in-out infinite;
+}
+
+/* 슬라이더 핸들 애니메이션 */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(123, 97, 255, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0.5;
+  }
 }
 
 .slider-label {

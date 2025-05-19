@@ -1151,15 +1151,16 @@ class PortfolioImageModal {
     function startDrag(e) {
       e.preventDefault();
       isDragging = true;
+      // 클릭 즉시 위치 업데이트
+      updateSliderPosition(e);
     }
 
     function endDrag() {
       isDragging = false;
     }
 
-    function drag(e) {
-      if (!isDragging) return;
-
+    // 슬라이더 위치 업데이트 함수 - 별도 함수로 분리하여 재사용
+    function updateSliderPosition(e) {
       let clientX;
 
       // 터치와 마우스 이벤트 처리
@@ -1191,9 +1192,18 @@ class PortfolioImageModal {
       }
     }
 
-    // 이벤트 리스너 등록
+    function drag(e) {
+      if (!isDragging) return;
+      updateSliderPosition(e);
+    }
+
+    // 이벤트 리스너 등록 - 슬라이더 컨테이너 전체에 이벤트 연결
     sliderHandle.addEventListener("mousedown", startDrag);
     sliderHandle.addEventListener("touchstart", startDrag);
+
+    // 슬라이더 컨테이너 전체 영역에 클릭 이벤트 추가
+    sliderContainer.addEventListener("mousedown", startDrag);
+    sliderContainer.addEventListener("touchstart", startDrag);
 
     document.addEventListener("mousemove", drag);
     document.addEventListener("touchmove", drag);
@@ -1207,6 +1217,12 @@ class PortfolioImageModal {
       document.removeEventListener("touchmove", drag);
       document.removeEventListener("mouseup", endDrag);
       document.removeEventListener("touchend", endDrag);
+
+      // 추가된 이벤트 리스너도 제거
+      if (sliderContainer) {
+        sliderContainer.removeEventListener("mousedown", startDrag);
+        sliderContainer.removeEventListener("touchstart", startDrag);
+      }
     };
   }
 }
