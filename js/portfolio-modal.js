@@ -538,6 +538,10 @@ class PortfolioImageModal {
         hasResponsive: true,
         responsiveUrl: "https://smkim12345.github.io/project1/index.html",
         category: "web",
+        // 비교 슬라이더 이미지 추가
+        hasComparisonSlider: true,
+        beforeImage: "images/제네시스/제네시스_수정전.jpg",
+        afterImage: "images/제네시스/제네시스_수정후.jpg",
       },
 
       // 맥딜리버리 프로젝트

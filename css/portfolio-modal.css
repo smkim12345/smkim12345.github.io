@@ -388,63 +388,14 @@
 }
 
 /* 슬라이더 핸들 가운데 부분 */
-.slider-handle::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 30px;
-  height: 30px;
-  background: #7b61ff;
-  border-radius: 50%;
-  border: 3px solid #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-  animation: pulse 1.5s ease-in-out infinite;
+/* .slider-handle::after {
+  ... (삭제)
 }
 
-/* 핸들 주변 효과 */
 .slider-handle::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50px;
-  height: 50px;
-  background: transparent;
-  border-radius: 50%;
-  border: 2px solid rgba(123, 97, 255, 0.3);
-  animation: pulse-ring 1.5s ease-in-out infinite;
+  ... (삭제)
 }
-
-/* 슬라이더 핸들 애니메이션 */
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 15px rgba(123, 97, 255, 0.8);
-  }
-  100% {
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-  }
-}
-
-@keyframes pulse-ring {
-  0% {
-    transform: translate(-50%, -50%) scale(0.9);
-    opacity: 0.5;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.1);
-    opacity: 0.8;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(0.9);
-    opacity: 0.5;
-  }
-}
+*/
 
 .slider-label {
   position: absolute;
@@ -481,16 +432,6 @@
 
   .slider-handle {
     width: 3px;
-  }
-
-  .slider-handle::after {
-    width: 20px;
-    height: 20px;
-  }
-
-  .slider-handle::before {
-    width: 30px;
-    height: 30px;
   }
 
   .slider-label {
