@@ -539,7 +539,7 @@ class PortfolioImageModal {
         tools: ["Adobe XD", "Photoshop"],
         hasMobile: true,
         mobileUrl:
-          "https://www.figma.com/proto/rbQY9g5Pl4imNGlIcJAeN7/%EA%B9%80%EC%84%B1%EB%AF%BC_%EB%A7%A5%EB%94%9C%EB%A6%AC%EB%B2%84%EB%A6%AC-%EC%95%B1%EB%A6%AC%EB%94%94%EC%9E%90%EC%9D%B8?node-id=0-1&t=iVqeKfXFMDC01kcH-1",
+          "https://www.figma.com/proto/SQ8TNrcQgM8Bdd4BetGrIl/%EB%A7%A5%EB%8F%84%EB%82%A0%EB%93%9C-%EC%96%B4%ED%94%8C-%EB%A6%AC%EB%94%94%EC%9E%90%EC%9D%B8_%EA%B9%80%EC%84%B1%EB%AF%BC?node-id=263-4261&t=3Ie7FZBjhLGOuHwY-1",
         openInNewTab: true,
         category: "app",
       },
@@ -726,6 +726,19 @@ class PortfolioImageModal {
         "URL:",
         projectData.mobileUrl
       );
+
+      // 맥도날드 프로젝트일 경우 버튼 텍스트 변경
+      if (projectData.title.includes("맥딜리버리")) {
+        mobileViewBtn.innerHTML = `
+          <i class="fas fa-mobile-alt"></i>
+          피그마 프로토타입
+        `;
+      } else {
+        mobileViewBtn.innerHTML = `
+          <i class="fas fa-mobile-alt"></i>
+          모바일
+        `;
+      }
 
       // 기존 이벤트 리스너 제거
       const newBtn = mobileViewBtn.cloneNode(true);
