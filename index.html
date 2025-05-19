@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>김성민's Portfolio </title>
+    <title>김성민's Portfolio</title>
     <meta
       name="description"
       content="분석적 사고와 창의적 디자인 역량을 겸비한 문제 해결사, 김성민의 웹디자인 & 프론트엔드 개발 포트폴리오"
@@ -15,10 +15,10 @@
 
     <!-- 파비콘 -->
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
-    
+
     <!-- 우주 무중력 효과 스타일 CSS 연결 -->
     <link rel="stylesheet" href="css/space-floating.css" />
-      
+
     <!-- 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,15 +27,16 @@
       rel="stylesheet"
     />
     <!-- 우주 테마 영문 폰트: Orbitron -->
-    <link 
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" 
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
     <!-- 우주 테마 한글 폰트: 학교안심 우주 -->
     <style>
       @font-face {
-        font-family: 'HakgyoansimWoojuR';
-        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2') format('woff2');
+        font-family: "HakgyoansimWoojuR";
+        src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2")
+          format("woff2");
         font-weight: normal;
         font-style: normal;
       }
@@ -64,15 +65,19 @@
 
     <!-- GSAP 라이브러리 미리 로드 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    
+
     <!-- 셰이더 코드 제거 - 유성 효과 비활성화 -->
-    
+
     <!-- 로켓 스크립트 우선 로드 -->
     <script src="js/gsap-rocket-improved.js"></script>
     <script src="js/rocket-event-handler.js"></script>
-    
+
     <!-- JS 라이브러리 미리 로드 -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" as="script">
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+      as="script"
+    />
   </head>
   <body>
     <!-- 로딩 화면 -->
@@ -90,44 +95,67 @@
         </div>
       </div>
     </div>
-    
+
     <!-- 로딩 화면 및 DOM 설정 스크립트 -->
     <script src="js/loading-screen.js"></script>
     <script src="js/dom-setup.js"></script>
-    
+
     <!-- 배경 캔버스 (별, 파티클) - 우주 배경으로 대체 -->
     <!-- <canvas id="space-background"></canvas> -->
 
     <!-- 로켓 애니메이션 요소 -->
-    <div id="rocket-element" style="z-index: 9000; pointer-events: auto !important;">
-      <img src="images/3d rocket_bg.png" alt="로켓" style="pointer-events: auto !important;" />
-      <div class="rocket-flame" style="display: none;"></div>
+    <div
+      id="rocket-element"
+      style="z-index: 9000; pointer-events: auto !important"
+    >
+      <img
+        src="images/3d rocket_bg.png"
+        alt="로켓"
+        style="pointer-events: auto !important"
+      />
+      <div class="rocket-flame" style="display: none"></div>
     </div>
 
     <!-- 로켓 설정 스크립트 -->
     <script src="js/rocket-settings.js"></script>
-    
+
     <!-- 메인 섹션 텍스트 전환 애니메이션 -->
     <script src="js/text-transition.js"></script>
 
     <!-- 내비게이션 -->
-    <nav class="main-nav" style="pointer-events: none;">
-      <div class="nav-container" style="pointer-events: auto;">
-        <div class="logo" style="pointer-events: auto;">
+    <nav class="main-nav" style="pointer-events: none">
+      <div class="nav-container" style="pointer-events: auto">
+        <div class="logo" style="pointer-events: auto">
           <a href="#home">김성민's <span class="highlight"> Portfolio</span></a>
         </div>
-        <div class="menu-toggle" style="pointer-events: auto;">
+        <div class="menu-toggle" style="pointer-events: auto">
           <div class="hamburger">
             <span></span>
             <span></span>
             <span></span>
           </div>
         </div>
-        <ul class="nav-links" style="pointer-events: auto;">
-          <li style="pointer-events: auto;"><a href="#home" class="nav-link active" style="pointer-events: auto;">홈</a></li>
-          <li style="pointer-events: auto;"><a href="#profile" class="nav-link" style="pointer-events: auto;">프로필</a></li>
-          <li style="pointer-events: auto;"><a href="#portfolio" class="nav-link" style="pointer-events: auto;">포트폴리오</a></li>
-          <li style="pointer-events: auto;"><a href="#contact" class="nav-link" style="pointer-events: auto;">연락하기</a></li>
+        <ul class="nav-links" style="pointer-events: auto">
+          <li style="pointer-events: auto">
+            <a href="#home" class="nav-link active" style="pointer-events: auto"
+              >홈</a
+            >
+          </li>
+          <li style="pointer-events: auto">
+            <a href="#profile" class="nav-link" style="pointer-events: auto"
+              >프로필</a
+            >
+          </li>
+          <li style="pointer-events: auto">
+            <a href="#portfolio" class="nav-link" style="pointer-events: auto"
+              >포트폴리오</a
+            >
+          </li>
+          <li style="pointer-events: auto">
+            <a href="#contact" class="nav-link" style="pointer-events: auto"
+              >연락하기</a
+            >
+          </li>
         </ul>
       </div>
     </nav>
@@ -155,11 +183,17 @@
               </div>
               <div class="cta-buttons">
                 <a href="#portfolio" class="btn primary-btn">포트폴리오 보기</a>
-                <a href="images/김성민 자기소개서_250515.pdf" class="btn secondary-btn" target="_blank" rel="noopener noreferrer">자기소개서</a>
+                <a
+                  href="images/김성민 자기소개서_250515.pdf"
+                  class="btn secondary-btn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >자기소개서</a
+                >
                 <a href="#contact" class="btn secondary-btn">연락하기</a>
               </div>
             </div>
-            
+
             <!-- 오른쪽에 프로필 사진 추가 -->
             <div class="hero-profile">
               <div class="profile-frame">
@@ -167,7 +201,11 @@
                   <!-- 원형 프레임은 유지 -->
                 </div>
                 <!-- 독립적인 이미지 배치 -->
-                <img src="images/프로필사진/메인사진.png" alt="김성민 프로필 사진" class="floating-profile-photo">
+                <img
+                  src="images/프로필사진/메인사진.png"
+                  alt="김성민 프로필 사진"
+                  class="floating-profile-photo"
+                />
               </div>
             </div>
           </div>
@@ -197,20 +235,19 @@
               </p>
               <p>
                 <strong>[가치관]</strong>
-                저는 기계공학도로써 분석적 사고와 INFJ만의 창의적인 생각<br/>으로 남다른 디자인을 
-                추구합니다. 
+                저는 기계공학도로써 분석적 사고와 INFJ만의 창의적인 생각<br />으로
+                남다른 디자인을 추구합니다.
               </p>
               <p>
                 <strong>[선호]</strong>
                 문제를 해결하는 과정에서 전략적 사고와 창의성을 결합하여 최적의
-                솔루션을 도출하는 것을 좋아합니다. 
+                솔루션을 도출하는 것을 좋아합니다.
               </p>
               <p>
                 <strong>[목표]</strong>
-                현대적인 웹 기술과 AI에 관심이 많아 독특한
-                디지털 경험을 효율적으로 창출하는 것이 제 목표입니다.
+                현대적인 웹 기술과 AI에 관심이 많아 독특한 디지털 경험을
+                효율적으로 창출하는 것이 제 목표입니다.
               </p>
-
             </div>
             <div class="profile-image">
               <div class="image-container">
@@ -219,7 +256,11 @@
                   <!-- 원형 프레임 유지 -->
                 </div>
                 <!-- 독립적인 이미지 배치 -->
-                <img src="images/프로필사진/검은.webp" alt="김성민 프로필 사진" class="floating-profile-photo profile-section-photo">
+                <img
+                  src="images/프로필사진/검은.webp"
+                  alt="김성민 프로필 사진"
+                  class="floating-profile-photo profile-section-photo"
+                />
               </div>
             </div>
           </div>
@@ -242,8 +283,8 @@
                         <div class="date-text">2014.03 - 2021.08</div>
                       </div>
                       <div class="card-content">
-                        <h3 style="text-align: center;">대구가톨릭대학교</h3>
-                        <p style="text-align: center;">기계시스템공학과 졸업</p>
+                        <h3 style="text-align: center">대구가톨릭대학교</h3>
+                        <p style="text-align: center">기계시스템공학과 졸업</p>
                       </div>
                     </div>
 
@@ -255,8 +296,8 @@
                         <div class="date-text">2021.09 - 2023.07</div>
                       </div>
                       <div class="card-content">
-                        <h3 style="text-align: center;">티에스알(TSR)</h3>
-                        <p style="text-align: center;">연구소 개발팀 사원</p>
+                        <h3 style="text-align: center">티에스알(TSR)</h3>
+                        <p style="text-align: center">연구소 개발팀 사원</p>
                       </div>
                     </div>
 
@@ -268,8 +309,10 @@
                         <div class="date-text">2023.07 - 2024.12</div>
                       </div>
                       <div class="card-content">
-                        <h3 style="text-align: center;">신영 그룹</h3>
-                        <p style="text-align: center;">신호 공장 생산관리팀 사원</p>
+                        <h3 style="text-align: center">신영 그룹</h3>
+                        <p style="text-align: center">
+                          신호 공장 생산관리팀 사원
+                        </p>
                       </div>
                     </div>
 
@@ -279,8 +322,12 @@
                         <div class="date-text">2025.01 - 2025.06</div>
                       </div>
                       <div class="card-content">
-                        <h3 style="text-align: center;">영진직업전문학교 수료</h3>
-                        <p style="text-align: center;">UI/UX, 웹디자인, 웹퍼블리셔</p>
+                        <h3 style="text-align: center">
+                          영진직업전문학교 수료
+                        </h3>
+                        <p style="text-align: center">
+                          UI/UX, 웹디자인, 웹퍼블리셔
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -695,7 +742,11 @@
             <div class="contact-info">
               <div class="contact-details">
                 <div class="contact-item">
-                  <a href="https://open.kakao.com/o/sGdVJFwh" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://open.kakao.com/o/sGdVJFwh"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <i class="fas fa-comment"></i>
                     <h3>오픈채팅방</h3>
                     <p>클릭하면 오픈채팅연결</p>
@@ -707,7 +758,11 @@
                   <p>010-6677-4015</p>
                 </div>
                 <div class="contact-item">
-                  <a href="https://github.com/smkim12345/smkim12345.github.io" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://github.com/smkim12345/smkim12345.github.io"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <i class="fab fa-github"></i>
                     <h3>깃허브</h3>
                     <p>github.com/smkim12345</p>
@@ -716,10 +771,14 @@
               </div>
             </div>
           </div>
-           <!-- 우주소년 이미지 추가 -->
-        <div class="space-boy">
-          <img src="images/푸터/우주소년.gif" alt="우주소년" class="space-boy-img">
-        </div>
+          <!-- 우주소년 이미지 추가 -->
+          <div class="space-boy">
+            <img
+              src="images/푸터/우주소년.gif"
+              alt="우주소년"
+              class="space-boy-img"
+            />
+          </div>
         </div>
       </section>
     </main>
@@ -734,13 +793,11 @@
       </div>
       <div class="planet-glow"></div>
       <div class="container">
-        
         <div class="footer-content">
           <div class="copyright">
             <p>&copy; 2025 김성민. All Rights Reserved.</p>
           </div>
         </div>
-
       </div>
     </footer>
 
@@ -760,16 +817,16 @@
     <script src="js/device-frame.js"></script>
     <script src="js/device-gallery.js"></script>
     <script src="js/portfolio-modal.js"></script>
-    
+
     <!-- 포트폴리오 필터링 (독립적인 모듈) -->
     <script src="js/portfolio-filter.js"></script>
-    
+
     <!-- 스킬 애니메이션 (독립적인 모듈) -->
     <script src="js/skill-animation.js"></script>
-    
+
     <!-- 프로필 섹션 애니메이션 -->
     <script src="js/profile-animations.js"></script>
-    
+
     <!-- 포트폴리오 섹션 애니메이션 -->
     <script src="js/portfolio-animations.js"></script>
 
@@ -778,7 +835,7 @@
 
     <!-- 네비게이션 관리자 (독립적인 모듈) -->
     <script src="js/navigation-manager.js"></script>
-    
+
     <!-- 우주 배경 효과 (독립적인 모듈) -->
     <script src="js/cosmic-background-enhanced.js"></script>
   </body>

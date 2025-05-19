@@ -178,12 +178,12 @@ class PortfolioImageModal {
     this.bindEvents();
     this.updatePortfolioItems();
     this.exposeGlobalMethods();
-    
+
     // 중앙화된 데이터 관리 시스템 확인
     if (window.COSMIC_PORTFOLIO) {
-      console.log('중앙화된 포트폴리오 데이터 관리 시스템 사용 중');
+      console.log("중앙화된 포트폴리오 데이터 관리 시스템 사용 중");
     } else {
-      console.warn('중앙화된 데이터 관리 시스템을 찾을 수 없습니다');
+      console.warn("중앙화된 데이터 관리 시스템을 찾을 수 없습니다");
     }
   }
 
@@ -263,88 +263,90 @@ class PortfolioImageModal {
 
   updatePortfolioItems() {
     // 포트폴리오 아이템 찾기
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
-    
+    const portfolioItems = document.querySelectorAll(".portfolio-item");
+
     // 클릭 이벤트 연결
-    portfolioItems.forEach(item => {
-      const image = item.querySelector('.portfolio-image');
-      const viewButton = item.querySelector('.view-project');
-      
+    portfolioItems.forEach((item) => {
+      const image = item.querySelector(".portfolio-image");
+      const viewButton = item.querySelector(".view-project");
+
       if (image) {
         // 이미지 클릭 이벤트
-        image.addEventListener('click', (e) => {
+        image.addEventListener("click", (e) => {
           // 이미 .view-project 버튼을 클릭한 경우 이벤트 처리하지 않음
-          if (e.target.closest('.view-project')) return;
-          
+          if (e.target.closest(".view-project")) return;
+
           e.preventDefault();
           e.stopPropagation();
           this.handleProjectClick(item);
         });
       }
-      
+
       if (viewButton) {
         // 자세히 보기 버튼 클릭 이벤트
-        viewButton.addEventListener('click', (e) => {
+        viewButton.addEventListener("click", (e) => {
           e.preventDefault();
           e.stopPropagation();
           this.handleProjectClick(item);
         });
       }
     });
-    
+
     console.log(`포트폴리오 아이템 이벤트 처리 (${portfolioItems.length}개)`);
   }
 
   handleProjectClick(item) {
     // 클릭 시 현재 스크롤 위치 저장
     this.savedScrollPosition = window.scrollY || window.pageYOffset || 0;
-    console.log('현재 스크롤 위치 저장:', this.savedScrollPosition);
-    
+    console.log("현재 스크롤 위치 저장:", this.savedScrollPosition);
+
     // 프로젝트 ID 추출
     const projectId = this.getProjectId(item);
-    
+
     if (projectId) {
       try {
         // 프로젝트 데이터 가져오기
         const projectData = this.getProjectData(projectId);
-        
+
         if (projectData) {
           // 모달 열기
           this.openModal(projectData);
         } else {
-          console.error(`프로젝트 ID에 해당하는 데이터를 찾을 수 없음: ${projectId}`);
+          console.error(
+            `프로젝트 ID에 해당하는 데이터를 찾을 수 없음: ${projectId}`
+          );
         }
       } catch (error) {
-        console.error('프로젝트 모달 열기 오류:', error);
+        console.error("프로젝트 모달 열기 오류:", error);
       }
     } else {
-      console.error('유효한 프로젝트 ID를 찾을 수 없음');
+      console.error("유효한 프로젝트 ID를 찾을 수 없음");
     }
   }
 
   getProjectId(item) {
     // 먼저 data-project-id 속성 체크
-    let projectId = item.getAttribute('data-project-id');
-    
+    let projectId = item.getAttribute("data-project-id");
+
     // 없으면 이미지 경로에서 추출
     if (!projectId) {
-      const img = item.querySelector('img');
+      const img = item.querySelector("img");
       if (img) {
-        projectId = this.getProjectIdFromPath(img.getAttribute('src'));
+        projectId = this.getProjectIdFromPath(img.getAttribute("src"));
       }
     }
-    
+
     // 마지막으로 클래스명에서 추출 시도
     if (!projectId) {
-      const classes = item.className.split(' ');
+      const classes = item.className.split(" ");
       for (const cls of classes) {
-        if (cls.startsWith('project-')) {
-          projectId = cls.replace('project-', '');
+        if (cls.startsWith("project-")) {
+          projectId = cls.replace("project-", "");
           break;
         }
       }
     }
-    
+
     return projectId;
   }
 
@@ -353,7 +355,7 @@ class PortfolioImageModal {
     if (window.COSMIC_PORTFOLIO && window.COSMIC_PORTFOLIO.getProjectData) {
       return window.COSMIC_PORTFOLIO.getProjectData(projectId);
     }
-    
+
     // 호환성을 위한 레거시 방식
     return this.getProjectDataLegacy(projectId);
   }
@@ -361,25 +363,25 @@ class PortfolioImageModal {
   // 이전 버전과의 호환성을 위해 유지하는 레거시 메서드
   getProjectIdFromPath(path) {
     if (!path) return null;
-    
+
     // URL에서 파일명 추출
-    let filename = path.split('/').pop();
+    let filename = path.split("/").pop();
     if (!filename) return null;
-    
+
     // 확장자 제거
-    let name = filename.split('.')[0];
-    
+    let name = filename.split(".")[0];
+
     // 접두사 "섬네일_"이 있으면 프로젝트 ID로 사용
-    if (name.startsWith('섬네일_')) {
+    if (name.startsWith("섬네일_")) {
       return name;
     }
-    
+
     // 파일 이름에서 프로젝트 ID 추출 시도
-    if (name.includes('_')) {
+    if (name.includes("_")) {
       // 언더스코어로 구분된 이름의 첫 부분 사용
-      return name.split('_')[0];
+      return name.split("_")[0];
     }
-    
+
     return name;
   }
 
@@ -388,30 +390,30 @@ class PortfolioImageModal {
     // 하드코딩된 프로젝트 데이터 (이전 버전과의 호환성 유지)
     const projectsData = {
       // 트로피카나 프로젝트
-      "섬네일_트로피카나": {
+      섬네일_트로피카나: {
         title: "트로피카나 스파클링 패키지 리디자인",
         imagePath: "images/트로피카나/상세_트로피카나.jpg",
         tools: ["Photoshop", "Illustrator"],
         process: "images/트로피카나/작업과정_트로피카나.pdf",
-        category: "package"
+        category: "package",
       },
-      
+
       // 투썸 프로젝트
-      "twosome": {
+      twosome: {
         title: "투썸 에이리스트 패키지 리디자인",
         imagePath: "images/투썸/상세_투썸.jpg",
         tools: ["Photoshop", "Illustrator"],
-        category: "package"
+        category: "package",
       },
-      "섬네일_투썸": {
+      섬네일_투썸: {
         title: "투썸 에이리스트 패키지 리디자인",
         imagePath: "images/투썸/상세_투썸.jpg",
         tools: ["Photoshop", "Illustrator"],
-        category: "package"
+        category: "package",
       },
-      
+
       // 갸스비 프로젝트
-      "gatsby": {
+      gatsby: {
         title: "갸스비 웹 리디자인",
         imagePath: "images/갸스비/상세_갸스비.jpg",
         link: "images/갸스비/링크_갸스비 웹.url",
@@ -419,9 +421,9 @@ class PortfolioImageModal {
         responsiveUrl: "https://smkim12345.github.io/project2/index.html",
         hasMobile: true,
         mobileUrl: "https://smkim12345.github.io/project2mobile/index.html",
-        category: "web"
+        category: "web",
       },
-      "섬네일_갸스비": {
+      섬네일_갸스비: {
         title: "갸스비 웹 리디자인",
         imagePath: "images/갸스비/상세_갸스비.jpg",
         link: "images/갸스비/링크_갸스비 웹.url",
@@ -429,11 +431,11 @@ class PortfolioImageModal {
         responsiveUrl: "https://smkim12345.github.io/project2/index.html",
         hasMobile: true,
         mobileUrl: "https://smkim12345.github.io/project2mobile/index.html",
-        category: "web"
+        category: "web",
       },
-      
+
       // 제네시스 프로젝트
-      "섬네일_제네시스": {
+      섬네일_제네시스: {
         title: "제네시스 웹 리디자인",
         imagePath: "images/제네시스/상세_제네시스.jpg",
         tools: ["Adobe XD", "Photoshop", "HTML/CSS"],
@@ -441,85 +443,86 @@ class PortfolioImageModal {
         process: "images/제네시스/작업과정_제네시스.pdf",
         hasResponsive: true,
         responsiveUrl: "https://smkim12345.github.io/project1/index.html",
-        category: "web"
+        category: "web",
       },
-      
+
       // 맥딜리버리 프로젝트
-      "섬네일_맥도날드": {
+      섬네일_맥도날드: {
         title: "맥딜리버리 앱 리디자인",
         imagePath: "images/맥도날드/상세_맥도날드.jpg",
         tools: ["Adobe XD", "Photoshop"],
         hasMobile: true,
-        mobileUrl: "https://www.figma.com/proto/rbQY9g5Pl4imNGlIcJAeN7/%EA%B9%80%EC%84%B1%EB%AF%BC_%EB%A7%A5%EB%94%9C%EB%A6%AC%EB%B2%84%EB%A6%AC-%EC%95%B1%EB%A6%AC%EB%94%94%EC%9E%90%EC%9D%B8?node-id=0-1&t=iVqeKfXFMDC01kcH-1",
+        mobileUrl:
+          "https://www.figma.com/proto/rbQY9g5Pl4imNGlIcJAeN7/%EA%B9%80%EC%84%B1%EB%AF%BC_%EB%A7%A5%EB%94%9C%EB%A6%AC%EB%B2%84%EB%A6%AC-%EC%95%B1%EB%A6%AC%EB%94%94%EC%9E%90%EC%9D%B8?node-id=0-1&t=iVqeKfXFMDC01kcH-1",
         openInNewTab: true,
-        category: "app"
+        category: "app",
       },
-      
+
       // 리스크아이 프로젝트
       "섬네일_리스크아이 로고 디자인": {
         title: "리스크아이 로고 디자인",
         imagePath: "images/리스크아이/상세_리스크아이 로고 디자인.jpg",
         tools: ["Illustrator", "Photoshop"],
         process: "images/리스크아이/작업과정_리스크아이 로고 디자인.pdf",
-        category: "branding"
+        category: "branding",
       },
-      
+
       // 박람회 프로젝트
-      "섬네일_박람회": {
+      섬네일_박람회: {
         title: "2025 국제인공지능 박람회 리플렛 디자인",
         imagePath: "images/박람회/상세_박람회.jpg",
         tools: ["Photoshop", "Illustrator"],
-        category: "print"
+        category: "print",
       },
-      
+
       // AI 박람회 프로젝트 (이전 데이터, 호환성을 위해 유지)
       "ai-expo": {
         title: "AI 박람회 리플렛",
         imagePath: "images/portfolio/ai-expo-detail.jpg",
-        category: "print"
+        category: "print",
       },
-      
+
       // 인스타그램 광고 배너
       "섬네일_인스타그램 광고배너디자인": {
         title: "인스타그램 광고 배너",
         imagePath: "images/인스타그램/상세_인스타그램 광고배너디자인.jpg",
         tools: ["Photoshop", "Illustrator"],
-        category: "web"
+        category: "web",
       },
-      
+
       // 갤럭시 버즈 프로젝트
       "섬네일_갤럭시 버즈3프로 상세페이지": {
         title: "갤럭시 버즈3 프로 상세페이지",
         imagePath: "images/갤럭시버즈/상세_갤럭시 버즈3프로.jpg", // 확장자 수정: .png → .jpg
         tools: ["Adobe XD", "Photoshop", "HTML/CSS"],
-        category: "web"
+        category: "web",
       },
-      
+
       // 광고 포스터 프로젝트
       "섬네일_광고 포스터": {
         title: "광고 포스터 디자인",
         imagePath: "images/광고 포스터/상세_광고 포스터.png",
         tools: ["Photoshop", "Illustrator"],
-        category: "print"
+        category: "print",
       },
-      
+
       // 내지 디자인 프로젝트
-      "섬네일_내지": {
+      섬네일_내지: {
         title: "내지 디자인",
         imagePath: "images/광고 포스터/상세_내지 디자인.png",
         tools: ["Photoshop", "InDesign"],
-        category: "print"
-      }
+        category: "print",
+      },
     };
-    
+
     return projectsData[projectId];
   }
 
   openModal(projectData) {
     // 스크롤 위치 저장
     this.savedScrollPosition = window.scrollY || window.pageYOffset || 0;
-    console.log('모달 열기: 스크롤 위치 저장', this.savedScrollPosition);
-    
+    console.log("모달 열기: 스크롤 위치 저장", this.savedScrollPosition);
+
     // 모달 요소 참조
     const modalTitle = document.querySelector(".modal-title");
     const detailImage = document.getElementById("detail-image");
@@ -528,7 +531,7 @@ class PortfolioImageModal {
     const processBtn = document.getElementById("process-btn");
     const responsiveViewBtn = document.getElementById("responsive-view-btn");
     const mobileViewBtn = document.getElementById("mobile-view-btn");
-    
+
     // 로켓 애니메이션 일시 중지 (성능 향상)
     this.pauseRocketAnimation();
 
@@ -538,41 +541,47 @@ class PortfolioImageModal {
     // 링크 버튼 설정
     if (projectData.link) {
       linkBtn.style.display = "block";
-      linkBtn.href = this.getActualUrl(projectData) || '#';
-      
+      linkBtn.href = this.getActualUrl(projectData) || "#";
+
       // 핸들러 교체
       const oldBtn = linkBtn;
       const newBtn = oldBtn.cloneNode(true);
       oldBtn.parentNode.replaceChild(newBtn, oldBtn);
-      
-      newBtn.addEventListener('click', (e) => {
+
+      newBtn.addEventListener("click", (e) => {
         e.preventDefault(); // 링크 기본 동작 방지
-        
+
         try {
           // 실제 URL 가져오기
           const urlToOpen = this.getActualUrl(projectData);
-          
+
           if (urlToOpen) {
-            console.log('외부 링크 열기:', urlToOpen);
-            
+            console.log("외부 링크 열기:", urlToOpen);
+
             // 새 창에서 열기
             window.open(urlToOpen, "_blank");
-            
+
             // 로켓 애니메이션 계속 유지 (새 창에서 열리므로)
             this.resumeRocketAnimation();
           } else {
-            console.error('유효한 URL을 찾을 수 없습니다');
+            console.error("유효한 URL을 찾을 수 없습니다");
           }
         } catch (error) {
-          console.error('링크 열기 오류:', error);
-          
+          console.error("링크 열기 오류:", error);
+
           // 폴백 URL 사용
-          if (projectData.title.includes('갸스비')) {
-            window.open("https://smkim12345.github.io/project2/index.html", "_blank");
-          } else if (projectData.title.includes('제네시스')) {
-            window.open("https://smkim12345.github.io/project1/index.html", "_blank");
+          if (projectData.title.includes("갸스비")) {
+            window.open(
+              "https://smkim12345.github.io/project2/index.html",
+              "_blank"
+            );
+          } else if (projectData.title.includes("제네시스")) {
+            window.open(
+              "https://smkim12345.github.io/project1/index.html",
+              "_blank"
+            );
           }
-          
+
           // 로켓 애니메이션 재개
           this.resumeRocketAnimation();
         }
@@ -586,10 +595,10 @@ class PortfolioImageModal {
       processBtn.style.display = "block";
       processBtn.onclick = (e) => {
         e.preventDefault(); // 링크 기본 동작 방지
-        
+
         // 새 창에서 열기
         window.open(projectData.process, "_blank");
-        
+
         // 로켓 애니메이션 재개 (외부 링크를 새 창에서 열기 때문에)
         this.resumeRocketAnimation();
       };
@@ -690,49 +699,55 @@ class PortfolioImageModal {
 
   closeModal() {
     // 모달 닫기
-    this.modal.classList.remove('show');
-    document.body.style.overflow = 'auto';
-    
+    this.modal.classList.remove("show");
+    document.body.style.overflow = "auto";
+
     // 이미지 숨기기 (성능 최적화)
-    const detailImage = document.getElementById('detail-image');
+    const detailImage = document.getElementById("detail-image");
     if (detailImage) {
-      detailImage.style.display = 'none';
-      detailImage.src = '';
+      detailImage.style.display = "none";
+      detailImage.src = "";
     }
-    
+
     // 관련 버튼들 숨기기
-    const linkBtn = document.getElementById('link-btn');
-    const processBtn = document.getElementById('process-btn');
-    const mobileViewBtn = document.getElementById('mobile-view-btn');
-    const responsiveViewBtn = document.getElementById('responsive-view-btn');
-    
-    if (linkBtn) linkBtn.style.display = 'none';
-    if (processBtn) processBtn.style.display = 'none';
-    if (mobileViewBtn) mobileViewBtn.style.display = 'none';
-    if (responsiveViewBtn) responsiveViewBtn.style.display = 'none';
-    
+    const linkBtn = document.getElementById("link-btn");
+    const processBtn = document.getElementById("process-btn");
+    const mobileViewBtn = document.getElementById("mobile-view-btn");
+    const responsiveViewBtn = document.getElementById("responsive-view-btn");
+
+    if (linkBtn) linkBtn.style.display = "none";
+    if (processBtn) processBtn.style.display = "none";
+    if (mobileViewBtn) mobileViewBtn.style.display = "none";
+    if (responsiveViewBtn) responsiveViewBtn.style.display = "none";
+
     // 저장된 스크롤 위치로 복원
     window.scrollTo(0, this.savedScrollPosition);
-    
+
     // 로켓 애니메이션 재개
     this.resumeRocketAnimation();
-    
+
     // 콘솔 로그로 확인
-    console.log('모달 닫기: 스크롤 위치 복원', this.savedScrollPosition);
+    console.log("모달 닫기: 스크롤 위치 복원", this.savedScrollPosition);
   }
 
   // 로켓 애니메이션 일시 중지
   pauseRocketAnimation() {
-    console.log('로켓 애니메이션 일시 중지');
-    if (window.rocketInstance && typeof window.rocketInstance.pauseAnimation === 'function') {
+    console.log("로켓 애니메이션 일시 중지");
+    if (
+      window.rocketInstance &&
+      typeof window.rocketInstance.pauseAnimation === "function"
+    ) {
       window.rocketInstance.pauseAnimation();
     }
   }
 
   // 로켓 애니메이션 재개
   resumeRocketAnimation() {
-    console.log('로켓 애니메이션 재개');
-    if (window.rocketInstance && typeof window.rocketInstance.resumeAnimation === 'function') {
+    console.log("로켓 애니메이션 재개");
+    if (
+      window.rocketInstance &&
+      typeof window.rocketInstance.resumeAnimation === "function"
+    ) {
       window.rocketInstance.resumeAnimation();
     }
   }
@@ -743,49 +758,51 @@ class PortfolioImageModal {
     if (projectData.responsiveUrl) {
       return projectData.responsiveUrl;
     }
-    
+
     if (projectData.link) {
       // link가 URL 객체를 가리키는 경우 문자열 추출 시도
       try {
         // '링크_' 접두사가 있는 파일명에서 실제 URL 추출
-        if (typeof projectData.link === 'string' && projectData.link.includes('링크_')) {
+        if (
+          typeof projectData.link === "string" &&
+          projectData.link.includes("링크_")
+        ) {
           // 프로젝트 타이틀로 확인
-          if (projectData.title.includes('갸스비')) {
+          if (projectData.title.includes("갸스비")) {
             return "https://smkim12345.github.io/project2/index.html";
-          } else if (projectData.title.includes('제네시스')) {
+          } else if (projectData.title.includes("제네시스")) {
             return "https://smkim12345.github.io/project1/index.html";
-          } else if (projectData.title.includes('갤럭시 버즈')) {
+          } else if (projectData.title.includes("갤럭시 버즈")) {
             return "https://smkim12345.github.io/galaxybuds/";
           }
         } else {
           return projectData.link;
         }
       } catch (error) {
-        console.error('URL 추출 오류:', error);
+        console.error("URL 추출 오류:", error);
       }
-
     }
-    
+
     // 제목으로 판단 (대체 URL)
-    if (projectData.title.includes('갸스비')) {
+    if (projectData.title.includes("갸스비")) {
       return "https://smkim12345.github.io/project2/index.html";
-    } else if (projectData.title.includes('제네시스')) {
+    } else if (projectData.title.includes("제네시스")) {
       return "https://smkim12345.github.io/project1/index.html";
-    } else if (projectData.title.includes('갤럭시 버즈')) {
+    } else if (projectData.title.includes("갤럭시 버즈")) {
       return "https://smkim12345.github.io/galaxybuds/";
     }
-    
+
     return null;
   }
 
   exposeGlobalMethods() {
     const self = this; // this 참조 저장
-    
+
     // 전역 객체에 메서드 노출하여 외부에서 호출 가능하게 함
     window.showMobilePreview = (url, title, preserveDeviceSize = false) => {
       // 로켓 애니메이션 일시 중지
       self.pauseRocketAnimation();
-      
+
       self.showMobilePreview(url, title, preserveDeviceSize);
     };
 
@@ -800,7 +817,7 @@ class PortfolioImageModal {
         setTimeout(() => {
           mobileMockup.remove();
         }, 300);
-        
+
         // 로켓 애니메이션 재개
         self.resumeRocketAnimation();
       }
@@ -811,22 +828,24 @@ class PortfolioImageModal {
 // 페이지 로드 후 모달 초기화
 document.addEventListener("DOMContentLoaded", () => {
   const modal = new PortfolioImageModal();
-  
+
   // 페이지 로드 시 이전에 저장된 스크롤 위치 복원
   if (window.savedPortfolioScrollPosition) {
-    console.log("저장된 스크롤 위치 복원:", window.savedPortfolioScrollPosition);
+    console.log(
+      "저장된 스크롤 위치 복원:",
+      window.savedPortfolioScrollPosition
+    );
     setTimeout(() => {
       window.scrollTo({
         top: window.savedPortfolioScrollPosition,
-        behavior: 'auto'
+        behavior: "auto",
       });
     }, 300);
   }
-  
+
   // DOM 업데이트 후 이벤트 리스너 다시 연결
   setTimeout(() => {
     console.log("포트폴리오 항목 이벤트 리스너 다시 연결");
     modal.updatePortfolioItems();
   }, 1000);
 });
-
