@@ -475,6 +475,23 @@ class PortfolioImageModal {
   getProjectDataLegacy(projectId) {
     // 하드코딩된 프로젝트 데이터 (이전 버전과의 호환성 유지)
     const projectsData = {
+      // 한국가이던스 프로젝트
+      섬네일_한국가이던스: {
+        title: "한국가이던스 웹 리디자인",
+        category: "web",
+        // 웹사이트 링크 추가
+        link: "images/한국가이던스/한국가이던스 - 심리문화를 선도하는 전문기관.url",
+        // 실제 URL을 직접 지정 (getActualUrl에서 사용)
+        actualUrl:
+          "https://smkim12345.github.io/project_koreaguidance_250522/index.html",
+        hasComparisonSlider: true,
+        beforeImage: "images/한국가이던스/상세_한국가이던스(BEFORE).png",
+        afterImage: "images/한국가이던스/상세_한국가이던스(AFTER).png",
+        tools: ["Photoshop", "Illustrator", "HTML", "CSS", "JavaScript"],
+        description:
+          "한국가이던스의 기존 웹사이트를 사용자 중심의 UI/UX로 개선하고 최신 웹 기술을 적용하여 리디자인했습니다. 주요 목표는 정보 접근성 향상과 기관의 전문성 강조였습니다.",
+      },
+
       // 트로피카나 프로젝트
       섬네일_트로피카나: {
         title: "트로피카나 스파클링 패키지 리디자인",
@@ -966,45 +983,36 @@ class PortfolioImageModal {
 
   // 실제 URL 가져오기
   getActualUrl(projectData) {
-    // 데이터에 직접 URL이 있으면 사용
+    // 직접 지정된 actualUrl이 있는 경우 사용
+    if (projectData.actualUrl) {
+      return projectData.actualUrl;
+    }
+
+    // 기존 로직 유지
+    if (projectData.link && typeof projectData.link === "string") {
+      // 링크가 "링크_"로 시작하는 경우 처리
+      if (projectData.link.includes("링크_")) {
+        // 기존 로직 유지
+        return projectData.link;
+      }
+      // .url 파일 경로인 경우 처리
+      if (projectData.link.endsWith(".url")) {
+        // 한국가이던스 프로젝트의 경우 하드코딩된 URL 반환
+        if (projectData.link.includes("한국가이던스")) {
+          return "https://smkim12345.github.io/project_koreaguidance_250522/index.html";
+        }
+        // 다른 .url 파일들에 대한 처리
+        return projectData.link;
+      }
+    }
+
+    // responsiveUrl이 있는 경우 처리
     if (projectData.responsiveUrl) {
       return projectData.responsiveUrl;
     }
 
-    if (projectData.link) {
-      // link가 URL 객체를 가리키는 경우 문자열 추출 시도
-      try {
-        // '링크_' 접두사가 있는 파일명에서 실제 URL 추출
-        if (
-          typeof projectData.link === "string" &&
-          projectData.link.includes("링크_")
-        ) {
-          // 프로젝트 타이틀로 확인
-          if (projectData.title.includes("갸스비")) {
-            return "https://smkim12345.github.io/project2/index.html";
-          } else if (projectData.title.includes("제네시스")) {
-            return "https://smkim12345.github.io/project1/index.html";
-          } else if (projectData.title.includes("갤럭시 버즈")) {
-            return "https://smkim12345.github.io/galaxybuds/";
-          }
-        } else {
-          return projectData.link;
-        }
-      } catch (error) {
-        console.error("URL 추출 오류:", error);
-      }
-    }
-
-    // 제목으로 판단 (대체 URL)
-    if (projectData.title.includes("갸스비")) {
-      return "https://smkim12345.github.io/project2/index.html";
-    } else if (projectData.title.includes("제네시스")) {
-      return "https://smkim12345.github.io/project1/index.html";
-    } else if (projectData.title.includes("갤럭시 버즈")) {
-      return "https://smkim12345.github.io/galaxybuds/";
-    }
-
-    return null;
+    // 기본값 반환
+    return "#";
   }
 
   exposeGlobalMethods() {
