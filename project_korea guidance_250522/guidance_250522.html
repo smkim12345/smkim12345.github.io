@@ -1,0 +1,2403 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>한국가이던스 - 심리문화를 선도하는 전문기관</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Open+Sans:wght@400;600;700&family=Montserrat:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        /* 주요 색상 */
+        --primary-blue: #3b7ebd;
+        --primary-blue-dark: #2e6ca6;
+        --secondary-green: #7fb685;
+        --secondary-green-dark: #6ba372;
+        --accent-orange: #f79256;
+        --accent-orange-dark: #e57d45;
+
+        /* 중립 색상 */
+        --white: #ffffff;
+        --light-gray: #f5f6fa;
+        --mid-gray: #dee2e6;
+        --dark-gray: #495057;
+        --charcoal: #212529;
+
+        /* 폰트 크기 */
+        --font-xl: 2.25rem;
+        --font-lg: 1.75rem;
+        --font-md: 1.375rem;
+        --font-base: 1rem;
+        --font-sm: 0.875rem;
+
+        /* 간격 */
+        --space-xs: 0.25rem;
+        --space-sm: 0.5rem;
+        --space-md: 1rem;
+        --space-lg: 1.5rem;
+        --space-xl: 2rem;
+        --space-xxl: 3rem;
+
+        /* 반지름 */
+        --radius-sm: 4px;
+        --radius-md: 8px;
+        --radius-lg: 12px;
+
+        /* 그림자 */
+        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+        /* 개인 탭 테마 색상 (연한 빨강 계열) */
+        --theme-individual-primary: hsl(0, 80%, 75%);
+        --theme-individual-primary-dark: hsl(0, 80%, 65%);
+        --theme-individual-primary-rgb: 255, 179, 179; /* HSL(0, 80%, 75%) to RGB */
+        --theme-individual-text: #fff;
+
+        /* 학교/교육기관 탭 테마 색상 (하늘색 계열) */
+        --theme-school-primary: hsl(195, 75%, 70%);
+        --theme-school-primary-dark: hsl(195, 75%, 60%);
+        --theme-school-primary-rgb: 140, 213, 230; /* HSL(195, 75%, 70%) to RGB */
+        --theme-school-text: #fff;
+
+        /* 전문가/상담사 탭 테마 색상 (주황색 계열) */
+        --theme-professional-primary: hsl(30, 90%, 65%);
+        --theme-professional-primary-dark: hsl(30, 90%, 55%);
+        --theme-professional-primary-rgb: 255, 168, 102; /* HSL(30, 90%, 65%) to RGB */
+        --theme-professional-text: #fff;
+
+        /* 기관/기업 탭 테마 색상 (초록 계열) */
+        --theme-company-primary: hsl(130, 60%, 70%);
+        --theme-company-primary-dark: hsl(130, 60%, 60%);
+        --theme-company-primary-rgb: 140, 217, 153; /* HSL(130, 60%, 70%) to RGB */
+        --theme-company-text: #fff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Noto Sans KR", "Open Sans", sans-serif;
+        color: var(--dark-gray);
+        line-height: 1.5;
+        background-color: var(--white);
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Noto Sans KR", "Montserrat", sans-serif;
+        font-weight: 700;
+        color: var(--charcoal);
+        line-height: 1.3;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+        transition: color 0.3s;
+      }
+
+      ul {
+        list-style-type: none;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--space-lg);
+      }
+
+      /* 섹션용 컨테이너에 카드 스타일 적용 */
+      .container-card {
+        padding: var(--space-xl);
+      }
+
+      /* 헤더용 컨테이너 */
+      .header-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--space-lg);
+      }
+
+      .btn {
+        display: inline-block;
+        padding: var(--space-sm) var(--space-lg);
+        border-radius: var(--radius-md);
+        font-weight: 500;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: none;
+        font-size: var(--font-base);
+      }
+
+      .btn-primary {
+        background-color: var(--primary-blue);
+        color: var(--white);
+      }
+
+      .btn-primary:hover {
+        background-color: var(--primary-blue-dark);
+      }
+
+      .btn-secondary {
+        background-color: var(--white);
+        color: var(--primary-blue);
+        border: 1px solid var(--primary-blue);
+      }
+
+      .btn-secondary:hover {
+        background-color: var(--primary-blue);
+        color: var(--white);
+      }
+
+      .btn-accent {
+        background-color: var(--primary-blue);
+        color: var(--white);
+        font-weight: bold;
+      }
+
+      .btn-accent:hover {
+        background-color: var(--primary-blue-dark);
+        transform: scale(1.05);
+      }
+
+      /* 헤더 스타일 */
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: var(--white);
+        box-shadow: var(--shadow-sm);
+        z-index: 1000;
+      }
+
+      .header-top {
+        background-color: var(--light-gray);
+        padding: var(--space-xs) 0;
+      }
+
+      .header-top ul {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--space-md);
+      }
+
+      .header-top a {
+        font-size: var(--font-sm);
+        color: var(--dark-gray);
+      }
+
+      .header-top a:hover {
+        color: var(--primary-blue);
+      }
+
+      .header-main {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+      }
+
+      .logo img {
+        height: 75px;
+        width: auto;
+      }
+
+      .nav-main {
+        display: flex;
+        gap: var(--space-xl);
+      }
+
+      .nav-main-item {
+        position: relative;
+        font-weight: 500;
+      }
+
+      .nav-main-item > a {
+        padding: var(--space-md) 0;
+      }
+
+      .nav-main-item:hover > li {
+        color: var(--primary-blue);
+      }
+
+      .dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: var(--white);
+        box-shadow: var(--shadow-md);
+        min-width: 160px;
+        border-radius: var(--radius-md);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: all 0.3s;
+        z-index: 100;
+      }
+
+      .nav-main-item:hover .dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .dropdown-item {
+        padding: 1rem;
+        width: 100%;
+        border-bottom: 1px solid var(--light-gray);
+      }
+
+      .dropdown-item:last-child {
+        border-bottom: none;
+      }
+
+      .dropdown-item:hover {
+        color: var(--primary-blue);
+        background-color: var(--light-gray);
+      }
+
+      .mobile-nav-toggle {
+        display: none;
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+        color: var(--dark-gray);
+        cursor: pointer;
+      }
+
+      /* 히어로 섹션 */
+      .hero {
+        padding-top: 100px;
+        padding-bottom: 0;
+        background: none;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .hero-slider {
+        position: relative;
+        width: 100%;
+        height: 500px;
+        overflow: hidden;
+        background-color: #f5f5f5;
+      }
+
+      .hero-slider-track {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 300%;
+        height: 100%;
+        display: flex;
+        transition: transform 0.5s ease;
+      }
+
+      .hero-slide {
+        width: 33.333%;
+        height: 100%;
+        position: relative;
+        background-color: #f5f5f5;
+      }
+
+      .hero-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+      }
+
+      .hero-content {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: var(--font-xl);
+        margin-bottom: var(--space-lg);
+        color: var(--white);
+      }
+
+      .hero p {
+        font-size: var(--font-md);
+        opacity: 0.9;
+        margin-bottom: var(--space-xl);
+      }
+
+      .hero-btns {
+        display: flex;
+        gap: var(--space-md);
+        justify-content: center;
+      }
+
+      .hero-nav {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 2rem;
+        transform: translateY(-50%);
+        z-index: 10;
+      }
+
+      .hero-nav-btn {
+        background: rgba(0, 0, 0, 0.3);
+        border: none;
+        font-size: 2rem;
+        color: var(--white);
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .hero-dots {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        gap: var(--space-md);
+        z-index: 10;
+      }
+
+      .hero-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+      }
+
+      .hero-dot.active {
+        background-color: var(--white);
+      }
+
+      /* 서비스 섹션 */
+      .section {
+        padding: var(--space-xxl) 0;
+      }
+
+      .section-header {
+        text-align: center;
+      }
+
+      .section-title {
+        font-size: var(--font-lg);
+        margin-bottom: var(--space-md);
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(to right, #ff9090, #6fb1ef);
+        border-radius: 10%;
+      }
+
+      .section-desc {
+        max-width: 700px;
+        margin: 50px auto;
+        color: var(--dark-gray);
+      }
+
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--space-lg);
+        margin-top: var(--space-xl);
+      }
+
+      .service-card {
+        background-color: var(--white);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        transition: transform 0.3s, box-shadow 0.3s;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .service-img {
+        height: 320px;
+        background-size: cover;
+        background-position: top;
+        transition: all 0.3s;
+      }
+
+      .service-content {
+        padding: var(--space-lg);
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        color: white;
+      }
+
+      .service-img {
+        position: relative;
+        z-index: 0;
+      }
+
+      .service-img img {
+        transition: transform 0.3s ease;
+      }
+
+      .service-img:hover img {
+        transform: scale(1.05);
+      }
+
+      .service-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .service-content::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.5;
+        z-index: -1;
+      }
+
+      .service-card:nth-child(1) .service-content {
+        background: linear-gradient(
+          to top,
+          rgba(49, 201, 201, 0.8) 0%,
+          rgba(59, 126, 189, 0.02) 100%
+        );
+      }
+
+      .service-card:nth-child(2) .service-content {
+        background: linear-gradient(
+          to top,
+          rgba(218, 103, 212, 0.8) 0%,
+          rgba(59, 126, 189, 0.02) 100%
+        );
+      }
+
+      .service-card:nth-child(3) .service-content {
+        background: linear-gradient(
+          to top,
+          rgba(247, 231, 95, 0.8) 0%,
+          rgba(59, 126, 189, 0.02) 100%
+        );
+      }
+
+      .service-title {
+        font-size: var(--font-md);
+        margin-bottom: var(--space-md);
+        position: relative;
+      }
+
+      .service-desc {
+        color: var(--dark-gray);
+        margin-bottom: var(--space-lg);
+        flex-grow: 1;
+        position: relative;
+      }
+
+      .service-card .btn {
+        align-self: center;
+        margin-top: auto;
+        position: relative;
+      }
+
+      /* 사용자 그룹 섹션 */
+      .users-section {
+        background-color: var(--light-gray);
+      }
+
+      .user-tabs {
+        display: flex;
+        justify-content: center;
+        gap: var(--space-md);
+        margin-top: var(--space-xl);
+        flex-wrap: wrap;
+        perspective: 1000px;
+      }
+
+      .user-tab {
+        padding: var(--space-sm) var(--space-lg);
+        background-color: var(--white);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        /* border: 2px solid var(--primary-blue); */ /* 기본 테두리 색상 제거 */
+        transition: all 0.3s ease-in-out;
+        position: relative;
+        overflow: hidden;
+        min-width: 120px;
+        text-align: center;
+        z-index: 1;
+        opacity: 0;
+      }
+
+      /* 기본 탭 테두리 색상 설정 */
+      .user-tab[data-target="individual"] {
+        border: 2px solid var(--theme-individual-primary);
+        color: var(--theme-individual-primary);
+      }
+      .user-tab[data-target="school"] {
+        border: 2px solid var(--theme-school-primary);
+        color: var(--theme-school-primary);
+      }
+      .user-tab[data-target="professional"] {
+        border: 2px solid var(--theme-professional-primary);
+        color: var(--theme-professional-primary);
+      }
+      .user-tab[data-target="company"] {
+        border: 2px solid var(--theme-company-primary);
+        color: var(--theme-company-primary);
+      }
+
+      /* 호버 시 테마 색상 적용 */
+      .user-tab[data-target="individual"]:hover {
+        background-color: var(--theme-individual-primary);
+        color: var(--theme-individual-text);
+      }
+      .user-tab[data-target="school"]:hover {
+        background-color: var(--theme-school-primary);
+        color: var(--theme-school-text);
+      }
+      .user-tab[data-target="professional"]:hover {
+        background-color: var(--theme-professional-primary);
+        color: var(--theme-professional-text);
+      }
+      .user-tab[data-target="company"]:hover {
+        background-color: var(--theme-company-primary);
+        color: var(--theme-company-text);
+      }
+
+      .user-tab:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+
+      /* 활성 탭 테마 색상 적용 */
+      .user-tab.active {
+        font-weight: 500;
+        /* border-color와 background-color는 각 탭 테마로 설정 */
+        /* color도 각 탭 테마로 설정 */
+      }
+
+      .user-tab[data-target="individual"].active {
+        background-color: var(--theme-individual-primary);
+        border-color: var(--theme-individual-primary);
+        color: var(--theme-individual-text);
+      }
+      .user-tab[data-target="school"].active {
+        background-color: var(--theme-school-primary);
+        border-color: var(--theme-school-primary);
+        color: var(--theme-school-text);
+      }
+      .user-tab[data-target="professional"].active {
+        background-color: var(--theme-professional-primary);
+        border-color: var(--theme-professional-primary);
+        color: var(--theme-professional-text);
+      }
+      .user-tab[data-target="company"].active {
+        background-color: var(--theme-company-primary);
+        border-color: var(--theme-company-primary);
+        color: var(--theme-company-text);
+      }
+
+      .user-tab span {
+        display: inline-block;
+        transition: transform 0.3s ease;
+      }
+
+      .user-content-container {
+        position: relative;
+        width: 100%;
+        min-height: 500px; /* 최소 높이 설정으로 레이아웃 이동 방지 */
+      }
+
+      .user-content {
+        width: 100%;
+        flex-shrink: 0;
+        display: none; /* 기본적으로 숨김 처리 */
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        position: absolute; /* 절대 위치로 설정 */
+        left: 0;
+        right: 0;
+      }
+
+      /* 활성화된 탭의 내용만 표시 */
+      .user-content.active {
+        display: block;
+        opacity: 1;
+        position: relative; /* 활성화된 콘텐츠는 문서 흐름에 포함 */
+      }
+
+      .content-header {
+        text-align: center;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: 0.6fr 1fr;
+        gap: var(--space-xl);
+        margin-bottom: var(--space-lg);
+        margin: 0 60px;
+      }
+
+      .feature-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .feature-item {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        padding: var(--space-md);
+        background-color: rgba(59, 126, 189, 0.05);
+        border-radius: var(--radius-md);
+        transition: all 0.3s ease;
+        border-left: 3px solid transparent;
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .user-content-inner .btn {
+        align-self: center;
+        padding: var(--space-md) var(--space-xl);
+        font-weight: 600;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        transition: all 0.4s ease;
+        border-radius: 50px;
+        /* 기본 box-shadow는 유지하고, 호버 시 테마 색상으로 변경 */
+        box-shadow: 0 6px 15px rgba(59, 126, 189, 0.2);
+      }
+
+      /* 개별 테마 버튼 색상 */
+      #individual .user-content-inner .btn {
+        background-color: var(--theme-individual-primary);
+        color: var(--theme-individual-text);
+        box-shadow: 0 6px 15px rgba(var(--theme-individual-primary-rgb), 0.2);
+      }
+      #individual .user-content-inner .btn:hover {
+        background-color: var(--theme-individual-primary-dark);
+        box-shadow: 0 0 20px rgba(var(--theme-individual-primary-rgb), 0.5);
+      }
+
+      #school .user-content-inner .btn {
+        background-color: var(--theme-school-primary);
+        color: var(--theme-school-text);
+        box-shadow: 0 6px 15px rgba(var(--theme-school-primary-rgb), 0.2);
+      }
+      #school .user-content-inner .btn:hover {
+        background-color: var(--theme-school-primary-dark);
+        box-shadow: 0 0 20px rgba(var(--theme-school-primary-rgb), 0.5);
+      }
+
+      #professional .user-content-inner .btn {
+        background-color: var(--theme-professional-primary);
+        color: var(--theme-professional-text);
+        box-shadow: 0 6px 15px rgba(var(--theme-professional-primary-rgb), 0.2);
+      }
+      #professional .user-content-inner .btn:hover {
+        background-color: var(--theme-professional-primary-dark);
+        box-shadow: 0 0 20px rgba(var(--theme-professional-primary-rgb), 0.5);
+      }
+
+      #company .user-content-inner .btn {
+        background-color: var(--theme-company-primary);
+        color: var(--theme-company-text);
+        box-shadow: 0 6px 15px rgba(var(--theme-company-primary-rgb), 0.2);
+      }
+      #company .user-content-inner .btn:hover {
+        background-color: var(--theme-company-primary-dark);
+        box-shadow: 0 0 20px rgba(var(--theme-company-primary-rgb), 0.5);
+      }
+
+      .user-content-inner .btn:hover {
+        transform: scale(1.05);
+        /* box-shadow는 각 테마별로 설정 */
+      }
+
+      /* 심리검사 카테고리 */
+      .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: var(--space-lg);
+        align-items: stretch;
+      }
+
+      .category-card {
+        text-align: center;
+        padding: var(--space-xl);
+        border-radius: var(--radius-md);
+        background-color: var(--white);
+        box-shadow: var(--shadow-md);
+        transition: all 0.3s;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        position: relative;
+      }
+
+      .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+        background: linear-gradient(
+          135deg,
+          hsla(210, 70%, 40%, 0.5),
+          hsla(0, 70%, 40%, 0.5),
+          hsla(60, 70%, 40%, 0.5)
+        );
+      }
+
+      .category-icon {
+        width: 170px;
+        height: 170px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto var(--space-lg);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .category-icon img {
+        max-width: 80%;
+        max-height: 80%;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+      }
+
+      /* 위아래 움직이는 애니메이션 정의 */
+      @keyframes floatUpDown {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      .category-card:hover .category-icon img {
+        animation: floatUpDown 1.7s ease-in-out infinite;
+      }
+
+      .category-title {
+        font-size: var(--font-md);
+        margin-bottom: var(--space-md);
+      }
+
+      .category-desc {
+        margin-bottom: var(--space-xl);
+        color: var(--dark-gray);
+        flex-grow: 1;
+      }
+
+      .category-card .btn {
+        margin-top: auto;
+      }
+
+      /* 테스티모니얼 섹션 */
+      .testimonials-section {
+        background-color: var(--light-gray);
+      }
+
+      .testimonials-slider {
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .testimonial-slide {
+        flex: 0 0 100%;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 0;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .testimonial-slide.active {
+        opacity: 1;
+        pointer-events: auto;
+        z-index: 2;
+      }
+
+      .testimonials-track {
+        display: block;
+        position: relative;
+        min-height: 300px;
+      }
+
+      .testimonial-card {
+        background-color: var(--white);
+        border-radius: var(--radius-md);
+        padding: var(--space-xl);
+        box-shadow: var(--shadow-md);
+        margin: var(--space-md);
+        display: flex;
+        align-items: center;
+        gap: var(--space-xl);
+        position: relative;
+      }
+
+      .testimonial-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 5px;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          var(--primary-blue) 0%,
+          var(--secondary-green) 100%
+        );
+        border-top-left-radius: var(--radius-md);
+        border-bottom-left-radius: var(--radius-md);
+      }
+
+      .testimonial-author-img {
+        flex: 0 0 120px;
+        height: 120px;
+        overflow: hidden;
+        border-radius: 50%;
+        box-shadow: var(--shadow-md);
+        border: 3px solid var(--white);
+        position: relative;
+      }
+
+      .testimonial-author-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .testimonial-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .testimonial-content {
+        font-style: italic;
+        margin-bottom: var(--space-md);
+        position: relative;
+        color: var(--dark-gray);
+        line-height: 1.6;
+      }
+
+      .testimonial-content::before {
+        content: '"';
+        font-size: 3rem;
+        color: rgba(59, 126, 189, 0.1);
+        position: absolute;
+        top: -40px;
+        left: -20px;
+        font-family: Georgia, serif;
+      }
+
+      .testimonial-content::after {
+        content: '"';
+        font-size: 3rem;
+        color: rgba(59, 126, 189, 0.1);
+        position: absolute;
+        top: 30px;
+        right: 0;
+        font-family: Georgia, serif;
+      }
+
+      .testimonial-author-info {
+        display: flex;
+        flex-direction: column;
+        margin-top: var(--space-sm);
+      }
+
+      .testimonial-author-name {
+        font-weight: 600;
+        color: var(--primary-blue);
+        font-size: 1.1rem;
+      }
+
+      .testimonial-author-title {
+        font-size: var(--font-sm);
+        color: var(--dark-gray);
+        opacity: 0.8;
+      }
+
+      .testimonial-nav {
+        display: flex;
+        justify-content: center;
+        gap: var(--space-md);
+        margin-top: var(--space-lg);
+      }
+
+      .testimonial-nav-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--white);
+        color: var(--primary-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: none;
+        box-shadow: var(--shadow-sm);
+        transition: all 0.3s;
+      }
+
+      .testimonial-nav-btn:hover {
+        background-color: var(--primary-blue);
+        color: var(--white);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* CTA 섹션 */
+      .cta-section {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue) 0%,
+          var(--secondary-green) 100%
+        );
+        color: var(--white);
+        text-align: center;
+        padding: var(--space-xxl) 0;
+      }
+
+      .cta-content {
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .cta-title {
+        font-size: var(--font-lg);
+        margin-bottom: var(--space-lg);
+        color: var(--white);
+      }
+
+      .cta-desc {
+        margin-bottom: var(--space-xl);
+        opacity: 0.9;
+      }
+
+      /* 푸터 */
+      .footer {
+        background-color: var(--charcoal);
+        color: var(--light-gray);
+        padding: var(--space-xxl) 0 var(--space-lg);
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--space-xl);
+      }
+
+      .footer-logo {
+        font-size: var(--font-lg);
+        font-weight: 700;
+        margin-bottom: var(--space-lg);
+        color: var(--white);
+      }
+
+      .footer-desc {
+        margin-bottom: var(--space-lg);
+        opacity: 0.8;
+      }
+
+      .footer-social {
+        display: flex;
+        gap: var(--space-md);
+      }
+
+      .social-icon {
+        width: 36px;
+        height: 36px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+      }
+      .social-icon.naver-icon {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      /* 소셜 아이콘 브랜드별 호버 색상 */
+      .social-icon.facebook:hover {
+        background-color: #1877f2; /* Facebook Blue */
+      }
+
+      .social-icon.instagram:hover {
+        background-color: #e1306c; /* Instagram Pink */
+      }
+
+      .social-icon.youtube:hover {
+        background-color: #ff0000; /* YouTube Red */
+      }
+
+      .social-icon.naver:hover {
+        background-color: #03cf5d; /* YouTube Red */
+      }
+
+      /* 기존의 일반 호버 효과 제거 */
+      /* .social-icon:hover {
+        background-color: var(--primary-blue);
+      } */
+
+      .footer-title {
+        font-size: var(--font-base);
+        font-weight: 500;
+        margin-bottom: var(--space-lg);
+        color: var(--white);
+      }
+
+      .footer-links li {
+        margin-bottom: var(--space-sm);
+      }
+
+      .footer-links a {
+        opacity: 0.8;
+        transition: all 0.3s;
+      }
+
+      .footer-links a:hover {
+        opacity: 1;
+        color: var(--accent-orange);
+      }
+
+      .footer-bottom {
+        margin-top: var(--space-xxl);
+        padding-top: var(--space-lg);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: var(--space-md);
+      }
+
+      .footer-bottom-links {
+        display: flex;
+        gap: var(--space-lg);
+      }
+
+      .footer-bottom-links a {
+        opacity: 0.8;
+      }
+
+      .footer-bottom-links a:hover {
+        opacity: 1;
+      }
+
+      /* 반응형 스타일 */
+      @media (max-width: 992px) {
+        .features-grid {
+          grid-template-columns: 1fr;
+          gap: var(--space-lg);
+        }
+
+        .user-content-img {
+          margin-bottom: var(--space-md);
+        }
+
+        .user-content-inner .btn {
+          width: 100%;
+          max-width: 300px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-main {
+          position: fixed;
+          top: 0;
+          right: -300px;
+          width: 300px;
+          height: 100vh;
+          background-color: var(--white);
+          flex-direction: column;
+          gap: 0;
+          box-shadow: var(--shadow-lg);
+          transition: right 0.3s;
+          padding: var(--space-xl) var(--space-lg);
+          z-index: 1001;
+        }
+
+        .nav-main.active {
+          right: 0;
+        }
+
+        .nav-main-item {
+          width: 100%;
+        }
+
+        .nav-main-item > a {
+          display: block;
+          padding: var(--space-md);
+          border-bottom: 1px solid var(--light-gray);
+        }
+
+        .dropdown {
+          position: static;
+          opacity: 1;
+          visibility: visible;
+          transform: none;
+          box-shadow: none;
+          min-width: auto;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s;
+        }
+
+        .nav-main-item.active .dropdown {
+          max-height: 500px;
+        }
+
+        .dropdown-item {
+          padding-left: var(--space-xl);
+        }
+
+        .mobile-nav-toggle {
+          display: block;
+        }
+
+        .hero-btns {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .hero-btns .btn {
+          width: 100%;
+          max-width: 300px;
+        }
+
+        .testimonial-card {
+          flex-direction: column;
+          text-align: center;
+          gap: var(--space-md);
+        }
+
+        .testimonial-author-img {
+          margin: 0 auto;
+        }
+
+        .testimonial-content::before,
+        .testimonial-content::after {
+          display: none;
+        }
+
+        .testimonial-author-info {
+          align-items: center;
+        }
+      }
+
+      @media (max-width: 576px) {
+        :root {
+          --font-xl: 1.75rem;
+          --font-lg: 1.375rem;
+          --font-md: 1.125rem;
+          --space-xl: 1.5rem;
+          --space-xxl: 2rem;
+        }
+
+        .container {
+          padding: 0 var(--space-md);
+        }
+
+        .header-top ul {
+          justify-content: center;
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+
+        .footer-bottom-links {
+          justify-content: center;
+        }
+      }
+
+      .user-content-title {
+        font-size: var(--font-lg);
+        margin-bottom: var(--space-md);
+        color: var(--primary-blue);
+        position: relative;
+        padding-bottom: var(--space-sm);
+        display: inline-block;
+      }
+
+      .user-content-desc {
+        margin-bottom: var(--space-md);
+        line-height: 1.7;
+        color: var(--dark-gray);
+        font-size: 1.05rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .feature-icon {
+        color: var(--primary-blue);
+        font-size: 1.2rem;
+        min-width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(59, 126, 189, 0.1);
+        border-radius: 50%;
+        padding: 6px;
+        transition: all 0.3s ease;
+      }
+
+      /* 개별 테마 feature-icon 색상 */
+      #individual .feature-icon {
+        color: var(--theme-individual-primary);
+        background-color: rgba(var(--theme-individual-primary-rgb), 0.1);
+      }
+      #school .feature-icon {
+        color: var(--theme-school-primary);
+        background-color: rgba(var(--theme-school-primary-rgb), 0.1);
+      }
+      #professional .feature-icon {
+        color: var(--theme-professional-primary);
+        background-color: rgba(var(--theme-professional-primary-rgb), 0.1);
+      }
+      #company .feature-icon {
+        color: var(--theme-company-primary);
+        background-color: rgba(var(--theme-company-primary-rgb), 0.1);
+      }
+
+      .feature-item span:last-child {
+        font-weight: 500;
+        color: var(--charcoal);
+        line-height: 1.5;
+      }
+
+      /* 자동 호버 효과를 위한 클래스 */
+      .feature-item.auto-hover {
+        background-color: rgba(59, 126, 189, 0.3);
+        transform: translateX(8px);
+        border-left: 3px solid var(--primary-blue);
+        box-shadow: 0 5px 15px rgba(59, 126, 189, 0.1);
+      }
+
+      .feature-item.auto-hover .feature-icon {
+        background-color: var(--primary-blue);
+        color: white;
+        transform: rotate(360deg);
+      }
+
+      .user-content-inner {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-lg);
+        padding: var(--space-xl);
+        transition: all 0.5s ease-in-out;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .user-content-img {
+        width: 100%;
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .user-content-img img {
+        width: 100%;
+        height: auto;
+        border-radius: var(--radius-md);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(222, 226, 230, 0.3);
+      }
+
+      .user-content-img:after {
+        content: "";
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        bottom: 0;
+        border-radius: var(--radius-md);
+        background: linear-gradient(
+          135deg,
+          rgba(59, 126, 189, 0.4) 0%,
+          rgba(127, 182, 133, 0.1) 100%
+        );
+        filter: blur(20px);
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.5s ease;
+      }
+
+      .feature-item.auto-hover {
+        background-color: rgba(59, 126, 189, 0.3);
+        transform: translateX(8px);
+        border-left: 3px solid var(--primary-blue);
+        box-shadow: 0 5px 15px rgba(59, 126, 189, 0.1);
+      }
+
+      /* 개별 테마 feature-item.auto-hover 색상 */
+      #individual .feature-item.auto-hover {
+        background-color: rgba(var(--theme-individual-primary-rgb), 0.3);
+        border-left: 3px solid var(--theme-individual-primary);
+        box-shadow: 0 5px 15px rgba(var(--theme-individual-primary-rgb), 0.1);
+      }
+
+      #school .feature-item.auto-hover {
+        background-color: rgba(var(--theme-school-primary-rgb), 0.3);
+        border-left: 3px solid var(--theme-school-primary);
+        box-shadow: 0 5px 15px rgba(var(--theme-school-primary-rgb), 0.1);
+      }
+
+      #professional .feature-item.auto-hover {
+        background-color: rgba(var(--theme-professional-primary-rgb), 0.3);
+        border-left: 3px solid var(--theme-professional-primary);
+        box-shadow: 0 5px 15px rgba(var(--theme-professional-primary-rgb), 0.1);
+      }
+
+      #company .feature-item.auto-hover {
+        background-color: rgba(var(--theme-company-primary-rgb), 0.3);
+        border-left: 3px solid var(--theme-company-primary);
+        box-shadow: 0 5px 15px rgba(var(--theme-company-primary-rgb), 0.1);
+      }
+
+      .feature-item.auto-hover .feature-icon {
+        background-color: var(--primary-blue);
+        color: white;
+        transform: rotate(360deg);
+      }
+
+      /* 개별 테마 feature-item.auto-hover .feature-icon 색상 */
+      #individual .feature-item.auto-hover .feature-icon {
+        background-color: var(--theme-individual-primary);
+        color: var(--theme-individual-text);
+      }
+
+      #school .feature-item.auto-hover .feature-icon {
+        background-color: var(--theme-school-primary);
+        color: var(--theme-school-text);
+      }
+
+      #professional .feature-item.auto-hover .feature-icon {
+        background-color: var(--theme-professional-primary);
+        color: var(--theme-professional-text);
+      }
+
+      #company .feature-item.auto-hover .feature-icon {
+        background-color: var(--theme-company-primary);
+        color: var(--theme-company-text);
+      }
+
+      .user-content-inner {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-lg);
+        padding: var(--space-xl);
+        transition: all 0.5s ease-in-out;
+        position: relative;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <header class="header">
+      <div class="header-top">
+        <div class="header-container">
+          <ul>
+            <li>
+              <a href="#"><i class="fas fa-user"></i> 로그인</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-user-plus"></i> 회원가입</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-search"></i> 검사결과조회</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="header-container">
+        <div class="header-main">
+          <a href="#" class="logo">
+            <img src="logo2.png" alt="한국가이던스 로고" />
+          </a>
+          <button class="mobile-nav-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+          <nav>
+            <ul class="nav-main">
+              <li class="nav-main-item">
+                <a href="#">심리검사소개</a>
+                <ul class="dropdown">
+                  <a href="#"><li class="dropdown-item">검사 종류</li></a>
+                  <a href="#"><li class="dropdown-item">검사 신뢰성</li></a>
+                  <a href="#"><li class="dropdown-item">인증 및 특허</li></a>
+                </ul>
+              </li>
+              <li class="nav-main-item">
+                <a href="#">가이던스 프로</a>
+                <ul class="dropdown">
+                  <a href="#"><li class="dropdown-item">성격검사</li></a>
+                  <a href="#"><li class="dropdown-item">적성검사</li></a>
+                  <a href="#"><li class="dropdown-item">진로검사</li></a>
+                  <a href="#"><li class="dropdown-item">학습검사</li></a>
+                </ul>
+              </li>
+              <li class="nav-main-item">
+                <a href="#">가이던스 에듀</a>
+                <ul class="dropdown">
+                  <a href="#"><li class="dropdown-item">학교 심리검사</li></a>
+                  <a href="#"><li class="dropdown-item">교육기관 서비스</li></a>
+                  <a href="#"><li class="dropdown-item">교사 지원 자료</li></a>
+                </ul>
+              </li>
+              <li class="nav-main-item">
+                <a href="#">마이스쿨존</a>
+                <ul class="dropdown">
+                  <a href="#"><li class="dropdown-item">학교 관리자</li></a>
+                  <a href="#"><li class="dropdown-item">학생 관리</li></a>
+                  <a href="#"><li class="dropdown-item">결과 통계</li></a>
+                </ul>
+              </li>
+              <li class="nav-main-item">
+                <a href="#">전문가 교육</a>
+                <ul class="dropdown">
+                  <a href="#"><li class="dropdown-item">교육 일정</li></a>
+                  <a href="#"><li class="dropdown-item">자격증 과정</li></a>
+                  <a href="#"><li class="dropdown-item">워크샵</li></a>
+                </ul>
+              </li>
+              <li class="nav-main-item">
+                <a href="#">고객지원</a>
+                <ul class="dropdown">
+                  <a href="#"><li class="dropdown-item">자주 묻는 질문</li></a>
+                  <a href="#"><li class="dropdown-item">1:1 문의</li></a>
+                  <a href="#"><li class="dropdown-item">자료실</li></a>
+                  <a href="#"><li class="dropdown-item">지역센터</li></a>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- 히어로 섹션 -->
+    <section class="hero">
+      <div class="hero-slider">
+        <div class="hero-slider-track">
+          <div class="hero-slide">
+            <img src="메인배너.png" alt="메인 배너 1" />
+            <div class="hero-content">
+              <!-- 내용 숨김으로 처리됨 -->
+            </div>
+          </div>
+          <div class="hero-slide">
+            <img src="메인배너2.png" alt="메인 배너 2" />
+            <div class="hero-content">
+              <!-- 내용 숨김으로 처리됨 -->
+            </div>
+          </div>
+          <div class="hero-slide">
+            <img src="메인배너3 .png" alt="메인 배너 3" />
+            <div class="hero-content">
+              <!-- 내용 숨김으로 처리됨 -->
+            </div>
+          </div>
+        </div>
+        <div class="hero-nav">
+          <button class="hero-nav-btn prev">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="hero-nav-btn next">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+        <div class="hero-dots">
+          <span class="hero-dot active" data-index="0"></span>
+          <span class="hero-dot" data-index="1"></span>
+          <span class="hero-dot" data-index="2"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 서비스 섹션 -->
+    <section class="section">
+      <div class="container container-card">
+        <div class="section-header">
+          <h2 class="section-title">주요 서비스</h2>
+          <p class="section-desc">
+            한국가이던스는 다양한 심리검사와 전문적인 해석 서비스를 제공합니다
+          </p>
+        </div>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-img">
+              <img src="주요서비스_온라인검사.jpg" alt="온라인 심리검사" />
+            </div>
+            <div class="service-content">
+              <h3 class="service-title">온라인 심리검사</h3>
+              <p class="service-desc">
+                신뢰도 높은 표준화된 심리검사를 온라인에서 편리하게 실시할 수
+                있습니다.
+              </p>
+              <a href="#" class="btn btn-primary">검사 시작하기</a>
+            </div>
+          </div>
+          <div class="service-card">
+            <div class="service-img">
+              <img src="주요서비스_전문상담2.png" alt="전문가 해석 서비스" />
+            </div>
+            <div class="service-content">
+              <h3 class="service-title">전문가 해석 서비스</h3>
+              <p class="service-desc">
+                전문 상담사의 1:1 맞춤형 심리검사 해석 서비스를 제공합니다.
+              </p>
+              <a href="#" class="btn btn-primary">예약하기</a>
+            </div>
+          </div>
+          <div class="service-card">
+            <div class="service-img">
+              <img src="주요서비스_학교.png" alt="학교 심리검사 프로그램" />
+            </div>
+            <div class="service-content">
+              <h3 class="service-title">학교 심리검사 프로그램</h3>
+              <p class="service-desc">
+                학교 및 교육기관을 위한 맞춤형 심리검사 프로그램을 제공합니다.
+              </p>
+              <a href="#" class="btn btn-primary">프로그램 안내</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 사용자 그룹 섹션 -->
+    <section class="section users-section">
+      <div class="container container-card">
+        <div class="section-header">
+          <h2 class="section-title">사용자 맞춤 서비스</h2>
+
+          <div class="user-tabs">
+            <div
+              class="user-tab active"
+              data-target="individual"
+              data-index="0"
+            >
+              <span><i class="fas fa-user"></i> 개인</span>
+            </div>
+            <div class="user-tab" data-target="school" data-index="1">
+              <span><i class="fas fa-school"></i> 학교/교육기관</span>
+            </div>
+            <div class="user-tab" data-target="professional" data-index="2">
+              <span><i class="fas fa-briefcase"></i> 전문가/상담사</span>
+            </div>
+            <div class="user-tab" data-target="company" data-index="3">
+              <span><i class="fas fa-building"></i> 기관/기업</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="user-content-container">
+          <div class="user-content active" id="individual">
+            <div class="user-content-inner">
+              <div class="content-header">
+                <p class="user-content-desc">
+                  자기 이해와 성장을 위한 다양한 심리검사 서비스를
+                  제공합니다.<br />
+                  성격, 적성, 진로, 학습 등 다양한 영역의 검사를 통해 더 나은
+                  자신을 발견하세요.
+                </p>
+              </div>
+              <div class="features-grid">
+                <div class="user-content-img">
+                  <img
+                    src="사용자 맞춤 서비스_개인.png"
+                    alt="개인 사용자를 위한 서비스"
+                  />
+                </div>
+                <div class="feature-list">
+                  <div class="feature-item">
+                    <span class="feature-icon"
+                      ><i class="fas fa-check-circle"></i
+                    ></span>
+                    <span>맞춤형 심리검사 추천</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="feature-icon"
+                      ><i class="fas fa-check-circle"></i
+                    ></span>
+                    <span>전문가 1:1 해석 서비스</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="feature-icon"
+                      ><i class="fas fa-check-circle"></i
+                    ></span>
+                    <span>상세한 검사 결과 리포트</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="feature-icon"
+                      ><i class="fas fa-check-circle"></i
+                    ></span>
+                    <span>자기 성장을 위한 맞춤형 제안</span>
+                  </div>
+                </div>
+              </div>
+              <a href="#" class="btn btn-primary">검사 시작하기</a>
+            </div>
+          </div>
+
+          <div class="user-content" id="school">
+            <div class="user-content-inner">
+              <div class="content-header">
+                <p class="user-content-desc">
+                  학생들의 심리 평가와 진로 지도를 위한 체계적인 검사 시스템을
+                  제공합니다. <br />학교 단위의 효율적인 검사 관리와 결과 분석이
+                  가능합니다.
+                </p>
+              </div>
+              <div class="features-grid">
+                <div class="user-content-img">
+                  <img
+                    src="사용자 맞춤 서비스_학교상담.png"
+                    alt="학교/교육기관을 위한 서비스"
+                  />
+                </div>
+                <div class="feature-list">
+                  <div class="feature-item">
+                    <span class="feature-icon"
+                      ><i class="fas fa-check-circle"></i
+                    ></span>
+                    <span>학교 단위 검사 관리 시스템</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="feature-icon"
+                      ><i class="fas fa-check-circle"></i
+                    ></span>
+                    <span>통합 결과 분석 및 통계</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="feature-icon"
+                      ><i class="fas fa-check-circle"></i
+                    ></span>
+                    <span>교사용 해석 가이드 제공</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="feature-icon"
+                      ><i class="fas fa-check-circle"></i
+                    ></span>
+                    <span>학교 상담실 연계 서비스</span>
+                  </div>
+                </div>
+              </div>
+              <a href="#" class="btn btn-primary">서비스 안내 받기</a>
+            </div>
+          </div>
+
+          <div class="user-content" id="professional">
+            <div class="user-content-inner">
+              <div class="content-header">
+                <p class="user-content-desc">
+                  심리검사를 활용하는 전문가를 위한 교육과 자격증 과정을
+                  제공합니다. <br />최신 심리검사 도구와 해석 방법을 배워
+                  전문성을 향상시키세요.
+                </p>
+              </div>
+              <div class="features-grid">
+                <div class="user-content-img">
+                  <img
+                    src="사용자 맞춤 서비스_전문가.png"
+                    alt="전문가/상담사를 위한 서비스"
+                  />
+                </div>
+                <div class="feature-list">
+                  <div class="feature-item">
+                    <span class="feature-icon"
+                      ><i class="fas fa-check-circle"></i
+                    ></span>
+                    <span>심리검사 자격증 과정</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="feature-icon"
+                      ><i class="fas fa-check-circle"></i
+                    ></span>
+                    <span>전문가 워크샵 및 세미나</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="feature-icon"
+                      ><i class="fas fa-check-circle"></i
+                    ></span>
+                    <span>전문가용 해석 도구 제공</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="feature-icon"
+                      ><i class="fas fa-check-circle"></i
+                    ></span>
+                    <span>지속적인 교육 및 슈퍼비전</span>
+                  </div>
+                </div>
+              </div>
+              <a href="#" class="btn btn-primary">교육 일정 확인하기</a>
+            </div>
+          </div>
+
+          <div class="user-content" id="company">
+            <div class="user-content-inner">
+              <div class="content-header">
+                <p class="user-content-desc">
+                  채용, 인재 개발, 조직 문화 개선을 위한 맞춤형 심리검사
+                  솔루션을 제공합니다. <br />조직의 성장과 구성원의 만족도를
+                  동시에 높이세요.
+                </p>
+              </div>
+              <div class="features-grid">
+                <div class="user-content-img">
+                  <img
+                    src="사용자 맞춤 서비스_기관기업.png"
+                    alt="기관/기업을 위한 서비스"
+                  />
+                </div>
+                <div class="feature-list">
+                  <div class="feature-item">
+                    <span class="feature-icon"
+                      ><i class="fas fa-check-circle"></i
+                    ></span>
+                    <span>맞춤형 채용 검사 시스템</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="feature-icon"
+                      ><i class="fas fa-check-circle"></i
+                    ></span>
+                    <span>팀 빌딩 및 조직 진단</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="feature-icon"
+                      ><i class="fas fa-check-circle"></i
+                    ></span>
+                    <span>리더십 및 역량 평가</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="feature-icon"
+                      ><i class="fas fa-check-circle"></i
+                    ></span>
+                    <span>조직 문화 컨설팅</span>
+                  </div>
+                </div>
+              </div>
+              <a href="#" class="btn btn-primary">기업 서비스 문의하기</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 심리검사 카테고리 -->
+    <section class="section">
+      <div class="container container-card">
+        <div class="section-header">
+          <h2 class="section-title">심리검사 카테고리</h2>
+          <p class="section-desc">
+            다양한 영역의 표준화된 심리검사를 제공합니다
+          </p>
+        </div>
+        <div class="categories-grid">
+          <div class="category-card">
+            <div class="category-icon">
+              <img src="3D 사람 아이콘.png" alt="성격검사 아이콘" />
+            </div>
+            <h3 class="category-title">성격검사</h3>
+            <p class="category-desc">
+              자신의 성격 특성과 강점을 파악하여 더 나은 자기 이해를 돕습니다.
+            </p>
+            <a href="#" class="btn btn-secondary">자세히 보기</a>
+          </div>
+          <div class="category-card">
+            <div class="category-icon">
+              <img src="3D 전구 아이콘.png" alt="적성검사 아이콘" />
+            </div>
+            <h3 class="category-title">적성검사</h3>
+            <p class="category-desc">
+              자신의 능력과 적성을 발견하여 적합한 진로 선택을 돕습니다.
+            </p>
+            <a href="#" class="btn btn-secondary">자세히 보기</a>
+          </div>
+          <div class="category-card">
+            <div class="category-icon">
+              <img src="3D 나침반 아이콘.png" alt="진로검사 아이콘" />
+            </div>
+            <h3 class="category-title">진로검사</h3>
+            <p class="category-desc">
+              자신에게 맞는 직업과 진로 방향을 탐색하는 데 도움을 줍니다.
+            </p>
+            <a href="#" class="btn btn-secondary">자세히 보기</a>
+          </div>
+          <div class="category-card">
+            <div class="category-icon">
+              <img src="3D 책 아이콘.png" alt="학습검사 아이콘" />
+            </div>
+            <h3 class="category-title">학습검사</h3>
+            <p class="category-desc">
+              자신의 학습 스타일과 방법을 파악하여 학습 효율을 높입니다.
+            </p>
+            <a href="#" class="btn btn-secondary">자세히 보기</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 테스티모니얼 섹션 -->
+    <section class="section testimonials-section">
+      <div class="container container-card">
+        <div class="section-header">
+          <h2 class="section-title">이용자 후기</h2>
+          <p class="section-desc">
+            한국가이던스 서비스를 경험한 사용자들의 생생한 후기를 확인하세요
+          </p>
+        </div>
+        <div class="testimonials-slider">
+          <div class="testimonials-track">
+            <div class="testimonial-slide">
+              <div class="testimonial-card">
+                <div class="testimonial-author-img">
+                  <img src="리뷰1.png" alt="김지윤님 사진" />
+                </div>
+                <div class="testimonial-content-wrapper">
+                  <div class="testimonial-content">
+                    진로 선택에 고민이 많았는데, 한국가이던스의 진로적성검사를
+                    통해 제 강점과 적성을 발견할 수 있었습니다. 전문가 상담까지
+                    받으니 진로 방향이 훨씬 명확해졌어요. 정말 감사합니다!
+                  </div>
+                  <div class="testimonial-author-info">
+                    <div class="testimonial-author-name">김지윤</div>
+                    <div class="testimonial-author-title">대학생</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-slide">
+              <div class="testimonial-card">
+                <div class="testimonial-author-img">
+                  <img src="리뷰2.png" alt="박상현님 사진" />
+                </div>
+                <div class="testimonial-content-wrapper">
+                  <div class="testimonial-content">
+                    학교 상담실에서 한국가이던스의 학교 심리검사 프로그램을
+                    도입했는데, 학생들의 특성을 파악하고 지도하는 데 큰 도움이
+                    되고 있습니다. 통계 분석 기능도 유용해요.
+                  </div>
+                  <div class="testimonial-author-info">
+                    <div class="testimonial-author-name">박상현</div>
+                    <div class="testimonial-author-title">
+                      고등학교 상담교사
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-slide">
+              <div class="testimonial-card">
+                <div class="testimonial-author-img">
+                  <img src="리뷰3.png" alt="이미영님 사진" />
+                </div>
+                <div class="testimonial-content-wrapper">
+                  <div class="testimonial-content">
+                    직원 채용과 인재 배치에 한국가이던스의 기업용 심리검사를
+                    활용하고 있습니다. 객관적인 데이터를 바탕으로 의사결정을 할
+                    수 있어 매우 유용합니다.
+                  </div>
+                  <div class="testimonial-author-info">
+                    <div class="testimonial-author-name">이미영</div>
+                    <div class="testimonial-author-title">인사팀 매니저</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-nav">
+            <button class="testimonial-nav-btn prev">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="testimonial-nav-btn next">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA 섹션 -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2 class="cta-title">지금 바로 심리검사를 시작하세요</h2>
+          <p class="cta-desc">
+            한국가이던스의 전문적인 심리검사로 더 나은 자신을 발견하고
+            성장하세요
+          </p>
+          <a href="#" class="btn btn-accent">무료 간편검사 시작하기</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div>
+            <div class="footer-logo">한국가이던스</div>
+            <p class="footer-desc">
+              심리문화를 선도하는 전문기관<br />표준화된 심리검사와 전문적인
+              해석 서비스를 제공합니다
+            </p>
+            <div class="footer-social">
+              <a href="#" class="social-icon facebook"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" class="social-icon instagram"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" class="social-icon youtube"
+                ><i class="fab fa-youtube"></i
+              ></a>
+              <a href="#" class="social-icon naver-icon">N</a>
+            </div>
+          </div>
+          <div>
+            <h4 class="footer-title">서비스 안내</h4>
+            <ul class="footer-links">
+              <li><a href="#">심리검사 소개</a></li>
+              <li><a href="#">가이던스 프로</a></li>
+              <li><a href="#">가이던스 에듀</a></li>
+              <li><a href="#">마이스쿨존</a></li>
+              <li><a href="#">전문가 교육</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="footer-title">고객 지원</h4>
+            <ul class="footer-links">
+              <li><a href="#">자주 묻는 질문</a></li>
+              <li><a href="#">1:1 문의</a></li>
+              <li><a href="#">자료실</a></li>
+              <li><a href="#">지역센터 안내</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="footer-title">회사 정보</h4>
+            <ul class="footer-links">
+              <li><a href="#">회사 소개</a></li>
+              <li><a href="#">연혁</a></li>
+              <li><a href="#">채용 정보</a></li>
+              <li><a href="#">오시는 길</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div>© 2025 한국가이던스. All Rights Reserved.</div>
+          <div class="footer-bottom-links">
+            <a href="#">이용약관</a>
+            <a href="#">개인정보처리방침</a>
+            <a href="#">이메일무단수집거부</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // 페이지 로딩 애니메이션
+        // 사용자 맞춤 서비스 섹션 로딩 애니메이션
+        const userContentInner = document.querySelector(".user-content-inner");
+        const userTabs = document.querySelectorAll(".user-tab");
+        const featureItems = document.querySelectorAll(".feature-item");
+
+        setTimeout(() => {
+          if (userContentInner) {
+            userContentInner.style.opacity = "1";
+            userContentInner.style.transform = "translateY(0)";
+          }
+
+          userTabs.forEach((tab, index) => {
+            setTimeout(() => {
+              tab.style.opacity = "1";
+              tab.style.transform = "translateY(0)";
+            }, 100 * index);
+          });
+
+          featureItems.forEach((item, index) => {
+            setTimeout(() => {
+              item.style.opacity = "1";
+              item.style.transform = "translateX(0)";
+            }, 150 * index);
+          });
+        }, 300);
+
+        // 자동 호버 효과 시작
+        setTimeout(startAutoHover, 200);
+      });
+
+      // 모바일 메뉴 토글
+      const mobileNavToggle = document.querySelector(".mobile-nav-toggle");
+      const navMain = document.querySelector(".nav-main");
+
+      mobileNavToggle.addEventListener("click", function () {
+        navMain.classList.toggle("active");
+        const isOpen = navMain.classList.contains("active");
+        mobileNavToggle.innerHTML = isOpen
+          ? '<i class="fas fa-times"></i>'
+          : '<i class="fas fa-bars"></i>';
+      });
+
+      // 모바일에서 드롭다운 토글
+      const navMainItems = document.querySelectorAll(".nav-main-item");
+
+      navMainItems.forEach((item) => {
+        item.addEventListener("click", function (e) {
+          if (window.innerWidth <= 768) {
+            if (e.target === this.querySelector("a")) {
+              e.preventDefault();
+              this.classList.toggle("active");
+            }
+          }
+        });
+      });
+
+      // 메인 배너 슬라이더
+      const heroSliderTrack = document.querySelector(".hero-slider-track");
+      const heroSlides = document.querySelectorAll(".hero-slide");
+      const heroPrevBtn = document.querySelector(".hero-nav-btn.prev");
+      const heroNextBtn = document.querySelector(".hero-nav-btn.next");
+      const heroDots = document.querySelectorAll(".hero-dot");
+
+      let heroCurrentIndex = 0;
+
+      function updateHeroSlider() {
+        heroSliderTrack.style.transform = `translateX(-${
+          heroCurrentIndex * (100 / heroSlides.length)
+        }%)`;
+        heroDots.forEach((dot, index) => {
+          dot.classList.toggle("active", index === heroCurrentIndex);
+        });
+      }
+
+      heroPrevBtn.addEventListener("click", function () {
+        heroCurrentIndex =
+          heroCurrentIndex > 0 ? heroCurrentIndex - 1 : heroSlides.length - 1;
+        updateHeroSlider();
+      });
+
+      heroNextBtn.addEventListener("click", function () {
+        heroCurrentIndex =
+          heroCurrentIndex < heroSlides.length - 1 ? heroCurrentIndex + 1 : 0;
+        updateHeroSlider();
+      });
+
+      heroDots.forEach((dot) => {
+        dot.addEventListener("click", function () {
+          heroCurrentIndex = parseInt(this.dataset.index);
+          updateHeroSlider();
+        });
+      });
+
+      // 자동 메인 배너 슬라이드
+      setInterval(function () {
+        heroCurrentIndex =
+          heroCurrentIndex < heroSlides.length - 1 ? heroCurrentIndex + 1 : 0;
+        updateHeroSlider();
+      }, 6000);
+
+      // 사용자 탭 전환
+      const userTabs = document.querySelectorAll(".user-tab");
+      const userContents = document.querySelectorAll(".user-content");
+      const userContentContainer = document.querySelector(
+        ".user-content-container"
+      );
+
+      // 페이지 로드시 첫 번째 콘텐츠가 보이도록 설정
+      window.addEventListener("load", function () {
+        // 첫 번째 탭에 active 클래스 추가
+        userTabs[0].classList.add("active");
+
+        // 첫 번째 콘텐츠에 active 클래스 추가하고 투명도 조정
+        const firstContent = document.getElementById(
+          userTabs[0].dataset.target
+        );
+        if (firstContent) {
+          firstContent.classList.add("active");
+          firstContent.style.opacity = "1";
+
+          // 콘텐츠 컨테이너 높이 설정
+          adjustContainerHeight(firstContent);
+        }
+      });
+
+      // 콘텐츠 컨테이너의 높이를 조절하는 함수
+      function adjustContainerHeight(activeContent) {
+        if (userContentContainer && activeContent) {
+          // 활성 콘텐츠의 실제 높이를 계산하여 컨테이너에 설정
+          const contentHeight = activeContent.offsetHeight;
+          userContentContainer.style.height = contentHeight + "px";
+        }
+      }
+
+      userTabs.forEach((tab) => {
+        tab.addEventListener("click", function () {
+          const target = this.dataset.target;
+
+          // 모든 탭에서 active 클래스 제거하고 현재 탭에 active 클래스 추가
+          userTabs.forEach((t) => t.classList.remove("active"));
+          this.classList.add("active");
+
+          // 페이드 아웃 후 페이드 인 효과 적용
+          const activeContent = document.getElementById(target);
+          const allContents = document.querySelectorAll(".user-content");
+
+          // 모든 콘텐츠 페이드 아웃
+          allContents.forEach((content) => {
+            content.style.opacity = "0";
+            setTimeout(() => {
+              content.classList.remove("active");
+            }, 300); // 페이드 아웃 시간
+          });
+
+          // 선택된 콘텐츠만 페이드 인
+          if (activeContent) {
+            setTimeout(() => {
+              activeContent.classList.add("active");
+
+              // 새 콘텐츠 높이에 맞게 컨테이너 높이 조정
+              setTimeout(() => {
+                adjustContainerHeight(activeContent);
+                activeContent.style.opacity = "1";
+              }, 50);
+            }, 350); // 페이드 아웃 후 페이드 인 시작
+          }
+
+          // 탭 전환 후 자동 호버 효과 재시작
+          setTimeout(startAutoHover, 700); // 페이드 인/아웃 애니메이션 이후에 시작
+        });
+      });
+
+      // 테스티모니얼 슬라이더
+      const testimonialSlides = document.querySelectorAll(".testimonial-slide");
+      const prevBtn = document.querySelector(".testimonial-nav-btn.prev");
+      const nextBtn = document.querySelector(".testimonial-nav-btn.next");
+      const testimonialTrack = document.querySelector(".testimonials-track");
+
+      let currentIndex = 0;
+      let isAnimating = false; // 애니메이션 진행 중 플래그
+
+      // 초기 상태 설정 - 첫 번째 슬라이드 표시
+      testimonialSlides[0].classList.add("active");
+
+      // 슬라이드 트랙 높이 설정
+      function adjustTrackHeight() {
+        const activeSlide = document.querySelector(".testimonial-slide.active");
+        if (activeSlide) {
+          const slideHeight = activeSlide.offsetHeight;
+          testimonialTrack.style.minHeight = `${slideHeight}px`;
+        }
+      }
+
+      // 페이지 로드 및 리사이즈 시 트랙 높이 조정
+      window.addEventListener("load", adjustTrackHeight);
+      window.addEventListener("resize", adjustTrackHeight);
+
+      function showSlide(index) {
+        if (isAnimating) return; // 애니메이션 중이면 함수 실행 중단
+        isAnimating = true;
+
+        // 현재 활성화된 슬라이드 찾기
+        const currentSlide = document.querySelector(
+          ".testimonial-slide.active"
+        );
+        const nextSlide = testimonialSlides[index];
+
+        if (currentSlide === nextSlide) {
+          isAnimating = false;
+          return;
+        }
+
+        // 현재 슬라이드 페이드 아웃
+        currentSlide.style.opacity = "0";
+
+        // 다음 슬라이드 준비
+        setTimeout(() => {
+          // active 클래스 전환
+          currentSlide.classList.remove("active");
+          nextSlide.classList.add("active");
+
+          // 다음 슬라이드 페이드 인
+          setTimeout(() => {
+            nextSlide.style.opacity = "1";
+
+            // 트랙 높이 조정
+            setTimeout(adjustTrackHeight, 50);
+
+            // 애니메이션 종료
+            setTimeout(() => {
+              isAnimating = false;
+            }, 300);
+          }, 50);
+        }, 400); // 현재 슬라이드 페이드 아웃 시간
+      }
+
+      prevBtn.addEventListener("click", function () {
+        if (isAnimating) return;
+        currentIndex =
+          currentIndex > 0 ? currentIndex - 1 : testimonialSlides.length - 1;
+        showSlide(currentIndex);
+      });
+
+      nextBtn.addEventListener("click", function () {
+        if (isAnimating) return;
+        currentIndex =
+          currentIndex < testimonialSlides.length - 1 ? currentIndex + 1 : 0;
+        showSlide(currentIndex);
+      });
+
+      // 자동 테스티모니얼 슬라이드
+      let testimonialInterval = setInterval(function () {
+        if (!isAnimating) {
+          currentIndex =
+            currentIndex < testimonialSlides.length - 1 ? currentIndex + 1 : 0;
+          showSlide(currentIndex);
+        }
+      }, 6000);
+
+      // 사용자가 버튼을 클릭하면 자동 슬라이드 재설정
+      [prevBtn, nextBtn].forEach((btn) => {
+        btn.addEventListener("click", () => {
+          clearInterval(testimonialInterval);
+          testimonialInterval = setInterval(function () {
+            if (!isAnimating) {
+              currentIndex =
+                currentIndex < testimonialSlides.length - 1
+                  ? currentIndex + 1
+                  : 0;
+              showSlide(currentIndex);
+            }
+          }, 6000);
+        });
+      });
+
+      // 자동 호버 효과 기능 추가
+      function startAutoHover() {
+        // 현재 활성화된 탭의 feature-item들만 선택
+        const activeTab = document.querySelector(".user-content.active");
+        if (!activeTab) return;
+
+        const featureItems = activeTab.querySelectorAll(".feature-item");
+        let currentIndex = 0;
+
+        // 이전 인터벌이 있다면 제거
+        if (window.autoHoverInterval) {
+          clearInterval(window.autoHoverInterval);
+        }
+
+        // 모든 아이템에서 auto-hover 클래스 제거
+        document.querySelectorAll(".feature-item").forEach((item) => {
+          item.classList.remove("auto-hover");
+        });
+
+        // 새 인터벌 설정
+        window.autoHoverInterval = setInterval(() => {
+          // 이전 아이템에서 클래스 제거
+          featureItems.forEach((item) => {
+            item.classList.remove("auto-hover");
+          });
+
+          // 현재 아이템에 클래스 추가
+          featureItems[currentIndex].classList.add("auto-hover");
+
+          // 다음 인덱스로 이동
+          currentIndex = (currentIndex + 1) % featureItems.length;
+        }, 2000); // 2초마다 전환
+      }
+
+      // 윈도우 리사이즈 이벤트에도 높이 조정 적용
+      window.addEventListener("resize", function () {
+        const activeContent = document.querySelector(".user-content.active");
+        if (activeContent) {
+          adjustContainerHeight(activeContent);
+        }
+      });
+    </script>
+  </body>
+</html>
